@@ -1,8 +1,9 @@
 import { Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 import { responsiveFontSizes } from "@mui/material";
-import { red } from "@mui/material/colors";
-import { globalStyles } from "@/styles/globalStyles";
+import { MuiCssBaseline } from "@/styles/components";
+import { palette } from "@/styles/palette";
+import { fontFamily } from "@/styles/fontFamily";
 
 export const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -12,26 +13,15 @@ export const roboto = Roboto({
 });
 
 const basicTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#556cd6",
-    },
-    secondary: {
-      main: "#19857b",
-    },
-    error: {
-      main: red.A400,
-    },
-  },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily,
   },
+  palette,
   components: {
-    MuiCssBaseline: {
-      styleOverrides: globalStyles,
-    },
+    MuiCssBaseline,
   },
 });
 
 const theme = responsiveFontSizes(basicTheme);
+
 export default theme;

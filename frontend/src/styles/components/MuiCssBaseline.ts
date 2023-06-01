@@ -1,4 +1,5 @@
-export const globalStyles = `
+export const MuiCssBaseline = {
+  styleOverrides: `
   html, body {
   height: 100%;
   max-width: 100vw;
@@ -24,4 +25,5 @@ export const globalStyles = `
   flex-grow: 0;
   flex-shrink: 0;
   }
-`;
+`,
+};
