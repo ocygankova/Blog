@@ -7,11 +7,11 @@ import session from 'express-session';
 import passport from 'passport';
 
 import env from './env';
-import usersRoutes from 'routes/users';
-import blogPostsRoutes from 'routes/blog-posts';
-import errorHandler from 'middlewares/error-handler';
-import sessionConfig from 'config/session';
-import 'config/passport';
+import usersRoutes from './routes/users';
+import blogPostsRoutes from './routes/blog-posts';
+import { errorHandler } from './middlewares';
+import sessionConfig from './config/session';
+import './config/passport';
 
 const app = express();
 

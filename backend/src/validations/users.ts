@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { imageFileSchema } from 'utils/validation';
+import { imageFileSchema } from '../utils/validation';
 
 const usernameSchema = yup
   .string()

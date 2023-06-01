@@ -4,5 +4,5 @@ declare module 'express-session' {
   }
 }
 
-//empty export needed so that typescript recognizes file as s module
+//empty export needed so that typescript recognizes file as a module
 export {};

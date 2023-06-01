@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { imageFileSchema, mongooseObjectIdSchema } from 'utils/validation';
+import { imageFileSchema, mongooseObjectIdSchema } from '../utils/validation';
 
 export const getBlogPostsSchema = yup.object({
   // the whole req object passed to yup, getting req.query from it

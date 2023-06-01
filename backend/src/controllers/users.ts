@@ -4,19 +4,19 @@ import bcrypt from 'bcrypt';
 import sharp from 'sharp';
 import crypto from 'crypto';
 
-import UserModel from 'models/user';
-import { assertIsDefined } from 'utils/assertIsDefined';
+import UserModel from '../models/user';
+import EmailVerificationToken from '../models/email-verification-token';
+import PasswordResetToken from '../models/password-reset-token';
+import { assertIsDefined } from '../utils/assertIsDefined';
+import * as Email from '../utils/email';
+import { destroyAllActiveSessionsForUser } from '../utils/auth';
 import {
   IRequestVerificationCodeBody,
   IResetPasswordBody,
   ISignUpBody,
   IUpdateUserBody,
-} from 'validations/users';
-import env from 'env';
-import EmailVerificationToken from 'models/email-verification-token';
-import PasswordResetToken from 'models/password-reset-token';
-import * as Email from 'utils/email';
-import { destroyAllActiveSessionsForUser } from 'utils/auth';
+} from '../validations/users';
+import env from '../env';
 
 // =============================================================================
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
@@ -26,9 +26,7 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
     assertIsDefined(authenticatedUser);
 
-    const user = await UserModel.findById(authenticatedUser._id)
-      .select('+email')
-      .exec();
+    const user = await UserModel.findById(authenticatedUser._id).select('+email').exec();
 
     res.status(200).json(user);
   } catch (err) {
@@ -54,12 +52,11 @@ export const getUserByUsername: RequestHandler = async (req, res, next) => {
 };
 
 // =============================================================================
-export const signUp: RequestHandler<
-  unknown,
-  unknown,
-  ISignUpBody,
-  unknown
-> = async (req, res, next) => {
+export const signUp: RequestHandler<unknown, unknown, ISignUpBody, unknown> = async (
+  req,
+  res,
+  next
+) => {
   const { username, email, password: passwordRaw, verificationCode } = req.body;
 
   try {
@@ -145,15 +142,10 @@ export const requestResetPasswordCode: RequestHandler<
   const { email } = req.body;
 
   try {
-    const user = await UserModel.findOne({ email })
-      .collation({ locale: 'en', strength: 2 })
-      .exec();
+    const user = await UserModel.findOne({ email }).collation({ locale: 'en', strength: 2 }).exec();
 
     if (!user) {
-      throw createHttpError(
-        404,
-        'A user with this email does not exist. Please sign ip instead.'
-      );
+      throw createHttpError(404, 'A user with this email does not exist. Please sign ip instead.');
     }
 
     const verificationCode = crypto.randomInt(100000, 999999).toString();
@@ -168,12 +160,11 @@ export const requestResetPasswordCode: RequestHandler<
 };
 
 // =============================================================================
-export const resetPassword: RequestHandler<
-  unknown,
-  unknown,
-  IResetPasswordBody,
-  unknown
-> = async (req, res, next) => {
+export const resetPassword: RequestHandler<unknown, unknown, IResetPasswordBody, unknown> = async (
+  req,
+  res,
+  next
+) => {
   const { email, password: newPasswordRaw, verificationCode } = req.body;
 
   try {
@@ -228,12 +219,11 @@ export const logOut: RequestHandler = (req, res) => {
 };
 
 // =============================================================================
-export const updateUser: RequestHandler<
-  unknown,
-  unknown,
-  IUpdateUserBody,
-  unknown
-> = async (req, res, next) => {
+export const updateUser: RequestHandler<unknown, unknown, IUpdateUserBody, unknown> = async (
+  req,
+  res,
+  next
+) => {
   const { username, displayName, about } = req.body;
   const profileImage = req.file;
   const authenticatedUser = req.user;
@@ -270,11 +260,7 @@ export const updateUser: RequestHandler<
           ...(displayName && { displayName }),
           ...(about && { about }),
           ...(profileImage && {
-            profileImageUrl:
-              env.SERVER_URL +
-              profileImageDestPath +
-              '?lastupdated=' +
-              Date.now(),
+            profileImageUrl: env.SERVER_URL + profileImageDestPath + '?lastupdated=' + Date.now(),
           }),
         },
       },

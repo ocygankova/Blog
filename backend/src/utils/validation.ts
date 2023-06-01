@@ -1,7 +1,6 @@
+import mongoose from 'mongoose';
 import * as yup from 'yup';
 import { validateBufferMIMEType } from 'validate-image-type';
-import * as path from 'path';
-import mongoose from 'mongoose';
 
 export const imageFileSchema = yup
   .mixed<Express.Multer.File>()

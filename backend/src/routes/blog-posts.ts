@@ -1,15 +1,13 @@
 import express from 'express';
 
-import * as BlogPostsController from 'controllers/blog-posts';
-import { postImageUpload } from 'middlewares/image-upload';
-import requiresAuth from 'middlewares/requiresAuth';
-import validateRequestSchema from 'middlewares/validateRequestSchema';
+import * as BlogPostsController from '../controllers/blog-posts';
+import { requiresAuth, validateRequestSchema, postImageUpload } from '../middlewares';
 import {
   createBlogPostSchema,
   deleteBlogPostSchema,
   getBlogPostsSchema,
   updateBlogPostSchema,
-} from 'validations/blog-posts';
+} from '../validations/blog-posts';
 
 const router = express.Router();
 

@@ -5,15 +5,15 @@ import createHttpError from 'http-errors';
 import * as fs from 'fs';
 import axios from 'axios';
 
-import BlogPostModel from 'models/blog-post';
-import { assertIsDefined } from 'utils/assertIsDefined';
+import BlogPostModel from '../models/blog-post';
+import { assertIsDefined } from '../utils/assertIsDefined';
 import {
   IBlogPostReqBody,
   IDeleteBlogPostParams,
   IGetBlogPostsReqQuery,
   IUpdateBlogPostParams,
-} from 'validations/blog-posts';
-import env from 'env';
+} from '../validations/blog-posts';
+import env from '../env';
 
 // =============================================================================
 export const getBlogPosts: RequestHandler<

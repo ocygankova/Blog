@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { SessionOptions } from 'express-session';
 import MongoStore from 'connect-mongo';
-import env from 'env';
+import env from '../env';
 
 const sessionConfig: SessionOptions = {
   secret: env.SESSION_SECRET,

@@ -6,8 +6,8 @@ import { Profile, Strategy as GithubStrategy } from 'passport-github2';
 import { VerifyCallback } from 'passport-oauth2';
 import bcrypt from 'bcrypt';
 
-import UserModel from 'models/user';
-import env from 'env';
+import UserModel from '../models/user';
+import env from '../env';
 
 passport.serializeUser((user, cb) => {
   cb(null, user._id);
@@ -21,17 +21,12 @@ passport.deserializeUser((userId: string, cb) => {
 passport.use(
   new LocalStrategy(async (username, password, cb) => {
     try {
-      const existingUser = await UserModel.findOne({ username })
-        .select('+email +password')
-        .exec();
+      const existingUser = await UserModel.findOne({ username }).select('+email +password').exec();
       if (!existingUser || !existingUser.password) {
         return cb(null, false);
       }
 
-      const passwordMatch = await bcrypt.compare(
-        password,
-        existingUser.password
-      );
+      const passwordMatch = await bcrypt.compare(password, existingUser.password);
       if (!passwordMatch) {
         return cb(null, false);
       }
@@ -83,12 +78,7 @@ passport.use(
       clientSecret: env.GITHUB_CLIENT_SECRET,
       callbackURL: `${env.SERVER_URL}/users/oauth2/redirect/github`,
     },
-    async (
-      accessToken: string,
-      refreshToken: string,
-      profile: Profile,
-      cb: VerifyCallback
-    ) => {
+    async (accessToken: string, refreshToken: string, profile: Profile, cb: VerifyCallback) => {
       try {
         let user = await UserModel.findOne({ githubId: profile.id }).exec();
         if (!user) {

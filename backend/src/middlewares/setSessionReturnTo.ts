@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import env from 'env';
+import env from '../env';
 
 const setSessionReturnTo: RequestHandler = (req, res, next) => {
   const { returnTo } = req.query;

@@ -1,5 +1,5 @@
 import { createTransport } from 'nodemailer';
-import env from 'env';
+import env from '../env';
 
 const transporter = createTransport({
   host: env.SMTP_HOST,
