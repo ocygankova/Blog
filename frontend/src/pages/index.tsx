@@ -1,6 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 import { Box, Container, Typography } from "@mui/material";
 
 export default function Home() {
@@ -34,15 +32,6 @@ export default function Home() {
           <Typography variant="h4" color="error">
             Test colors
           </Typography>
-
-          <Link href="/about">Go to the about page</Link>
-          <Image
-            src="/vercel.svg"
-            alt="Vercel Logo"
-            width={100}
-            height={24}
-            priority
-          />
         </Box>
       </Container>
     </>
