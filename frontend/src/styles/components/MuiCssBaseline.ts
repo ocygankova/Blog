@@ -6,7 +6,7 @@ export const MuiCssBaseline = {
   overflow-x: hidden;
   },
   
-  #root {
+  #__next {
   min-height: 100%;
   display: flex;
   flex-direction: column;
