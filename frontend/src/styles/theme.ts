@@ -1,16 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 import { responsiveFontSizes } from "@mui/material";
-import { MuiCssBaseline } from "@/styles/components";
+import { MuiCssBaseline, MuiLink } from "@/styles/components";
 import { palette } from "@/styles/palette";
-import { fontFamily } from "@/styles/fontFamily";
+import { typography } from "@/styles/typography";
 
 const basicTheme = createTheme({
-  typography: {
-    fontFamily,
-  },
+  typography,
   palette,
   components: {
     MuiCssBaseline,
+    MuiLink,
   },
 });
 

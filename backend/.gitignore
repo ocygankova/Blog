@@ -131,3 +131,6 @@ dist
 
 # Static folders
 uploads/*
+
+/.idea/
+/.vscode/

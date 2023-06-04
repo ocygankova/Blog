@@ -1,6 +1,7 @@
 import { red } from "@mui/material/colors";
+import { PaletteOptions } from "@mui/material/styles/createPalette";
 
-export const palette = {
+export const palette: PaletteOptions = {
   primary: {
     main: "#556cd6",
   },
