@@ -25,5 +25,17 @@ export const MuiCssBaseline = {
   flex-grow: 0;
   flex-shrink: 0;
   }
+  
+  button {
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
 `,
 };
