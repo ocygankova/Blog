@@ -2,26 +2,33 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-
-import logo from "@/assets/logo.png";
 import {
   AppBar,
+  Box,
   Container,
+  Divider,
+  Drawer,
   IconButton,
   Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useAuthenticatedUser } from "@/hooks";
-import LoggedInNavbar from "./LoggedInNavbar/LoggedInNavbar";
-import LoggedOutNavbar from "./LoggedOutNavbar/LoggedOutNavbar";
-import MobileDrawer from "./MobileDrawer/MobileDrawer";
+import logo from "@/assets/logo.png";
+import { LoggedInDrawer, LoggedInNavbar } from "./LoggedInView";
+import { LoggedOutDrawer, LoggedOutNavbar } from "./LoggedOutView";
 
 function Header() {
-  const { user, userLoading, userLoadingError, mutateUser } =
-    useAuthenticatedUser();
+  const { user, userLoading } = useAuthenticatedUser();
 
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
@@ -72,20 +79,79 @@ function Header() {
             <IconButton
               color="inherit"
               aria-label="open menu"
-              edge="start"
-              onClick={handleMobileDrawerToggle}
               sx={{ display: { sm: "none" } }}
+              onClick={handleMobileDrawerToggle}
             >
-              <MenuIcon />
+              <MenuIcon fontSize="large" />
             </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
 
-      <MobileDrawer
-        open={mobileDrawerOpen}
-        handleToggle={handleMobileDrawerToggle}
-      />
+      <Box component="nav">
+        <Drawer
+          open={mobileDrawerOpen}
+          onClose={handleMobileDrawerToggle}
+          anchor="right"
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: "300px",
+            },
+          }}
+        >
+          <Box>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              p={2}
+            >
+              <Typography variant="h6">Welcome Blog</Typography>
+              <IconButton
+                color="inherit"
+                aria-label="open menu"
+                sx={{ display: { sm: "none" } }}
+                onClick={handleMobileDrawerToggle}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
+            </Stack>
+
+            <Divider variant="middle" />
+
+            <List onClick={handleMobileDrawerToggle}>
+              <ListItem component={NextLink} href="/">
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItem>
+
+              <ListItem component={NextLink} href="/blog">
+                <ListItemIcon>
+                  <NewspaperIcon />
+                </ListItemIcon>
+                <ListItemText primary="Articles" />
+              </ListItem>
+            </List>
+
+            {!userLoading && !user && (
+              <LoggedOutDrawer handleDrawerToggle={handleMobileDrawerToggle} />
+            )}
+            {user && (
+              <LoggedInDrawer
+                user={user}
+                handleDrawerToggle={handleMobileDrawerToggle}
+              />
+            )}
+          </Box>
+        </Drawer>
+      </Box>
     </>
   );
 }

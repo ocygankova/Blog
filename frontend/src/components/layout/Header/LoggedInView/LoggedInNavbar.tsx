@@ -28,7 +28,6 @@ interface IProps {
 function LoggedInNavbar({
   user: { username, displayName, profileImageUrl },
 }: IProps) {
-  const router = useRouter();
   const { mutateUser } = useAuthenticatedUser();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -80,6 +79,7 @@ function LoggedInNavbar({
             alt="User profile picture"
             width={40}
             height={40}
+            priority
           />
         </Avatar>
         <ArrowDropDownIcon />
