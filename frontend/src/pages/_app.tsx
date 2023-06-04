@@ -6,7 +6,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import NextNProgress from "nextjs-progressbar";
 import basicTheme from "@/styles/theme";
 import createEmotionCache from "@/styles/createEmotionCache";
-import { Footer } from "@/components";
+import { Footer, Header } from "@/components";
 import { Container } from "@mui/material";
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -34,9 +34,9 @@ export default function MyApp(props: MyAppProps) {
             showSpinner: false,
           }}
         />
-
+        <Header />
         <main>
-          <Container>
+          <Container sx={{ py: 8 }}>
             <Component {...pageProps} />
           </Container>
         </main>
