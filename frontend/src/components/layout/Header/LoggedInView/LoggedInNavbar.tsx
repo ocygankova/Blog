@@ -1,5 +1,4 @@
 import { MouseEvent, useState } from "react";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
 import {
@@ -7,9 +6,11 @@ import {
   Button,
   Divider,
   ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -32,6 +33,7 @@ function LoggedInNavbar({
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,39 +65,62 @@ function LoggedInNavbar({
         </Typography>
       </Button>
 
-      <Stack
-        component="button"
-        direction="row"
-        alignItems="center"
-        spacing={0.5}
-        aria-controls={open ? "profile-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        <Avatar>
-          <Image
-            src={profileImageUrl || profileImgPlaceholder}
-            alt="User profile picture"
-            width={40}
-            height={40}
-            priority
-          />
-        </Avatar>
-        <ArrowDropDownIcon />
-      </Stack>
+      <Tooltip title="Profile settings">
+        <Stack
+          component="button"
+          direction="row"
+          alignItems="center"
+          spacing={0.5}
+          aria-controls={open ? "profile-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <Avatar>
+            <Image
+              src={profileImageUrl || profileImgPlaceholder}
+              alt="User profile picture"
+              width={40}
+              height={40}
+              priority
+            />
+          </Avatar>
+          <ArrowDropDownIcon />
+        </Stack>
+      </Tooltip>
 
       <Menu
         id="profile-menu"
         anchorEl={anchorEl}
         open={open}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        PaperProps={{
+          sx: {
+            mt: 0.8,
+            minWidth: "200px",
+          },
+        }}
         onClose={handleClose}
       >
-        <MenuItem sx={{ mb: 2 }}>
+        <MenuItem
+          component={NextLink}
+          href={`/users/${username}`}
+          sx={{ mb: 2 }}
+        >
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <NextLink href={`/users/${username}`}>Profile</NextLink>
+          <ListItemText
+            primary="Your profile"
+            secondary={displayName || "User"}
+          />
         </MenuItem>
 
         <Divider />
@@ -103,7 +128,7 @@ function LoggedInNavbar({
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
-          <span>Logout</span>
+          <ListItemText primary="Logout" />
         </MenuItem>
       </Menu>
     </Stack>
