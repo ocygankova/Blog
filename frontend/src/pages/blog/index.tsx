@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { stringify } from "querystring";
 import * as BlogApi from "@/http/api/blog";
 import { IBlogPostsPage } from "@/models/blogPost";
+import { BlogPostsGrid } from "@/components";
 
 export const getServerSideProps: GetServerSideProps<IPageProps> = async ({
   query,
@@ -43,9 +44,6 @@ interface IPageProps {
 
 function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
   const router = useRouter();
-  console.log(blogPosts);
-  console.log(page);
-  console.log(totalPages);
 
   const handlePageItemClicked = (page: number) => {
     router.push({
@@ -62,6 +60,7 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
 
       <div>
         <h1>Blog</h1>
+        {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
       </div>
     </>
   );
