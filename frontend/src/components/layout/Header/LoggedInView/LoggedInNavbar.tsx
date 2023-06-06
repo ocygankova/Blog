@@ -1,8 +1,6 @@
 import { MouseEvent, useState } from "react";
-import Image from "next/image";
 import NextLink from "next/link";
 import {
-  Avatar,
   Button,
   Divider,
   ListItemIcon,
@@ -20,7 +18,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { IUser } from "@/models/user";
 import { useAuthenticatedUser } from "@/hooks";
 import * as UsersApi from "@/http/api/users";
-import profileImgPlaceholder from "@/assets/profile-pic-placeholder.png";
+import { UserAvatar } from "@/components";
 
 interface IProps {
   user: IUser;
@@ -76,15 +74,7 @@ function LoggedInNavbar({
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <Avatar>
-            <Image
-              src={profileImageUrl || profileImgPlaceholder}
-              alt="User profile picture"
-              width={40}
-              height={40}
-              priority
-            />
-          </Avatar>
+          <UserAvatar src={profileImageUrl} />
           <ArrowDropDownIcon />
         </Stack>
       </Tooltip>
