@@ -11,4 +11,8 @@ export const palette: PaletteOptions = {
   error: {
     main: red.A400,
   },
+  background: {
+    paper: "#fff",
+    default: "#f8fafd",
+  },
 };
