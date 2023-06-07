@@ -31,11 +31,10 @@ export const MuiCssBaseline = {
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
+   }
+   
+  img {
+  display: block;
+  }
 `,
 };

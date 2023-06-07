@@ -1,6 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 import { responsiveFontSizes } from "@mui/material";
-import { MuiCssBaseline, MuiLink } from "@/styles/components";
+import {
+  MuiCssBaseline,
+  MuiLink,
+  MuiTooltip,
+  MuiMenu,
+  MuiButton,
+  MuiPagination,
+} from "@/styles/components";
 import { palette } from "@/styles/palette";
 import { typography } from "@/styles/typography";
 
@@ -10,6 +17,13 @@ const basicTheme = createTheme({
   components: {
     MuiCssBaseline,
     MuiLink,
+    MuiTooltip,
+    MuiMenu,
+    MuiButton,
+    MuiPagination,
+  },
+  shape: {
+    borderRadius: 18,
   },
 });
 

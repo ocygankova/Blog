@@ -1,2 +1,2 @@
-// export { BlogPostCard } from './BlogPostCard';
-// export { BlogPostsGrid } from './BlogPostsGrid';
+export { BlogPostCard } from "./BlogPostCard";
+export { BlogPostsGrid } from "./BlogPostsGrid";

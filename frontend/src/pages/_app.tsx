@@ -36,7 +36,7 @@ export default function MyApp(props: MyAppProps) {
         />
         <Header />
         <main>
-          <Container sx={{ py: 8 }}>
+          <Container sx={{ pb: 4, pt: 12 }}>
             <Component {...pageProps} />
           </Container>
         </main>
