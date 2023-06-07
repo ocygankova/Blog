@@ -7,3 +7,4 @@ export { default as UserProfileLink } from "./UserProfileLink";
 export { default as Dot } from "./Dot";
 export { default as MultilineText } from "./MultilineText";
 export { default as TitleLink } from "./TitleLink";
+export { default as PaginationBar } from "./PaginationBar";

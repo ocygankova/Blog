@@ -2,9 +2,10 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { stringify } from "querystring";
+import { Stack, Typography } from "@mui/material";
 import * as BlogApi from "@/http/api/blog";
 import { IBlogPostsPage } from "@/models/blogPost";
-import { BlogPostsGrid } from "@/components";
+import { BlogPostsGrid, PaginationBar } from "@/components";
 
 export const getServerSideProps: GetServerSideProps<IPageProps> = async ({
   query,
@@ -45,8 +46,9 @@ interface IPageProps {
 function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
   const router = useRouter();
 
-  const handlePageItemClicked = (page: number) => {
-    router.push({
+  const handlePageItemClicked = async (page: number) => {
+    console.log(page);
+    await router.push({
       query: { ...router.query, page },
     });
   };
@@ -58,10 +60,26 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
         <meta name="description" content="Read the latest posts on Blog" />
       </Head>
 
-      <div>
-        <h1>Blog</h1>
-        {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
-      </div>
+      <Typography variant="h2" mb={4}>
+        Latest posts
+      </Typography>
+
+      {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
+
+      <Stack mt={4}>
+        {blogPosts.length > 0 && (
+          <PaginationBar
+            count={totalPages}
+            page={page}
+            onPageChange={handlePageItemClicked}
+            sx={{ mx: "auto" }}
+          />
+        )}
+
+        {blogPosts.length === 0 && (
+          <Typography>No blog posts found.</Typography>
+        )}
+      </Stack>
     </>
   );
 }

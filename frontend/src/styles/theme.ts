@@ -6,6 +6,7 @@ import {
   MuiTooltip,
   MuiMenu,
   MuiButton,
+  MuiPagination,
 } from "@/styles/components";
 import { palette } from "@/styles/palette";
 import { typography } from "@/styles/typography";
@@ -19,6 +20,7 @@ const basicTheme = createTheme({
     MuiTooltip,
     MuiMenu,
     MuiButton,
+    MuiPagination,
   },
   shape: {
     borderRadius: 18,
