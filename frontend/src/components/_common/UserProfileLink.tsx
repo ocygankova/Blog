@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { Link, Stack, Tooltip } from "@mui/material";
+import { Button, Stack, Tooltip, Typography } from "@mui/material";
 import { IUser } from "@/models/user";
 import { UserAvatar } from "@/components";
 import { formatDate } from "@/utils/utils";
@@ -20,57 +20,57 @@ function UserProfileLink({
       </NextLink>
 
       <div>
-        <strong>User since:</strong> {formatDate(createdAt)} <br />
+        <Typography mb={1}>
+          <strong>User since:</strong> {formatDate(createdAt)}
+        </Typography>
         {about && (
-          <>
+          <Typography>
             <strong>About:</strong> {about}
-          </>
+          </Typography>
         )}
       </div>
     </Stack>
   );
 
   return (
-    <>
+    <Stack direction="row" component="span" spacing={1} alignItems="center">
       <NextLink href={profileLink}>
         <UserAvatar src={profileImageUrl} size="sm" />
       </NextLink>
 
       <Tooltip
         title={renderTooltipContent()}
-        arrow
         placement="bottom-start"
         componentsProps={{
           tooltip: {
             sx: {
-              p: 1,
+              p: 1.5,
               bgcolor: "background.paper",
               color: "text.primary",
-              maxWidth: 200,
+              maxWidth: 260,
               boxShadow: "10",
               "& .MuiTooltip-arrow": {
                 color: "background.paper",
+              },
+              "&.MuiTooltip-tooltip": {
+                "&.MuiTooltip-tooltipPlacementBottom": {
+                  marginTop: "6px",
+                },
               },
             },
           },
         }}
       >
-        <Link
+        <Button
+          color="secondary"
           component={NextLink}
           href={profileLink}
           sx={{ display: "inline-flex", alignItems: "center" }}
         >
-          <Stack
-            component="span"
-            direction="row"
-            spacing={1.5}
-            alignItems="center"
-          >
-            <span>{displayName}</span>
-          </Stack>
-        </Link>
+          {displayName}
+        </Button>
       </Tooltip>
-    </>
+    </Stack>
   );
 }
 
