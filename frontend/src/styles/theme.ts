@@ -5,6 +5,7 @@ import {
   MuiLink,
   MuiTooltip,
   MuiMenu,
+  MuiButton,
 } from "@/styles/components";
 import { palette } from "@/styles/palette";
 import { typography } from "@/styles/typography";
@@ -17,6 +18,7 @@ const basicTheme = createTheme({
     MuiLink,
     MuiTooltip,
     MuiMenu,
+    MuiButton,
   },
   shape: {
     borderRadius: 18,
