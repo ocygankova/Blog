@@ -3,10 +3,10 @@ import { PaletteOptions } from "@mui/material/styles/createPalette";
 
 export const palette: PaletteOptions = {
   primary: {
-    main: "#556cd6",
+    main: "#364fc2",
   },
   secondary: {
-    main: "#19857b",
+    main: "#051923",
   },
   error: {
     main: red.A400,

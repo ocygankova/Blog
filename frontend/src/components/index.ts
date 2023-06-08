@@ -3,4 +3,4 @@ export * from "./layout";
 // export * from './auth';
 // export * from './form';
 export * from "./blog";
-// export * from './userProfile';
+export * from "./modal";

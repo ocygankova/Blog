@@ -3,7 +3,6 @@ export const MuiCssBaseline = {
   html, body {
   height: 100%;
   max-width: 100vw;
-  overflow-x: hidden;
   },
   
   #__next {

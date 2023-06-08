@@ -15,7 +15,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { IUser } from "@/models/user";
 import { useAuthenticatedUser } from "@/hooks";
 import * as UsersApi from "@/http/api/users";
-import { UserAvatar } from "@/components";
+import { ButtonPill, UserAvatar } from "@/components";
 
 interface IProps {
   user: IUser;
@@ -41,7 +41,7 @@ function LoggedInDrawer({
   return (
     <List onClick={handleDrawerToggle}>
       <ListItem>
-        <Button
+        <ButtonPill
           component={NextLink}
           href="/blog/create"
           variant="outlined"
@@ -51,7 +51,7 @@ function LoggedInDrawer({
           <Typography component="span" ml={2}>
             Create post
           </Typography>
-        </Button>
+        </ButtonPill>
       </ListItem>
 
       <ListItem component={NextLink} href={`/users/${username}`}>

@@ -17,13 +17,13 @@ const basicTheme = createTheme({
   components: {
     MuiCssBaseline,
     MuiLink,
-    MuiTooltip,
-    MuiMenu,
+    // MuiTooltip,
+    // MuiMenu,
     MuiButton,
-    MuiPagination,
+    // MuiPagination,
   },
   shape: {
-    borderRadius: 18,
+    borderRadius: 8,
   },
 });
 

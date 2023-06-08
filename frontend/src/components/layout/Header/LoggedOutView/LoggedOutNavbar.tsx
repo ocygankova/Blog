@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
+import { ButtonPill, LogInModal } from "@/components";
 
 function LoggedOutNavbar() {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
@@ -8,27 +9,46 @@ function LoggedOutNavbar() {
     useState<boolean>(false);
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={2}
-      display={{ xs: "none", sm: "block" }}
-    >
-      <Button
-        onClick={() => {
-          setShowLoginModal(true);
+    <>
+      <LogInModal
+        open={showLoginModal}
+        onClose={() => {
+          setShowLoginModal(false);
         }}
-      >
-        Log in
-      </Button>
-      <Button
-        onClick={() => {
+        onSignUpInsteadClicked={() => {
+          setShowLoginModal(false);
           setShowSignUpModal(true);
         }}
+        onForgotPasswordClicked={() => {
+          setShowLoginModal(false);
+          setShowResetPasswordModal(true);
+        }}
+      />
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        display={{ xs: "none", sm: "block" }}
       >
-        Create account
-      </Button>
-    </Stack>
+        <ButtonPill
+          variant="outlined"
+          color="secondary"
+          onClick={() => {
+            setShowLoginModal(true);
+          }}
+        >
+          Log in
+        </ButtonPill>
+        <ButtonPill
+          variant="contained"
+          onClick={() => {
+            setShowSignUpModal(true);
+          }}
+        >
+          Create account
+        </ButtonPill>
+      </Stack>
+    </>
   );
 }
 

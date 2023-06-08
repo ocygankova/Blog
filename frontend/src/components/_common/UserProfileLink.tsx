@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { Button, Stack, Tooltip, Typography } from "@mui/material";
 import { IUser } from "@/models/user";
-import { UserAvatar } from "@/components";
+import { ButtonLink, UserAvatar } from "@/components";
 import { formatDate } from "@/utils/utils";
 
 interface IProps {
@@ -61,14 +61,14 @@ function UserProfileLink({
           },
         }}
       >
-        <Button
+        <ButtonLink
           color="secondary"
           component={NextLink}
           href={profileLink}
           sx={{ display: "inline-flex", alignItems: "center" }}
         >
           {displayName}
-        </Button>
+        </ButtonLink>
       </Tooltip>
     </Stack>
   );
