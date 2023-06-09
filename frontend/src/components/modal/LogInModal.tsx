@@ -1,20 +1,18 @@
 import * as yup from "yup";
-import { requiredStringSchema } from "@/utils/validation";
-import { useAuthenticatedUser } from "@/hooks";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Alert,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Divider, Typography } from "@mui/material";
+import { requiredStringSchema } from "@/utils/validation";
+import { useAuthenticatedUser } from "@/hooks";
 import { UnauthorizedError } from "@/http/http-errors";
 import * as UsersApi from "@/http/api/users";
-import { ButtonLink, ButtonPill } from "@/components";
+import {
+  ButtonLink,
+  DialogBase,
+  FormInputField,
+  PasswordInputField,
+} from "@/components";
 
 interface IProps {
   open: boolean;
@@ -64,40 +62,68 @@ function LogInModal({
     }
   };
 
-  const withFormReset = (func: () => void) => () => {
-    func();
+  const withFormReset = (callback: () => void) => () => {
+    callback();
     reset();
     setErrorMessage(null);
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <DialogBase open={open} onClose={onClose}>
+      <Typography variant="h5" textAlign="center">
+        Welcome to Blog!
+      </Typography>
+
+      <Divider sx={{ my: 2 }}>Login to your account</Divider>
+
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
-      <DialogTitle>Log in</DialogTitle>
-      <DialogContent sx={{ minWidth: "300px" }}>
-        <TextField
-          autoFocus
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit(onSubmit)}
+        py={2}
+      >
+        <FormInputField
+          register={register("username")}
+          label="Username"
+          inputError={errors.username}
+          id="username"
+          sx={{
+            mb: 2,
+          }}
         />
-        <ButtonLink onClick={onForgotPasswordClicked}>
+
+        <PasswordInputField
+          register={register("password")}
+          label="Password"
+          inputError={errors.password}
+          id="password"
+          sx={{
+            mb: 1,
+          }}
+        />
+
+        <ButtonLink
+          onClick={onForgotPasswordClicked}
+          sx={{ display: "block", ml: "auto", mb: 3 }}
+        >
           Forgot password?
         </ButtonLink>
 
-        <ButtonPill variant="contained" fullWidth onClick={onClose}>
+        <Button type="submit" variant="contained" fullWidth>
           Log in
-        </ButtonPill>
+        </Button>
 
-        <Typography my={2}>
+        <Typography my={2} textAlign="center">
           Don&apos;t have an account yet?
           <ButtonLink onClick={onSignUpInsteadClicked}>Sign up</ButtonLink>
         </Typography>
-      </DialogContent>
-    </Dialog>
+
+        <Divider />
+      </Box>
+    </DialogBase>
   );
 }
 

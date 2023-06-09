@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import NextImage from "next/image";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { IBlogPost } from "@/models/blogPost";
 import { formatDate } from "@/utils/utils";
 import {

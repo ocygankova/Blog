@@ -7,6 +7,7 @@ import {
   MuiMenu,
   MuiButton,
   MuiPagination,
+  MuiDialog,
 } from "@/styles/components";
 import { palette } from "@/styles/palette";
 import { typography } from "@/styles/typography";
@@ -20,6 +21,7 @@ const basicTheme = createTheme({
     // MuiTooltip,
     // MuiMenu,
     MuiButton,
+    MuiDialog,
     // MuiPagination,
   },
   shape: {

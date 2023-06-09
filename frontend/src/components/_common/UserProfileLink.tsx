@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { Button, Stack, Tooltip, Typography } from "@mui/material";
+import { Stack, Tooltip, Typography } from "@mui/material";
 import { IUser } from "@/models/user";
 import { ButtonLink, UserAvatar } from "@/components";
 import { formatDate } from "@/utils/utils";
