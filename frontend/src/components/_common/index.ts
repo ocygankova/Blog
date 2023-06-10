@@ -12,3 +12,4 @@ export { default as ButtonPill } from "./ButtonPill";
 export { default as ButtonLink } from "./ButtonLink";
 export { default as PaperRounded } from "./PaperRounded";
 export { default as DialogBase } from "./DialogBase";
+export { default as LoadingButton } from "./LoadingButton";

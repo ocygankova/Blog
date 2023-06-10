@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Stack } from "@mui/material";
-import { ButtonPill, LogInModal } from "@/components";
+import { ButtonPill, LogInModal, SignUpModal } from "@/components";
 
 function LoggedOutNavbar() {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
@@ -24,6 +24,18 @@ function LoggedOutNavbar() {
           setShowResetPasswordModal(true);
         }}
       />
+
+      <SignUpModal
+        open={showSignUpModal}
+        onClose={() => {
+          setShowSignUpModal(false);
+        }}
+        onLogInInsteadClicked={() => {
+          setShowSignUpModal(false);
+          setShowLoginModal(true);
+        }}
+      />
+
       <Stack
         direction="row"
         alignItems="center"

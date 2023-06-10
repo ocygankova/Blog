@@ -3,22 +3,20 @@ import { TextField, TextFieldProps } from "@mui/material";
 
 interface IProps {
   register: UseFormRegisterReturn;
-  inputLabel?: string;
-  inputError?: FieldError;
+  validationError?: FieldError;
 }
 
 function FormInputField({
   register,
-  inputLabel,
-  inputError,
+  validationError,
   ...props
 }: IProps & TextFieldProps) {
   return (
     <TextField
       variant="outlined"
       fullWidth
-      error={!!inputError}
-      helperText={inputError?.message}
+      error={!!validationError}
+      helperText={validationError?.message}
       {...register}
       {...props}
     />

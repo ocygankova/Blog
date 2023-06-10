@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { List, ListItem } from "@mui/material";
-import { LogInModal, ButtonPill } from "@/components";
+import { ButtonPill, LogInModal } from "@/components";
 
 interface IProps {
   handleDrawerToggle: () => void;
@@ -33,6 +33,7 @@ function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
         <ListItem>
           <ButtonPill
             variant="outlined"
+            color="secondary"
             fullWidth
             onClick={() => {
               setShowLoginModal(true);

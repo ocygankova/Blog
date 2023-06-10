@@ -7,14 +7,12 @@ import { FormInputField } from "@/components";
 
 interface IProps {
   register: UseFormRegisterReturn;
-  inputLabel?: string;
-  inputError?: FieldError;
+  validationError?: FieldError;
 }
 
 function PasswordInputField({
   register,
-  inputLabel,
-  inputError,
+  validationError,
   ...props
 }: IProps & TextFieldProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -26,8 +24,7 @@ function PasswordInputField({
   return (
     <FormInputField
       register={register}
-      inputLabel={inputLabel}
-      inputError={inputError}
+      validationError={validationError}
       {...props}
       type={showPassword ? "text" : "password"}
       InputProps={{

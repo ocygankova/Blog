@@ -11,6 +11,7 @@ import {
   ButtonLink,
   DialogBase,
   FormInputField,
+  LoadingButton,
   PasswordInputField,
 } from "@/components";
 
@@ -81,14 +82,14 @@ function LogInModal({
       <Box
         component="form"
         noValidate
-        autoComplete="off"
+        // autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
         py={2}
       >
         <FormInputField
           register={register("username")}
           label="Username"
-          inputError={errors.username}
+          validationError={errors.username}
           id="username"
           sx={{
             mb: 2,
@@ -98,7 +99,7 @@ function LogInModal({
         <PasswordInputField
           register={register("password")}
           label="Password"
-          inputError={errors.password}
+          validationError={errors.password}
           id="password"
           sx={{
             mb: 1,
@@ -112,9 +113,14 @@ function LogInModal({
           Forgot password?
         </ButtonLink>
 
-        <Button type="submit" variant="contained" fullWidth>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          fullWidth
+          isLoading={isSubmitting}
+        >
           Log in
-        </Button>
+        </LoadingButton>
 
         <Typography my={2} textAlign="center">
           Don&apos;t have an account yet?
