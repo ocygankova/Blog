@@ -1,19 +1,20 @@
-import * as yup from "yup";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Alert, Box, Button, Divider, Typography } from "@mui/material";
-import { requiredStringSchema } from "@/utils/validation";
-import { useAuthenticatedUser } from "@/hooks";
-import { UnauthorizedError } from "@/http/http-errors";
-import * as UsersApi from "@/http/api/users";
+import * as yup from 'yup';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Alert, Box, Divider, Typography } from '@mui/material';
+import { requiredStringSchema } from '@/utils/validation';
+import { useAuthenticatedUser } from '@/hooks';
+import { UnauthorizedError } from '@/http/http-errors';
+import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
   DialogBase,
   FormInputField,
   LoadingButton,
   PasswordInputField,
-} from "@/components";
+  SocialSignInSection,
+} from '@/components';
 
 interface IProps {
   open: boolean;
@@ -29,12 +30,7 @@ const validationSchema = yup.object({
 
 type ILogInFormData = yup.InferType<typeof validationSchema>;
 
-function LogInModal({
-  open,
-  onClose,
-  onSignUpInsteadClicked,
-  onForgotPasswordClicked,
-}: IProps) {
+function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordClicked }: IProps) {
   const { mutateUser } = useAuthenticatedUser();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -55,7 +51,7 @@ function LogInModal({
       onClose();
     } catch (error) {
       if (error instanceof UnauthorizedError) {
-        setErrorMessage("Invalid credentials");
+        setErrorMessage('Invalid credentials');
       } else {
         console.log(error);
         alert(error);
@@ -71,23 +67,23 @@ function LogInModal({
 
   return (
     <DialogBase open={open} onClose={onClose}>
-      <Typography variant="h5" textAlign="center">
-        Welcome to Blog!
+      <Typography variant="h5" textAlign="center" mb={4}>
+        Login to your account
       </Typography>
 
-      <Divider sx={{ my: 2 }}>Login to your account</Divider>
-
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
+      <SocialSignInSection />
+
+      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email address</Divider>
 
       <Box
         component="form"
         noValidate
         // autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-        py={2}
-      >
+        onSubmit={handleSubmit(onSubmit)}>
         <FormInputField
-          register={register("username")}
+          register={register('username')}
           label="Username"
           validationError={errors.username}
           id="username"
@@ -97,7 +93,7 @@ function LogInModal({
         />
 
         <PasswordInputField
-          register={register("password")}
+          register={register('password')}
           label="Password"
           validationError={errors.password}
           id="password"
@@ -106,28 +102,18 @@ function LogInModal({
           }}
         />
 
-        <ButtonLink
-          onClick={onForgotPasswordClicked}
-          sx={{ display: "block", ml: "auto", mb: 3 }}
-        >
+        <ButtonLink onClick={onForgotPasswordClicked} sx={{ display: 'block', ml: 'auto', mb: 2 }}>
           Forgot password?
         </ButtonLink>
 
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          fullWidth
-          isLoading={isSubmitting}
-        >
+        <LoadingButton type="submit" variant="contained" fullWidth isLoading={isSubmitting}>
           Log in
         </LoadingButton>
 
-        <Typography my={2} textAlign="center">
+        <Typography mt={2} textAlign="center">
           Don&apos;t have an account yet?
           <ButtonLink onClick={onSignUpInsteadClicked}>Sign up</ButtonLink>
         </Typography>
-
-        <Divider />
       </Box>
     </DialogBase>
   );

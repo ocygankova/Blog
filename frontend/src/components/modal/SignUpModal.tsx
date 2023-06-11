@@ -1,25 +1,26 @@
-import * as yup from "yup";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Alert, Box, Divider, Typography } from "@mui/material";
+import * as yup from 'yup';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Alert, Box, Divider, Typography } from '@mui/material';
 import {
   emailSchema,
   passwordSchema,
   requiredStringSchema,
   usernameSchema,
-} from "@/utils/validation";
-import { useAuthenticatedUser, useCountdown } from "@/hooks";
-import { BadRequestError, ConflictError } from "@/http/http-errors";
-import * as UsersApi from "@/http/api/users";
+} from '@/utils/validation';
+import { useAuthenticatedUser, useCountdown } from '@/hooks';
+import { BadRequestError, ConflictError } from '@/http/http-errors';
+import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
   DialogBase,
   FormInputField,
   LoadingButton,
   PasswordInputField,
+  SocialSignInSection,
   VerificationCodeField,
-} from "@/components";
+} from '@/components';
 
 interface IProps {
   open: boolean;
@@ -28,9 +29,9 @@ interface IProps {
 }
 
 const validationSchema = yup.object({
-  username: usernameSchema.required("Please fill out this field."),
-  email: emailSchema.required("Please fill out this field."),
-  password: passwordSchema.required("Please fill out this field."),
+  username: usernameSchema.required('Please fill out this field.'),
+  email: emailSchema.required('Please fill out this field.'),
+  password: passwordSchema.required('Please fill out this field.'),
   verificationCode: requiredStringSchema,
 });
 
@@ -38,10 +39,8 @@ type ISignUpFormData = yup.InferType<typeof validationSchema>;
 
 function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
   const { mutateUser } = useAuthenticatedUser();
-  const {
-    start: startVerificationCodeTimeout,
-    secondsLeft: verificationCodeTimeoutSecondsLeft,
-  } = useCountdown();
+  const { start: startVerificationCodeTimeout, secondsLeft: verificationCodeTimeoutSecondsLeft } =
+    useCountdown();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [verificationCodeRequestPending, setVerificationCodeRequestPending] =
@@ -76,9 +75,9 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
   };
 
   const requestVerificationCode = async () => {
-    const validEmail = await trigger("email");
+    const validEmail = await trigger('email');
     if (!validEmail) return;
-    const email = getValues("email");
+    const email = getValues('email');
 
     setErrorMessage(null);
     setShowVerificationCodeSentMessage(false);
@@ -102,28 +101,26 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
 
   return (
     <DialogBase open={open} onClose={onClose}>
-      <Typography variant="h5" textAlign="center">
-        Sign up
+      <Typography variant="h5" textAlign="center" mb={4}>
+        Sign up to create an account
       </Typography>
-
-      <Divider sx={{ my: 2 }}>Sign up to create an account</Divider>
 
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       {showVerificationCodeSentMessage && (
-        <Alert severity="warning">
-          We sent you a verification code. Please check your inbox!
-        </Alert>
+        <Alert severity="warning">We sent you a verification code. Please check your inbox!</Alert>
       )}
+
+      <SocialSignInSection />
+
+      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email address</Divider>
 
       <Box
         component="form"
         noValidate
         // autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-        py={2}
-      >
+        onSubmit={handleSubmit(onSubmit)}>
         <FormInputField
-          register={register("username")}
+          register={register('username')}
           label="Username"
           validationError={errors.username}
           id="username"
@@ -133,7 +130,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         />
 
         <FormInputField
-          register={register("email")}
+          register={register('email')}
           label="Email"
           validationError={errors.email}
           id="email"
@@ -143,7 +140,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         />
 
         <PasswordInputField
-          register={register("password")}
+          register={register('password')}
           label="Password"
           validationError={errors.password}
           id="password"
@@ -153,7 +150,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         />
 
         <VerificationCodeField
-          register={register("verificationCode")}
+          register={register('verificationCode')}
           validationError={errors.verificationCode}
           codeSending={verificationCodeRequestPending}
           timeoutLeft={verificationCodeTimeoutSecondsLeft}
@@ -167,17 +164,14 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
           isLoading={isSubmitting}
           sx={{
             mt: 2,
-          }}
-        >
+          }}>
           Sign up
         </LoadingButton>
 
-        <Typography my={2} textAlign="center">
+        <Typography mt={2} textAlign="center">
           Already have an account?
           <ButtonLink onClick={onLogInInsteadClicked}>Log in</ButtonLink>
         </Typography>
-
-        <Divider />
       </Box>
     </DialogBase>
   );
