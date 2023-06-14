@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { List, ListItem } from '@mui/material';
 import { ButtonPill, LogInModal, SignUpModal } from '@/components';
+import ResetPasswordModal from '@/components/modal/ResetPasswordModal';
 
 interface IProps {
   handleDrawerToggle: () => void;
@@ -36,6 +37,17 @@ function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
         onLogInInsteadClicked={() => {
           setShowSignUpModal(false);
           setShowLoginModal(true);
+        }}
+      />
+
+      <ResetPasswordModal
+        open={showResetPasswordModal}
+        onClose={() => {
+          setShowResetPasswordModal(false);
+        }}
+        onSignUpClicked={() => {
+          setShowResetPasswordModal(false);
+          setShowSignUpModal(true);
         }}
       />
 

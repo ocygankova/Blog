@@ -67,13 +67,13 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
 
   return (
     <DialogBase open={open} onClose={onClose}>
-      <Typography variant="h5" textAlign="center" mb={4}>
+      <Typography variant="h5" textAlign="center" mb={2}>
         Login to your account
       </Typography>
 
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
-      <SocialSignInSection />
+      <SocialSignInSection pt={2} />
 
       <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email address</Divider>
 

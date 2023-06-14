@@ -1,8 +1,8 @@
-import api from "@/http/axiosInstance";
-import { IUser } from "@/models/user";
+import api from '@/http/axiosInstance';
+import { IUser } from '@/models/user';
 
 export async function getAuthenticatedUser() {
-  const res = await api.get<IUser>("/users/me");
+  const res = await api.get<IUser>('/users/me');
   return res.data;
 }
 
@@ -19,26 +19,26 @@ interface ISignUpValues {
 }
 
 export async function signUp(credentials: ISignUpValues) {
-  const res = await api.post<IUser>("/users/signup", credentials);
+  const res = await api.post<IUser>('/users/signup', credentials);
   return res.data;
 }
 
 export async function requestEmailVerificationCode(email: string) {
-  await api.post("/users/verification-code", { email });
+  await api.post('/users/verification-code', { email });
 }
 
 export async function requestPasswordResetCode(email: string) {
-  await api.post("/users/reset-password-code", { email });
+  await api.post('/users/reset-password-code', { email });
 }
 
 interface IResetPasswordValues {
   email: string;
-  password: string;
+  newPassword: string;
   verificationCode: string;
 }
 
 export async function resetPassword(credentials: IResetPasswordValues) {
-  const res = await api.post<IUser>("/users/reset-password", credentials);
+  const res = await api.post<IUser>('/users/reset-password', credentials);
   return res.data;
 }
 
@@ -48,12 +48,12 @@ interface ILoginValues {
 }
 
 export async function logIn(credentials: ILoginValues) {
-  const res = await api.post<IUser>("/users/login", credentials);
+  const res = await api.post<IUser>('/users/login', credentials);
   return res.data;
 }
 
 export async function logOut() {
-  await api.post("/users/logout");
+  await api.post('/users/logout');
 }
 
 interface IUpdateUserValues {
@@ -69,6 +69,6 @@ export async function updateUser(input: IUpdateUserValues) {
     if (value !== undefined) formData.append(key, value);
   });
 
-  const res = await api.patch<IUser>("/users/me", formData);
+  const res = await api.patch<IUser>('/users/me', formData);
   return res.data;
 }

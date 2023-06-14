@@ -2,15 +2,10 @@ import * as yup from 'yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Box, Divider, Typography } from '@mui/material';
-import {
-  emailSchema,
-  passwordSchema,
-  requiredStringSchema,
-  usernameSchema,
-} from '@/utils/validation';
+import { Alert, Box, Typography } from '@mui/material';
+import { emailSchema, passwordSchema, requiredStringSchema } from '@/utils/validation';
 import { useAuthenticatedUser, useCountdown } from '@/hooks';
-import { BadRequestError, ConflictError } from '@/http/http-errors';
+import { BadRequestError, ConflictError, NotFoundError } from '@/http/http-errors';
 import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
@@ -18,26 +13,24 @@ import {
   FormInputField,
   LoadingButton,
   PasswordInputField,
-  SocialSignInSection,
   VerificationCodeField,
 } from '@/components';
 
 interface IProps {
   open: boolean;
   onClose: () => void;
-  onLogInInsteadClicked: () => void;
+  onSignUpClicked: () => void;
 }
 
 const validationSchema = yup.object({
-  username: usernameSchema.required('Please fill out this field.'),
   email: emailSchema.required('Please fill out this field.'),
-  password: passwordSchema.required('Please fill out this field.'),
+  newPassword: passwordSchema.required('Please fill out this field.'),
   verificationCode: requiredStringSchema,
 });
 
-type ISignUpFormData = yup.InferType<typeof validationSchema>;
+type IResetPasswordFormData = yup.InferType<typeof validationSchema>;
 
-function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
+function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
   const { mutateUser } = useAuthenticatedUser();
   const { start: startVerificationCodeTimeout, secondsLeft: verificationCodeTimeoutSecondsLeft } =
     useCountdown();
@@ -55,14 +48,14 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     getValues,
     trigger,
     formState: { errors, isSubmitting },
-  } = useForm<ISignUpFormData>({ resolver: yupResolver(validationSchema) });
+  } = useForm<IResetPasswordFormData>({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = async (credentials: ISignUpFormData) => {
+  const onSubmit = async (credentials: IResetPasswordFormData) => {
     try {
       setErrorMessage(null);
       setShowVerificationCodeSentMessage(false);
-      const newUser = await UsersApi.signUp(credentials);
-      await mutateUser(newUser);
+      const user = await UsersApi.resetPassword(credentials);
+      await mutateUser(user);
       onClose();
     } catch (error) {
       if (error instanceof ConflictError || error instanceof BadRequestError) {
@@ -84,11 +77,11 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     setVerificationCodeRequestPending(true);
 
     try {
-      await UsersApi.requestEmailVerificationCode(email);
+      await UsersApi.requestPasswordResetCode(email);
       setShowVerificationCodeSentMessage(true);
       startVerificationCodeTimeout(60);
     } catch (error) {
-      if (error instanceof ConflictError) {
+      if (error instanceof NotFoundError) {
         setErrorMessage(error.message);
       } else {
         console.log(error);
@@ -102,7 +95,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
   return (
     <DialogBase open={open} onClose={onClose}>
       <Typography variant="h5" textAlign="center" mb={2}>
-        Sign up to create an account
+        Reset password
       </Typography>
 
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
@@ -110,25 +103,12 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         <Alert severity="warning">We sent you a verification code. Please check your inbox!</Alert>
       )}
 
-      <SocialSignInSection pt={2} />
-
-      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email address</Divider>
-
       <Box
+        pt={2}
         component="form"
         noValidate
         // autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}>
-        <FormInputField
-          register={register('username')}
-          label="Username"
-          validationError={errors.username}
-          id="username"
-          sx={{
-            mb: 2,
-          }}
-        />
-
         <FormInputField
           register={register('email')}
           label="Email"
@@ -140,9 +120,9 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         />
 
         <PasswordInputField
-          register={register('password')}
+          register={register('newPassword')}
           label="Password"
-          validationError={errors.password}
+          validationError={errors.newPassword}
           id="password"
           sx={{
             mb: 2,
@@ -173,12 +153,12 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         </LoadingButton>
 
         <Typography mt={2} textAlign="center">
-          Already have an account?
-          <ButtonLink onClick={onLogInInsteadClicked}>Log in</ButtonLink>
+          Don&apos;t have an account yet?
+          <ButtonLink onClick={onSignUpClicked}>Sign up</ButtonLink>
         </Typography>
       </Box>
     </DialogBase>
   );
 }
 
-export default SignUpModal;
+export default ResetPasswordModal;

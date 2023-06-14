@@ -1,9 +1,9 @@
-import { Stack } from '@mui/material';
+import { Stack, StackProps } from '@mui/material';
 import { GitHubSignInButton, GoogleSignInButton } from './SocialSignInButtons';
 
-function SocialSignInSection() {
+function SocialSignInSection({ ...props }: StackProps) {
   return (
-    <Stack spacing={1}>
+    <Stack spacing={1} {...props}>
       <GoogleSignInButton />
       <GitHubSignInButton />
     </Stack>

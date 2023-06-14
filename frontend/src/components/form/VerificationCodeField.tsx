@@ -1,6 +1,6 @@
-import { Box, Button, Stack } from "@mui/material";
-import { FieldError, UseFormRegisterReturn } from "react-hook-form";
-import { FormInputField } from "@/components";
+import { Box, Button, Stack } from '@mui/material';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { FormInputField } from '@/components';
 
 interface IProps {
   register: UseFormRegisterReturn;
@@ -25,7 +25,7 @@ function VerificationCodeField({
         <FormInputField
           register={register}
           validationError={validationError}
-          label={label || "Verification Code"}
+          label={label || 'Verification Code'}
           type="number"
         />
       </Box>
@@ -35,9 +35,8 @@ function VerificationCodeField({
         disabled={codeSending || timeoutLeft > 0}
         sx={{
           py: 1.7,
-        }}
-      >
-        {timeoutLeft > 0 ? `Resend in ${timeoutLeft}` : "Send Code"}
+        }}>
+        {timeoutLeft > 0 ? `Resend in ${timeoutLeft}` : 'Send Code'}
       </Button>
     </Stack>
   );

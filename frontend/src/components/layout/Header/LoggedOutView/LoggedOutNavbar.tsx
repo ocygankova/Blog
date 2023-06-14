@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Stack } from "@mui/material";
-import { ButtonPill, LogInModal, SignUpModal } from "@/components";
+import { useState } from 'react';
+import { Stack } from '@mui/material';
+import { ButtonPill, LogInModal, SignUpModal } from '@/components';
+import ResetPasswordModal from '@/components/modal/ResetPasswordModal';
 
 function LoggedOutNavbar() {
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false);
-  const [showResetPasswordModal, setShowResetPasswordModal] =
-    useState<boolean>(false);
+  const [showResetPasswordModal, setShowResetPasswordModal] = useState<boolean>(false);
 
   return (
     <>
@@ -36,27 +36,31 @@ function LoggedOutNavbar() {
         }}
       />
 
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={2}
-        display={{ xs: "none", sm: "block" }}
-      >
+      <ResetPasswordModal
+        open={showResetPasswordModal}
+        onClose={() => {
+          setShowResetPasswordModal(false);
+        }}
+        onSignUpClicked={() => {
+          setShowResetPasswordModal(false);
+          setShowSignUpModal(true);
+        }}
+      />
+
+      <Stack direction="row" alignItems="center" spacing={2} display={{ xs: 'none', sm: 'block' }}>
         <ButtonPill
           variant="outlined"
           color="secondary"
           onClick={() => {
             setShowLoginModal(true);
-          }}
-        >
+          }}>
           Log in
         </ButtonPill>
         <ButtonPill
           variant="contained"
           onClick={() => {
             setShowSignUpModal(true);
-          }}
-        >
+          }}>
           Create account
         </ButtonPill>
       </Stack>
