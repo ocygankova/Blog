@@ -1,16 +1,8 @@
-import { createTheme } from "@mui/material/styles";
-import { responsiveFontSizes } from "@mui/material";
-import {
-  MuiCssBaseline,
-  MuiLink,
-  MuiTooltip,
-  MuiMenu,
-  MuiButton,
-  MuiPagination,
-  MuiDialog,
-} from "@/styles/components";
-import { palette } from "@/styles/palette";
-import { typography } from "@/styles/typography";
+import { createTheme } from '@mui/material/styles';
+import { responsiveFontSizes } from '@mui/material';
+import { MuiButton, MuiCssBaseline, MuiLink } from '@/styles/components';
+import { palette } from '@/styles/palette';
+import { typography } from '@/styles/typography';
 
 const basicTheme = createTheme({
   typography,
@@ -18,11 +10,7 @@ const basicTheme = createTheme({
   components: {
     MuiCssBaseline,
     MuiLink,
-    // MuiTooltip,
-    // MuiMenu,
     MuiButton,
-    MuiDialog,
-    // MuiPagination,
   },
   shape: {
     borderRadius: 8,

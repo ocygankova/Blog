@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { Dialog, DialogProps, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { ReactNode } from 'react';
+import { Box, Dialog, DialogProps, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface IProps {
   open: boolean;
@@ -8,18 +8,18 @@ interface IProps {
   children: ReactNode;
 }
 
-function DialogBase({
-  open,
-  onClose,
-  children,
-  ...props
-}: IProps & DialogProps) {
+function DialogBase({ open, onClose, children, ...props }: IProps & DialogProps) {
+  const theme = useTheme();
+  const widthSmDown = useMediaQuery(theme.breakpoints.down('sm'), { noSsr: true });
+
   return (
-    <Dialog open={open} onClose={onClose} {...props}>
-      <IconButton sx={{ alignSelf: "end", mb: 0.5 }} onClick={onClose}>
+    <Dialog open={open} onClose={onClose} fullScreen={widthSmDown} {...props}>
+      <IconButton sx={{ alignSelf: 'end', mt: 1, mr: 1 }} onClick={onClose}>
         <CloseIcon />
       </IconButton>
-      {children}
+      <Box px={4} pb={4} pt={1}>
+        {children}
+      </Box>
     </Dialog>
   );
 }
