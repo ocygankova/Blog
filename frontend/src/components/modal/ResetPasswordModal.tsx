@@ -79,7 +79,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
     try {
       await UsersApi.requestPasswordResetCode(email);
       setShowVerificationCodeSentMessage(true);
-      startVerificationCodeTimeout(60);
+      startVerificationCodeTimeout(30);
     } catch (error) {
       if (error instanceof NotFoundError) {
         setErrorMessage(error.message);
@@ -92,8 +92,14 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
     }
   };
 
+  const withFormReset = (callback: () => void) => () => {
+    callback();
+    reset();
+    setErrorMessage(null);
+  };
+
   return (
-    <DialogBase open={open} onClose={onClose}>
+    <DialogBase open={open} onClose={withFormReset(onClose)}>
       <Typography variant="h5" textAlign="center" mb={2}>
         Reset password
       </Typography>
@@ -154,7 +160,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
 
         <Typography mt={2} textAlign="center">
           Don&apos;t have an account yet?
-          <ButtonLink onClick={onSignUpClicked}>Sign up</ButtonLink>
+          <ButtonLink onClick={withFormReset(onSignUpClicked)}>Sign up</ButtonLink>
         </Typography>
       </Box>
     </DialogBase>

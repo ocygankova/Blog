@@ -86,7 +86,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     try {
       await UsersApi.requestEmailVerificationCode(email);
       setShowVerificationCodeSentMessage(true);
-      startVerificationCodeTimeout(60);
+      startVerificationCodeTimeout(30);
     } catch (error) {
       if (error instanceof ConflictError) {
         setErrorMessage(error.message);
@@ -99,8 +99,14 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     }
   };
 
+  const withFormReset = (callback: () => void) => () => {
+    callback();
+    reset();
+    setErrorMessage(null);
+  };
+
   return (
-    <DialogBase open={open} onClose={onClose}>
+    <DialogBase open={open} onClose={withFormReset(onClose)}>
       <Typography variant="h5" textAlign="center" mb={2}>
         Sign up to create an account
       </Typography>
@@ -174,7 +180,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
 
         <Typography mt={2} textAlign="center">
           Already have an account?
-          <ButtonLink onClick={onLogInInsteadClicked}>Log in</ButtonLink>
+          <ButtonLink onClick={withFormReset(onLogInInsteadClicked)}>Log in</ButtonLink>
         </Typography>
       </Box>
     </DialogBase>

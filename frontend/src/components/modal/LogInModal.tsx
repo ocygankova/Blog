@@ -66,7 +66,7 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
   };
 
   return (
-    <DialogBase open={open} onClose={onClose}>
+    <DialogBase open={open} onClose={withFormReset(onClose)}>
       <Typography variant="h5" textAlign="center" mb={2}>
         Login to your account
       </Typography>
@@ -112,7 +112,7 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
 
         <Typography mt={2} textAlign="center">
           Don&apos;t have an account yet?
-          <ButtonLink onClick={onSignUpInsteadClicked}>Sign up</ButtonLink>
+          <ButtonLink onClick={withFormReset(onSignUpInsteadClicked)}>Sign up</ButtonLink>
         </Typography>
       </Box>
     </DialogBase>
