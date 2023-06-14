@@ -145,7 +145,7 @@ export const requestResetPasswordCode: RequestHandler<
     const user = await UserModel.findOne({ email }).collation({ locale: 'en', strength: 2 }).exec();
 
     if (!user) {
-      throw createHttpError(404, 'A user with this email does not exist. Please sign ip instead.');
+      throw createHttpError(404, 'A user with this email does not exist. Please sign up instead.');
     }
 
     const verificationCode = crypto.randomInt(100000, 999999).toString();
@@ -165,7 +165,7 @@ export const resetPassword: RequestHandler<unknown, unknown, IResetPasswordBody,
   res,
   next
 ) => {
-  const { email, password: newPasswordRaw, verificationCode } = req.body;
+  const { email, newPassword: newPasswordRaw, verificationCode } = req.body;
 
   try {
     const existingUser = await UserModel.findOne({ email })

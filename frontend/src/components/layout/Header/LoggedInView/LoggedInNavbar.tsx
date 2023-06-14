@@ -1,7 +1,6 @@
 import { MouseEvent, useState } from "react";
 import NextLink from "next/link";
 import {
-  Button,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -18,7 +17,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { IUser } from "@/models/user";
 import { useAuthenticatedUser } from "@/hooks";
 import * as UsersApi from "@/http/api/users";
-import { UserAvatar } from "@/components";
+import { UserAvatar, ButtonPill } from "@/components";
 
 interface IProps {
   user: IUser;
@@ -56,12 +55,12 @@ function LoggedInNavbar({
       spacing={2}
       display={{ xs: "none", sm: "flex" }}
     >
-      <Button component={NextLink} href="/blog/create" variant="outlined">
+      <ButtonPill component={NextLink} href="/blog/create" variant="outlined">
         <AddIcon />
         <Typography component="span" ml={1}>
           Create post
         </Typography>
-      </Button>
+      </ButtonPill>
 
       <Tooltip title="Profile settings">
         <Stack
