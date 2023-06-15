@@ -1,19 +1,17 @@
-import { GetServerSideProps } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { stringify } from "querystring";
-import { Stack, Typography } from "@mui/material";
-import * as BlogApi from "@/http/api/blog";
-import { IBlogPostsPage } from "@/models/blogPost";
-import { BlogPostsGrid, PaginationBar } from "@/components";
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { stringify } from 'querystring';
+import { Stack, Typography } from '@mui/material';
+import * as BlogApi from '@/http/api/blog';
+import { IBlogPostsPage } from '@/models/blogPost';
+import { BlogPostsGrid, PaginationBar } from '@/components';
 
-export const getServerSideProps: GetServerSideProps<IPageProps> = async ({
-  query,
-}) => {
-  const page = parseInt(query.page?.toString() || "1");
+export const getServerSideProps: GetServerSideProps<IPageProps> = async ({ query }) => {
+  const page = parseInt(query.page?.toString() || '1');
 
   if (page < 1) {
-    query.page = "1";
+    query.page = '1';
     return {
       redirect: {
         destination: `/blog?${stringify(query)}`,
@@ -60,7 +58,7 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
         <meta name="description" content="Read the latest posts on Blog" />
       </Head>
 
-      <Typography variant="h2" mb={4}>
+      <Typography component="h1" variant="h2" mb={4}>
         Latest posts
       </Typography>
 
@@ -72,13 +70,11 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
             count={totalPages}
             page={page}
             onPageChange={handlePageItemClicked}
-            sx={{ mx: "auto" }}
+            sx={{ mx: 'auto' }}
           />
         )}
 
-        {blogPosts.length === 0 && (
-          <Typography>No blog posts found.</Typography>
-        )}
+        {blogPosts.length === 0 && <Typography>No blog posts found.</Typography>}
       </Stack>
     </>
   );
