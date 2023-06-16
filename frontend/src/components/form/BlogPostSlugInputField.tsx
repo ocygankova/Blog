@@ -30,7 +30,7 @@ function BlogPostSlugInputField({
         />
       </Box>
 
-      <Button onClick={onGenerateSlugClick} sx={{ py: 1.6, mt: 4.5, ml: 1 }}>
+      <Button variant="contained" onClick={onGenerateSlugClick} sx={{ py: 1.6, mt: 4.5, ml: 1 }}>
         Generate slug
       </Button>
     </Stack>

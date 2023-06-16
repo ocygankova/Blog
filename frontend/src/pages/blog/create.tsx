@@ -8,7 +8,12 @@ import * as BlogApi from '@/http/api/blog';
 import { requiredFileSchema, requiredStringSchema, slugSchema } from '@/utils/validation';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import { generateSlug } from '@/utils/utils';
-import { BlogPostInputField, BlogPostSlugInputField, LoadingButton } from '@/components';
+import {
+  BlogPostInputField,
+  BlogPostSlugInputField,
+  LoadingButton,
+  MarkdownEditor,
+} from '@/components';
 
 const validationSchema = yup.object({
   title: requiredStringSchema,
@@ -121,6 +126,14 @@ function CreatePostPage() {
           id="postImage"
           type="file"
           inputProps={{ accept: 'image/png,image/jpeg' }}
+        />
+
+        <MarkdownEditor
+          register={register('body')}
+          watch={watch}
+          setValue={setValue}
+          validationError={errors.body}
+          label="Post content"
         />
 
         <LoadingButton type="submit" variant="contained" isLoading={isSubmitting}>
