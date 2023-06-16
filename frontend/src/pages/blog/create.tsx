@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -49,6 +50,14 @@ function CreatePostPage() {
       alert(err);
     }
   };
+
+  const title = watch('title');
+
+  useEffect(() => {
+    if (getValues('title')) {
+      trigger('title');
+    }
+  }, [title]);
 
   const generateSlugFromTitle = async () => {
     const validTitle = await trigger('title');
