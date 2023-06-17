@@ -29,7 +29,7 @@ function MarkdownEditor({
   return (
     <StyledFormControl>
       <InputLabel
-        htmlFor={register.name + '-input'}
+        htmlFor={`${register.name}-input`}
         sx={{
           transform: 'none',
           position: 'inherit',
@@ -42,7 +42,7 @@ function MarkdownEditor({
       <MdEditor
         renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>}
         {...register}
-        id={register.name + '-input'}
+        id={`${register.name}-input`}
         value={watch(register.name)}
         onChange={({ text }) =>
           setValue(register.name, text, {

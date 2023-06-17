@@ -1,5 +1,4 @@
 import format from 'date-fns/format/index';
-import crypto from 'crypto';
 
 export const formatDate = (date: string) => {
   return format(new Date(date), 'MMM d, yyyy');
