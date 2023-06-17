@@ -5,9 +5,14 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, Typography } from '@mui/material';
 import * as BlogApi from '@/http/api/blog';
-import { requiredFileSchema, requiredStringSchema, slugSchema } from '@/utils/validation';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
-import { generateSlug } from '@/utils/utils';
+import {
+  maxLengths,
+  generateSlug,
+  requiredFileSchema,
+  requiredStringSchema,
+  slugSchema,
+} from '@/utils';
 import {
   BlogPostInputField,
   BlogPostSlugInputField,
