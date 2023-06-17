@@ -72,7 +72,16 @@ function CreatePostPage() {
   const generateSlugFromTitle = async () => {
     const validTitle = await trigger('title');
     if (!validTitle) return;
-    const slug = generateSlug(getValues('title'));
+
+    const maxLengthSlug = maxLengths.postSlug || undefined;
+    let slug;
+
+    if (maxLengthSlug && maxLengthSlug > 0) {
+      slug = generateSlug(getValues('title')).slice(0, maxLengthSlug);
+    } else {
+      slug = generateSlug(getValues('title'));
+    }
+
     setValue('slug', slug, { shouldValidate: true });
   };
 
@@ -96,39 +105,39 @@ function CreatePostPage() {
         onSubmit={handleSubmit(onSubmit)}>
         <BlogPostInputField
           register={register('title')}
-          label="Post title (100 characters maximum)"
+          label="Post title"
           placeholder="What is your post title?"
           validationError={errors.title}
-          id="title"
-          inputProps={{ maxLength: 100 }}
           multiline
+          watch={watch}
+          maxLength={maxLengths.postTitle}
+          onBlur={handleTitleFieldBlur}
         />
 
         <BlogPostSlugInputField
           register={register('slug')}
           onGenerateSlugClick={generateSlugFromTitle}
           validationError={errors.slug}
-          label="Post slug (100 characters maximum)"
-          id="slug"
+          label="Post slug "
           multiline
-          inputProps={{ maxLength: 100 }}
+          watch={watch}
+          maxLength={maxLengths.postSlug}
         />
 
         <BlogPostInputField
           register={register('summary')}
-          label="Post summary (300 characters maximum)"
+          label="Post summary"
           placeholder="What is your post about?"
           validationError={errors.summary}
-          id="summary"
-          inputProps={{ maxLength: 300 }}
           multiline
+          watch={watch}
+          maxLength={maxLengths.postSummary}
         />
 
         <BlogPostInputField
           register={register('postImage')}
           label="Post cover image"
           validationError={errors.postImage}
-          id="postImage"
           type="file"
           inputProps={{ accept: 'image/png,image/jpeg' }}
         />
