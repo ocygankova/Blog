@@ -85,6 +85,12 @@ function CreatePostPage() {
     setValue('slug', slug, { shouldValidate: true });
   };
 
+  const handleTitleFieldBlur = () => {
+    if (getValues('slug')) return;
+    if (!getValues('title')) return;
+    generateSlugFromTitle();
+  };
+
   useUnsavedChangesWarning(isDirty && !isSubmitting);
 
   if (!userLoading && !user) {
