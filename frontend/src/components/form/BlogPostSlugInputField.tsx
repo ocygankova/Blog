@@ -23,8 +23,8 @@ function BlogPostSlugInputField({
   ...props
 }: IProps & TextFieldProps) {
   return (
-    <Stack direction="row" alignItems="flex-start">
-      <Box flex={1}>
+    <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'stretch', sm: 'flex-start' }}>
+      <Box flex={{ sm: 1 }}>
         <BlogPostInputField
           register={register}
           validationError={validationError}
@@ -36,7 +36,15 @@ function BlogPostSlugInputField({
         />
       </Box>
 
-      <Button variant="contained" onClick={onGenerateSlugClick} sx={{ py: 1.6, mt: 4.5, ml: 1 }}>
+      <Button
+        variant="contained"
+        onClick={onGenerateSlugClick}
+        sx={{
+          py: { xs: 'auto', sm: 1.6 },
+          mt: { xs: 1, sm: 4 },
+          ml: { xs: 0, sm: 1 },
+          alignSelf: 'flex-start',
+        }}>
         Generate slug
       </Button>
     </Stack>

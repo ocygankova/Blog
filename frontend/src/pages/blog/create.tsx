@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Stack, Typography } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
 import * as BlogApi from '@/http/api/blog';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import {
@@ -67,7 +67,7 @@ function CreatePostPage() {
     if (getValues('title')) {
       trigger('title');
     }
-  }, [title]);
+  }, [title, getValues, trigger]);
 
   const generateSlugFromTitle = async () => {
     const validTitle = await trigger('title');
@@ -92,6 +92,10 @@ function CreatePostPage() {
   };
 
   useUnsavedChangesWarning(isDirty && !isSubmitting);
+
+  if (userLoading) {
+    return <CircularProgress sx={{ display: 'block', mx: 'auto' }} />;
+  }
 
   if (!userLoading && !user) {
     router.push('/');
@@ -156,7 +160,11 @@ function CreatePostPage() {
           label="Post content"
         />
 
-        <LoadingButton type="submit" variant="contained" isLoading={isSubmitting}>
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          isLoading={isSubmitting}
+          sx={{ alignSelf: { sm: 'center' }, px: 8 }}>
           Create post
         </LoadingButton>
       </Stack>
