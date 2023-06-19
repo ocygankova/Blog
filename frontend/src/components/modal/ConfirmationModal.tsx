@@ -4,10 +4,10 @@ import { DialogBase } from '@/components';
 
 interface IProps {
   open: boolean;
-  message?: string | ReactNode;
   onConfirm: () => void;
   onDismiss: () => void;
   title?: string;
+  message?: string | ReactNode;
   confirmButtonText?: string;
   dismissButtonText?: string;
   confirmButtonVariant?: ButtonProps['variant'];
@@ -16,9 +16,9 @@ interface IProps {
 
 function ConfirmationModal({
   open,
-  message,
   onConfirm,
   onDismiss,
+  message,
   title = 'Confirm action',
   confirmButtonText = 'Confirm',
   dismissButtonText = 'Dismiss',

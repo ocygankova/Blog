@@ -10,6 +10,7 @@ import { generateSlug, maxLengths, requiredStringSchema, slugSchema } from '@/ut
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import { Button, CircularProgress, Stack, Typography } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {
   BlogPostInputField,
   BlogPostSlugInputField,
@@ -51,6 +52,8 @@ export default function EditPost({ post }: IPageProps) {
   const router = useRouter();
   const { user, userLoading } = useAuthenticatedUser();
 
+  const [showDiscardConfirmationModal, setShowDiscardConfirmationModal] = useState<boolean>(false);
+  const [discardConfirmed, setDiscardConfirmed] = useState<boolean>(false);
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState<boolean>(false);
   const [deletePending, setDeletePending] = useState<boolean>(false);
 
@@ -105,6 +108,20 @@ export default function EditPost({ post }: IPageProps) {
     setShowDeleteConfirmationModal(false);
   };
 
+  const openDiscardConfirmationModal = () => {
+    setShowDiscardConfirmationModal(true);
+  };
+
+  const onDiscardConfirmed = () => {
+    setShowDiscardConfirmationModal(false);
+    setDiscardConfirmed(true);
+    router.push(`/blog/${post.slug}`);
+  };
+
+  const onDiscardDismissed = () => {
+    setShowDiscardConfirmationModal(false);
+  };
+
   const generateSlugFromTitle = async () => {
     const validTitle = await trigger('title');
     if (!validTitle) return;
@@ -121,7 +138,7 @@ export default function EditPost({ post }: IPageProps) {
     setValue('slug', slug, { shouldValidate: true });
   };
 
-  useUnsavedChangesWarning(isDirty && !isSubmitting && !deletePending);
+  useUnsavedChangesWarning(isDirty && !isSubmitting && !deletePending && !discardConfirmed);
 
   const userIsAuthorized = (user && user._id === post.author._id) || false;
 
@@ -137,6 +154,9 @@ export default function EditPost({ post }: IPageProps) {
     <>
       <ConfirmationModal
         open={showDeleteConfirmationModal}
+        onConfirm={onDeleteConfirmed}
+        onDismiss={onDeleteDismissed}
+        title="Confirm post deletion"
         message={
           <>
             <span>Do you want to permanently delete this post?</span>
@@ -144,23 +164,26 @@ export default function EditPost({ post }: IPageProps) {
             <span>This action can not be reversed.</span>
           </>
         }
-        onConfirm={onDeleteConfirmed}
-        onDismiss={onDeleteDismissed}
-        title="Confirm post deletion"
         confirmButtonColor="error"
         confirmButtonText="Delete post"
+        dismissButtonText="Cancel"
+      />
+
+      <ConfirmationModal
+        open={showDiscardConfirmationModal}
+        onConfirm={onDiscardConfirmed}
+        onDismiss={onDiscardDismissed}
+        title="Discard changes?"
+        confirmButtonColor="error"
+        confirmButtonText="Discard"
+        dismissButtonText="Keep writing"
       />
 
       <Typography component="h1" variant="h2" mb={4}>
         Edit post
       </Typography>
 
-      <Stack
-        spacing={4}
-        component="form"
-        noValidate
-        // autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}>
+      <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
         <BlogPostInputField
           register={register('title')}
           label="Post title"
@@ -208,18 +231,27 @@ export default function EditPost({ post }: IPageProps) {
           label="Post content"
         />
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={4} justifyContent="space-between">
-          <LoadingButton type="submit" variant="contained" isLoading={isSubmitting} sx={{ px: 8 }}>
-            Save changes
-          </LoadingButton>
-
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 4, sm: 2 }}>
+          <Stack direction="row" justifyContent="flex-end" spacing={2} flex={1}>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              isLoading={isSubmitting}
+              sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
+              Save changes
+            </LoadingButton>
+            <Button variant="outlined" color="secondary" onClick={openDiscardConfirmationModal}>
+              Discard
+            </Button>
+          </Stack>
           <Button
             variant="outlined"
             color="error"
             disabled={deletePending}
             onClick={openDeleteConfirmationModal}
             sx={{ alignSelf: 'flex-end' }}>
-            Delete post
+            <DeleteOutlineIcon fontSize="small" sx={{ mr: 0.3 }} />
+            Delete
           </Button>
         </Stack>
       </Stack>

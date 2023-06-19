@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CircularProgress, Stack, Typography } from '@mui/material';
+import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import * as BlogApi from '@/http/api/blog';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import {
@@ -16,6 +16,7 @@ import {
 import {
   BlogPostInputField,
   BlogPostSlugInputField,
+  ConfirmationModal,
   LoadingButton,
   MarkdownEditor,
 } from '@/components';
@@ -32,8 +33,10 @@ type ICreatePostFormData = yup.InferType<typeof validationSchema>;
 
 function CreatePostPage() {
   const router = useRouter();
-
   const { user, userLoading } = useAuthenticatedUser();
+
+  const [showDiscardConfirmationModal, setShowDiscardConfirmationModal] = useState<boolean>(false);
+  const [discardConfirmed, setDiscardConfirmed] = useState<boolean>(false);
 
   const {
     register,
@@ -59,6 +62,20 @@ function CreatePostPage() {
       console.log(err);
       alert(err);
     }
+  };
+
+  const openDiscardConfirmationModal = () => {
+    setShowDiscardConfirmationModal(true);
+  };
+
+  const onDiscardConfirmed = () => {
+    setShowDiscardConfirmationModal(false);
+    setDiscardConfirmed(true);
+    router.back();
+  };
+
+  const onDiscardDismissed = () => {
+    setShowDiscardConfirmationModal(false);
   };
 
   const title = watch('title');
@@ -91,7 +108,7 @@ function CreatePostPage() {
     generateSlugFromTitle();
   };
 
-  useUnsavedChangesWarning(isDirty && !isSubmitting);
+  useUnsavedChangesWarning(isDirty && !isSubmitting && !discardConfirmed);
 
   if (userLoading) {
     return <CircularProgress sx={{ display: 'block', mx: 'auto' }} />;
@@ -103,16 +120,21 @@ function CreatePostPage() {
 
   return (
     <>
+      <ConfirmationModal
+        open={showDiscardConfirmationModal}
+        onConfirm={onDiscardConfirmed}
+        onDismiss={onDiscardDismissed}
+        title="Discard changes?"
+        confirmButtonColor="error"
+        confirmButtonText="Discard"
+        dismissButtonText="Keep writing"
+      />
+
       <Typography component="h1" variant="h2" mb={4}>
         Create a post
       </Typography>
 
-      <Stack
-        spacing={4}
-        component="form"
-        noValidate
-        // autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}>
+      <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
         <BlogPostInputField
           register={register('title')}
           label="Post title"
@@ -160,13 +182,18 @@ function CreatePostPage() {
           label="Post content"
         />
 
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          isLoading={isSubmitting}
-          sx={{ alignSelf: { sm: 'center' }, px: 8 }}>
-          Create post
-        </LoadingButton>
+        <Stack direction="row" justifyContent="flex-end" spacing={2}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            isLoading={isSubmitting}
+            sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
+            Create post
+          </LoadingButton>
+          <Button variant="outlined" color="secondary" onClick={openDiscardConfirmationModal}>
+            Discard
+          </Button>
+        </Stack>
       </Stack>
     </>
   );
