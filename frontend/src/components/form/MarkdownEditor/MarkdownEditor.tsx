@@ -29,7 +29,7 @@ function MarkdownEditor({
   return (
     <StyledFormControl>
       <InputLabel
-        htmlFor={`${register.name}-input`}
+        htmlFor={`${register.name}-input_md`}
         sx={{
           transform: 'none',
           position: 'inherit',
