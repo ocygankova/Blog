@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { List, ListItem } from '@mui/material';
-import { ButtonPill, LogInModal, SignUpModal } from '@/components';
-import ResetPasswordModal from '@/components/modal/ResetPasswordModal';
+import { Button, List, ListItem } from '@mui/material';
+import { LogInModal, ResetPasswordModal, SignUpModal } from '@/components';
 
 interface IProps {
   handleDrawerToggle: () => void;
@@ -53,7 +52,7 @@ function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
 
       <List onClick={handleDrawerToggle}>
         <ListItem>
-          <ButtonPill
+          <Button
             variant="outlined"
             color="secondary"
             fullWidth
@@ -61,18 +60,18 @@ function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
               setShowLoginModal(true);
             }}>
             Log in
-          </ButtonPill>
+          </Button>
         </ListItem>
 
         <ListItem>
-          <ButtonPill
+          <Button
             variant="contained"
             fullWidth
             onClick={() => {
               setShowSignUpModal(true);
             }}>
             Create account
-          </ButtonPill>
+          </Button>
         </ListItem>
       </List>
     </>

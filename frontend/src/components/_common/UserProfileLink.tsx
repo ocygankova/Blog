@@ -1,8 +1,8 @@
-import NextLink from "next/link";
-import { Stack, Tooltip, Typography } from "@mui/material";
-import { IUser } from "@/models/user";
-import { ButtonLink, UserAvatar } from "@/components";
-import { formatDate } from "@/utils/utils";
+import NextLink from 'next/link';
+import { Stack, Tooltip, Typography } from '@mui/material';
+import { IUser } from '@/models/user';
+import { ButtonLink, UserAvatar } from '@/components';
+import { formatDate } from '@/utils/utils';
 
 interface IProps {
   user: IUser;
@@ -41,32 +41,31 @@ function UserProfileLink({
       <Tooltip
         title={renderTooltipContent()}
         placement="bottom-start"
+        enterDelay={1000}
         componentsProps={{
           tooltip: {
             sx: {
               p: 1.5,
-              bgcolor: "background.paper",
-              color: "text.primary",
+              bgcolor: 'background.paper',
+              color: 'text.primary',
               maxWidth: 260,
-              boxShadow: "10",
-              "& .MuiTooltip-arrow": {
-                color: "background.paper",
+              boxShadow: '10',
+              '& .MuiTooltip-arrow': {
+                color: 'background.paper',
               },
-              "&.MuiTooltip-tooltip": {
-                "&.MuiTooltip-tooltipPlacementBottom": {
-                  marginTop: "6px",
+              '&.MuiTooltip-tooltip': {
+                '&.MuiTooltip-tooltipPlacementBottom': {
+                  marginTop: '6px',
                 },
               },
             },
           },
-        }}
-      >
+        }}>
         <ButtonLink
           color="secondary"
           component={NextLink}
           href={profileLink}
-          sx={{ display: "inline-flex", alignItems: "center" }}
-        >
+          sx={{ display: 'inline-flex', alignItems: 'center' }}>
           {displayName}
         </ButtonLink>
       </Tooltip>

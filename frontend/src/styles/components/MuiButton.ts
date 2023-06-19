@@ -1,6 +1,6 @@
-import { Components } from "@mui/material/styles/components";
+import { Components } from '@mui/material/styles/components';
 
-export const MuiButton: Components["MuiButton"] = {
+export const MuiButton: Components['MuiButton'] = {
   defaultProps: {
     disableRipple: true,
     disableElevation: true,
@@ -8,10 +8,11 @@ export const MuiButton: Components["MuiButton"] = {
 
   styleOverrides: {
     root: {
-      textTransform: "none",
-      fontSize: "inherit",
-      "&.Mui-focusVisible": {
-        outline: "auto",
+      textTransform: 'none',
+      fontSize: 'inherit',
+      borderRadius: '18px',
+      '&.Mui-focusVisible': {
+        outline: 'auto',
       },
     },
   },

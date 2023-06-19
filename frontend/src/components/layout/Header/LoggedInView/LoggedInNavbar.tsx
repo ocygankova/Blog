@@ -1,6 +1,7 @@
-import { MouseEvent, useState } from "react";
-import NextLink from "next/link";
+import { MouseEvent, useState } from 'react';
+import NextLink from 'next/link';
 import {
+  Button,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -9,23 +10,21 @@ import {
   Stack,
   Tooltip,
   Typography,
-} from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import AddIcon from "@mui/icons-material/Add";
-import PersonIcon from "@mui/icons-material/Person";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { IUser } from "@/models/user";
-import { useAuthenticatedUser } from "@/hooks";
-import * as UsersApi from "@/http/api/users";
-import { UserAvatar, ButtonPill } from "@/components";
+} from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import AddIcon from '@mui/icons-material/Add';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { IUser } from '@/models/user';
+import { useAuthenticatedUser } from '@/hooks';
+import * as UsersApi from '@/http/api/users';
+import { UserAvatar } from '@/components';
 
 interface IProps {
   user: IUser;
 }
 
-function LoggedInNavbar({
-  user: { username, displayName, profileImageUrl },
-}: IProps) {
+function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IProps) {
   const { mutateUser } = useAuthenticatedUser();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -49,18 +48,13 @@ function LoggedInNavbar({
   };
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={2}
-      display={{ xs: "none", sm: "flex" }}
-    >
-      <ButtonPill component={NextLink} href="/blog/create" variant="outlined">
+    <Stack direction="row" alignItems="center" spacing={2} display={{ xs: 'none', sm: 'flex' }}>
+      <Button component={NextLink} href="/blog/create" variant="outlined">
         <AddIcon />
         <Typography component="span" ml={1}>
           Create post
         </Typography>
-      </ButtonPill>
+      </Button>
 
       <Tooltip title="Profile settings">
         <Stack
@@ -68,11 +62,10 @@ function LoggedInNavbar({
           direction="row"
           alignItems="center"
           spacing={0.5}
-          aria-controls={open ? "profile-menu" : undefined}
+          aria-controls={open ? 'profile-menu' : undefined}
           aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-        >
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}>
           <UserAvatar src={profileImageUrl} />
           <ArrowDropDownIcon />
         </Stack>
@@ -83,33 +76,25 @@ function LoggedInNavbar({
         anchorEl={anchorEl}
         open={open}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         PaperProps={{
           sx: {
             mt: 0.8,
-            minWidth: "200px",
+            minWidth: '200px',
           },
         }}
-        onClose={handleClose}
-      >
-        <MenuItem
-          component={NextLink}
-          href={`/users/${username}`}
-          sx={{ mb: 2 }}
-        >
+        onClose={handleClose}>
+        <MenuItem component={NextLink} href={`/users/${username}`} sx={{ mb: 2 }}>
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText
-            primary="Your profile"
-            secondary={displayName || "User"}
-          />
+          <ListItemText primary="Your profile" secondary={displayName || 'User'} />
         </MenuItem>
 
         <Divider />
