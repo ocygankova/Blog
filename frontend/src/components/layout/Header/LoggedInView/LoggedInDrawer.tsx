@@ -1,4 +1,4 @@
-import NextLink from "next/link";
+import NextLink from 'next/link';
 import {
   Button,
   Divider,
@@ -8,14 +8,14 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import PersonIcon from "@mui/icons-material/Person";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { IUser } from "@/models/user";
-import { useAuthenticatedUser } from "@/hooks";
-import * as UsersApi from "@/http/api/users";
-import { ButtonPill, UserAvatar } from "@/components";
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { IUser } from '@/models/user';
+import { useAuthenticatedUser } from '@/hooks';
+import * as UsersApi from '@/http/api/users';
+import { UserAvatar } from '@/components';
 
 interface IProps {
   user: IUser;
@@ -41,41 +41,32 @@ function LoggedInDrawer({
   return (
     <List onClick={handleDrawerToggle}>
       <ListItem>
-        <ButtonPill
-          component={NextLink}
-          href="/blog/create"
-          variant="outlined"
-          fullWidth
-        >
+        <Button component={NextLink} href="/blog/create" variant="outlined" fullWidth>
           <AddIcon />
           <Typography component="span" ml={2}>
             Create post
           </Typography>
-        </ButtonPill>
+        </Button>
       </ListItem>
 
       <ListItem component={NextLink} href={`/users/${username}`}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
-        <ListItemText
-          primary="Your profile"
-          secondary={displayName || "User"}
-        />
+        <ListItemText primary="Your profile" secondary={displayName || 'User'} />
         <ListItemAvatar
           sx={{
-            "& .MuiAvatar-root": {
+            '& .MuiAvatar-root': {
               marginRight: 0,
-              marginLeft: "auto",
+              marginLeft: 'auto',
             },
-          }}
-        >
+          }}>
           <UserAvatar src={profileImageUrl} />
         </ListItemAvatar>
       </ListItem>
 
       <Divider />
-      <ListItem onClick={logoutUser} sx={{ mt: 2, cursor: "pointer" }}>
+      <ListItem onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>

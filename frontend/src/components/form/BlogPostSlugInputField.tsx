@@ -40,7 +40,7 @@ function BlogPostSlugInputField({
         variant="contained"
         onClick={onGenerateSlugClick}
         sx={{
-          py: { xs: 'auto', sm: 1.6 },
+          // py: { xs: 'auto', sm: 1.6 },
           mt: { xs: 1, sm: 4 },
           ml: { xs: 0, sm: 1 },
           alignSelf: 'flex-start',

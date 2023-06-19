@@ -3,7 +3,7 @@ import NextImage from 'next/image';
 import NextLink from 'next/link';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import EditIcon from '@mui/icons-material/Edit';
 import * as BlogApi from '@/http/api/blog';
@@ -11,7 +11,7 @@ import { NotFoundError } from '@/http/http-errors';
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser } from '@/hooks';
 import { formatDate } from '@/utils/utils';
-import { BlogPostImageBox, ButtonPill } from '@/components';
+import { BlogPostImageBox } from '@/components';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await BlogApi.getAllBlogPostSlugs();
@@ -65,20 +65,20 @@ function BlogPostPage({ post }: IPageProps) {
       </Head>
 
       <Stack direction="row" spacing={5} alignItems="center" mb={4}>
-        <ButtonPill component={NextLink} href={`/blog`}>
+        <Button component={NextLink} href={`/blog`}>
           <NavigateBeforeIcon sx={{ mr: 1 }} />
           <span>Back to Blog</span>
-        </ButtonPill>
+        </Button>
 
         {user?._id === author._id && (
-          <ButtonPill
+          <Button
             component={NextLink}
             href={`/blog/edit/${slug}`}
             variant="outlined"
             color="inherit">
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             <span>Edit post</span>
-          </ButtonPill>
+          </Button>
         )}
       </Stack>
 
