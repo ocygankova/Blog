@@ -13,6 +13,7 @@ import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import {
   BlogPostInputField,
   BlogPostSlugInputField,
+  ConfirmationModal,
   LoadingButton,
   MarkdownEditor,
 } from '@/components';
@@ -134,6 +135,22 @@ export default function EditPost({ post }: IPageProps) {
 
   return (
     <>
+      <ConfirmationModal
+        open={showDeleteConfirmationModal}
+        message={
+          <>
+            <span>Do you want to permanently delete this post?</span>
+            <br />
+            <span>This action can not be reversed.</span>
+          </>
+        }
+        onConfirm={onDeleteConfirmed}
+        onDismiss={onDeleteDismissed}
+        title="Confirm post deletion"
+        confirmButtonColor="error"
+        confirmButtonText="Delete post"
+      />
+
       <Typography component="h1" variant="h2" mb={4}>
         Edit post
       </Typography>
