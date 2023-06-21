@@ -41,7 +41,8 @@ function UserProfileLink({
       <Tooltip
         title={renderTooltipContent()}
         placement="bottom-start"
-        enterDelay={1000}
+        enterDelay={400}
+        enterNextDelay={400}
         componentsProps={{
           tooltip: {
             sx: {
