@@ -45,7 +45,6 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
   const router = useRouter();
 
   const handlePageItemClicked = async (page: number) => {
-    console.log(page);
     await router.push({
       query: { ...router.query, page },
     });

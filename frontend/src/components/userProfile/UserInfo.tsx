@@ -9,7 +9,7 @@ interface IProps {
 
 function UserInfo({ user: { username, displayName, about, profileImageUrl, createdAt } }: IProps) {
   return (
-    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={4}>
+    <Stack component="section" direction={{ xs: 'column', sm: 'row' }} spacing={4} pb={4}>
       <UserAvatar
         src={profileImageUrl}
         size="xl"
@@ -42,7 +42,7 @@ function UserInfo({ user: { username, displayName, about, profileImageUrl, creat
           <Typography component="span" variant="h6">
             About me:{' '}
           </Typography>
-          {about || "This user hasn't provided any info yet"}
+          {about || "This user hasn't provided any info yet..."}
         </Typography>
       </Stack>
     </Stack>
