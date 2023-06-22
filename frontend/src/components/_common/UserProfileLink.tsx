@@ -20,12 +20,19 @@ function UserProfileLink({
       </NextLink>
 
       <div>
-        <Typography mb={1}>
-          <strong>User since:</strong> {formatDate(createdAt)}
+        <Typography>
+          <Typography component="span" variant="h6">
+            User since:{' '}
+          </Typography>
+          {formatDate(createdAt)}
         </Typography>
+
         {about && (
           <Typography>
-            <strong>About:</strong> {about}
+            <Typography component="span" variant="h6">
+              About me:{' '}
+            </Typography>
+            {about}
           </Typography>
         )}
       </div>
@@ -33,23 +40,20 @@ function UserProfileLink({
   );
 
   return (
-    <Stack direction="row" component="span" spacing={1} alignItems="center">
-      <NextLink href={profileLink}>
-        <UserAvatar src={profileImageUrl} size="sm" />
-      </NextLink>
-
+    <Stack direction="row" component="span" spacing={0.5} alignItems="center">
       <Tooltip
         title={renderTooltipContent()}
         placement="bottom-start"
-        enterDelay={400}
-        enterNextDelay={400}
+        enterDelay={300}
+        enterNextDelay={300}
+        leaveDelay={300}
         componentsProps={{
           tooltip: {
             sx: {
               p: 1.5,
               bgcolor: 'background.paper',
               color: 'text.primary',
-              maxWidth: 260,
+              maxWidth: 340,
               boxShadow: '10',
               '& .MuiTooltip-arrow': {
                 color: 'background.paper',
@@ -62,14 +66,18 @@ function UserProfileLink({
             },
           },
         }}>
-        <ButtonLink
-          color="secondary"
-          component={NextLink}
-          href={profileLink}
-          sx={{ display: 'inline-flex', alignItems: 'center' }}>
-          {displayName}
-        </ButtonLink>
+        <NextLink href={profileLink}>
+          <UserAvatar src={profileImageUrl} size="sm" />
+        </NextLink>
       </Tooltip>
+
+      <ButtonLink
+        color="secondary"
+        component={NextLink}
+        href={profileLink}
+        sx={{ display: 'inline-flex', alignItems: 'center', typography: 'caption' }}>
+        {displayName}
+      </ButtonLink>
     </Stack>
   );
 }

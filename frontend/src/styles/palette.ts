@@ -6,7 +6,7 @@ export const palette: PaletteOptions = {
     main: '#026C9C',
   },
   secondary: {
-    main: '#051923',
+    main: '#070b0d',
   },
   error: {
     main: red.A400,
@@ -14,5 +14,10 @@ export const palette: PaletteOptions = {
   background: {
     paper: '#fff',
     default: '#f8fafd',
+  },
+  text: {
+    primary: '#131b1d',
+    secondary: '#6b6b7a',
+    disabled: '#a2a2a2',
   },
 };

@@ -64,7 +64,7 @@ function BlogPostPage({ post }: IPageProps) {
         <meta name="description" content={summary} />
       </Head>
 
-      <Stack direction="row" spacing={5} alignItems="center" mb={4}>
+      <Stack direction="row" spacing={{ xs: 2, sm: 5 }} alignItems="center" mb={4}>
         <Button component={NextLink} href={`/blog`}>
           <NavigateBeforeIcon sx={{ mr: 1 }} />
           <span>Back to Blog</span>
@@ -84,15 +84,15 @@ function BlogPostPage({ post }: IPageProps) {
 
       <article>
         <Stack alignItems="center">
-          <Typography component="h1" variant="h3" textAlign="center" mb={4}>
+          <Typography variant="h1" textAlign="center" mb={4}>
             {title}
           </Typography>
 
-          <Typography variant="h5" textAlign="center" mb={1}>
+          <Typography variant="h4" textAlign="center" mb={4}>
             {summary}
           </Typography>
 
-          <Typography>{createdUpdatedText} </Typography>
+          <Typography variant="body2">{createdUpdatedText} </Typography>
 
           <BlogPostImageBox my={2}>
             <NextImage

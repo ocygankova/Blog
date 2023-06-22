@@ -25,7 +25,7 @@ function UserPosts({ user }: IProps) {
 
   return (
     <Box component="section" py={4}>
-      <Typography variant="h3" mb={3}>
+      <Typography variant="h3Uppercase" mb={3}>
         Published articles
       </Typography>
 
