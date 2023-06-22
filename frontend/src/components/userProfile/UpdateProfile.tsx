@@ -76,7 +76,7 @@ function UpdateProfile({ onUserUpdated }: IProps) {
       </Snackbar>
 
       <Box component="section" py={4}>
-        <Typography variant="h3" mb={3}>
+        <Typography variant="h3Uppercase" mb={3}>
           Update profile
         </Typography>
 

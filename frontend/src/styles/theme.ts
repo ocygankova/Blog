@@ -1,22 +1,39 @@
 import { createTheme } from '@mui/material/styles';
 import { responsiveFontSizes } from '@mui/material';
-import { MuiButton, MuiCssBaseline, MuiLink } from '@/styles/components';
+import { MuiButton, MuiCssBaseline, MuiLink, MuiTooltip } from '@/styles/components';
 import { palette } from '@/styles/palette';
-import { typography } from '@/styles/typography';
+import createTypography from '@/styles/typography';
 
-const basicTheme = createTheme({
-  typography,
+let theme = createTheme({
   palette,
+});
+
+const typography = createTypography(theme);
+
+theme = createTheme(theme, {
+  typography,
+
   components: {
     MuiCssBaseline,
     MuiLink,
     MuiButton,
+    MuiTooltip,
+
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          h2Uppercase: 'h2',
+          h3Uppercase: 'h3',
+        },
+      },
+    },
   },
+
   shape: {
     borderRadius: 8,
   },
 });
 
-const theme = responsiveFontSizes(basicTheme);
+theme = responsiveFontSizes(theme);
 
 export default theme;

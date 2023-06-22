@@ -57,24 +57,26 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
         <meta name="description" content="Read the latest posts on Blog" />
       </Head>
 
-      <Typography component="h1" variant="h2" mb={4}>
-        Latest posts
-      </Typography>
+      <section>
+        <Typography component="h1" variant="h2Uppercase" mb={4}>
+          Latest posts
+        </Typography>
 
-      {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
+        {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
 
-      <Stack mt={4}>
-        {blogPosts.length > 0 && (
-          <PaginationBar
-            count={totalPages}
-            page={page}
-            onPageChange={handlePageItemClicked}
-            sx={{ mx: 'auto' }}
-          />
-        )}
+        <Stack mt={4}>
+          {blogPosts.length > 0 && (
+            <PaginationBar
+              count={totalPages}
+              page={page}
+              onPageChange={handlePageItemClicked}
+              sx={{ mx: 'auto' }}
+            />
+          )}
 
-        {blogPosts.length === 0 && <Typography>No blog posts found.</Typography>}
-      </Stack>
+          {blogPosts.length === 0 && <Typography>No blog posts found.</Typography>}
+        </Stack>
+      </section>
     </>
   );
 }

@@ -20,9 +20,7 @@ function UserInfo({ user: { username, displayName, about, profileImageUrl, creat
       />
 
       <Stack spacing={1}>
-        <Typography variant="h2" component="h1">
-          {displayName}
-        </Typography>
+        <Typography variant="h1">{displayName}</Typography>
 
         <Typography>
           <Typography component="span" variant="h6">

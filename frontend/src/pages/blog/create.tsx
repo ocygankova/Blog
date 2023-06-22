@@ -130,7 +130,7 @@ function CreatePostPage() {
         dismissButtonText="Keep writing"
       />
 
-      <Typography component="h1" variant="h2" mb={4}>
+      <Typography variant="h1" mb={4}>
         Create a post
       </Typography>
 
