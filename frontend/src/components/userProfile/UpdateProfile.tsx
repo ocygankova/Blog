@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Alert, Box, Slide, Snackbar, Stack, Typography } from '@mui/material';
 import { IUser } from '@/models/user';
 import * as UsersApi from '@/http/api/users';
-import { BlogPostInputField, LoadingButton } from '@/components';
+import { FormInputField, LoadingButton } from '@/components';
 import { maxLengths } from '@/utils';
 
 interface IProps {
@@ -81,7 +81,7 @@ function UpdateProfile({ onUserUpdated }: IProps) {
         </Typography>
 
         <Stack spacing={2} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-          <BlogPostInputField
+          <FormInputField
             register={register('displayName')}
             label="Display name"
             placeholder="How should we call you?"
@@ -89,7 +89,7 @@ function UpdateProfile({ onUserUpdated }: IProps) {
             maxLength={maxLengths.userDisplayName}
           />
 
-          <BlogPostInputField
+          <FormInputField
             register={register('about')}
             label="About me"
             placeholder="Tell us a few things about you..."
@@ -98,7 +98,7 @@ function UpdateProfile({ onUserUpdated }: IProps) {
             multiline
           />
 
-          <BlogPostInputField
+          <FormInputField
             register={register('profileImage')}
             label="Profile picture"
             type="file"

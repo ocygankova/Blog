@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from '@mui/material';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import { FormInputField } from '@/components';
+import { AuthFormInputField } from '@/components';
 
 interface IProps {
   register: UseFormRegisterReturn;
@@ -22,7 +22,7 @@ function VerificationCodeField({
   return (
     <Stack direction="row" spacing={1} alignItems="flex-start">
       <Box flex={1}>
-        <FormInputField
+        <AuthFormInputField
           register={register}
           validationError={validationError}
           label={label || 'Verification Code'}

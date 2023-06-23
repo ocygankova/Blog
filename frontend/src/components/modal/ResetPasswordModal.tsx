@@ -10,7 +10,7 @@ import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
   DialogBase,
-  FormInputField,
+  AuthFormInputField,
   LoadingButton,
   PasswordInputField,
   VerificationCodeField,
@@ -115,7 +115,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
         noValidate
         // autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}>
-        <FormInputField
+        <AuthFormInputField
           register={register('email')}
           label="Email"
           validationError={errors.email}

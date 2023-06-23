@@ -15,7 +15,7 @@ import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
   DialogBase,
-  FormInputField,
+  AuthFormInputField,
   LoadingButton,
   PasswordInputField,
   SocialSignInSection,
@@ -127,7 +127,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         noValidate
         // autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}>
-        <FormInputField
+        <AuthFormInputField
           register={register('username')}
           label="Username"
           validationError={errors.username}
@@ -138,7 +138,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
           }}
         />
 
-        <FormInputField
+        <AuthFormInputField
           register={register('email')}
           label="Email"
           validationError={errors.email}

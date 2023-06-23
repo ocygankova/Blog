@@ -10,7 +10,7 @@ import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
   DialogBase,
-  FormInputField,
+  AuthFormInputField,
   LoadingButton,
   PasswordInputField,
   SocialSignInSection,
@@ -82,7 +82,7 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
         noValidate
         // autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}>
-        <FormInputField
+        <AuthFormInputField
           register={register('username')}
           label="Username"
           validationError={errors.username}

@@ -8,6 +8,7 @@ interface IProps {
   maxLength?: number;
 }
 
+// pass 'watch' and 'maxLength' to show remaining characters
 function FormInputField({
   register,
   watch,
@@ -44,6 +45,12 @@ function FormInputField({
       inputProps={inputProps}
       {...register}
       {...props}
+      InputLabelProps={{ shrink: true }}
+      sx={{
+        '& label': { transform: 'none', position: 'inherit', mb: 1, color: 'inherit' },
+        '& legend': { display: 'none' },
+        '& fieldset': { top: '0' },
+      }}
     />
   );
 }

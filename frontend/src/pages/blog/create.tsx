@@ -14,7 +14,7 @@ import {
   slugSchema,
 } from '@/utils';
 import {
-  BlogPostInputField,
+  FormInputField,
   BlogPostSlugInputField,
   ConfirmationModal,
   LoadingButton,
@@ -135,7 +135,7 @@ function CreatePostPage() {
       </Typography>
 
       <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <BlogPostInputField
+        <FormInputField
           register={register('title')}
           label="Post title"
           placeholder="What is your post title?"
@@ -156,7 +156,7 @@ function CreatePostPage() {
           maxLength={maxLengths.postSlug}
         />
 
-        <BlogPostInputField
+        <FormInputField
           register={register('summary')}
           label="Post summary"
           placeholder="What is your post about?"
@@ -166,7 +166,7 @@ function CreatePostPage() {
           maxLength={maxLengths.postSummary}
         />
 
-        <BlogPostInputField
+        <FormInputField
           register={register('postImage')}
           label="Post cover image"
           validationError={errors.postImage}
