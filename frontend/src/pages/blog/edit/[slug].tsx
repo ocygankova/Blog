@@ -108,8 +108,9 @@ export default function EditPost({ post }: IPageProps) {
     setShowDeleteConfirmationModal(false);
   };
 
-  const openDiscardConfirmationModal = () => {
-    setShowDiscardConfirmationModal(true);
+  const handleDiscardButtonClick = () => {
+    if (!isDirty) router.push(`/blog/${post.slug}`);
+    else setShowDiscardConfirmationModal(true);
   };
 
   const onDiscardConfirmed = () => {
@@ -237,10 +238,11 @@ export default function EditPost({ post }: IPageProps) {
               type="submit"
               variant="contained"
               isLoading={isSubmitting}
+              disabled={!isDirty}
               sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
               Save changes
             </LoadingButton>
-            <Button variant="outlined" color="secondary" onClick={openDiscardConfirmationModal}>
+            <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
               Discard
             </Button>
           </Stack>

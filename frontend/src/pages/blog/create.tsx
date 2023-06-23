@@ -64,14 +64,15 @@ function CreatePostPage() {
     }
   };
 
-  const openDiscardConfirmationModal = () => {
-    setShowDiscardConfirmationModal(true);
+  const handleDiscardButtonClick = () => {
+    if (!isDirty) router.push('/blog');
+    else setShowDiscardConfirmationModal(true);
   };
 
   const onDiscardConfirmed = () => {
     setShowDiscardConfirmationModal(false);
     setDiscardConfirmed(true);
-    router.back();
+    router.push('/blog');
   };
 
   const onDiscardDismissed = () => {
@@ -187,10 +188,11 @@ function CreatePostPage() {
             type="submit"
             variant="contained"
             isLoading={isSubmitting}
+            disabled={!isDirty}
             sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
             Create post
           </LoadingButton>
-          <Button variant="outlined" color="secondary" onClick={openDiscardConfirmationModal}>
+          <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
             Discard
           </Button>
         </Stack>
