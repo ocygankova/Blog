@@ -119,7 +119,6 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
           register={register('email')}
           label="Email"
           validationError={errors.email}
-          id="email"
           sx={{
             mb: 2,
           }}
@@ -129,7 +128,6 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
           register={register('newPassword')}
           label="Password"
           validationError={errors.newPassword}
-          id="password"
           sx={{
             mb: 2,
           }}

@@ -86,7 +86,6 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
           register={register('username')}
           label="Username"
           validationError={errors.username}
-          id="username"
           sx={{
             mb: 2,
           }}
@@ -96,7 +95,6 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
           register={register('password')}
           label="Password"
           validationError={errors.password}
-          id="password"
           sx={{
             mb: 1,
           }}

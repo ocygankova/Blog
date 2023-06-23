@@ -21,6 +21,7 @@ import {
   SocialSignInSection,
   VerificationCodeField,
 } from '@/components';
+import { maxLengths } from '@/utils';
 
 interface IProps {
   open: boolean;
@@ -54,6 +55,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     reset,
     getValues,
     trigger,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ISignUpFormData>({ resolver: yupResolver(validationSchema) });
 
@@ -129,7 +131,8 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
           register={register('username')}
           label="Username"
           validationError={errors.username}
-          id="username"
+          watch={watch}
+          maxLength={maxLengths.userName}
           sx={{
             mb: 2,
           }}
@@ -139,7 +142,6 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
           register={register('email')}
           label="Email"
           validationError={errors.email}
-          id="email"
           sx={{
             mb: 2,
           }}
@@ -149,7 +151,6 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
           register={register('password')}
           label="Password"
           validationError={errors.password}
-          id="password"
           sx={{
             mb: 2,
           }}
