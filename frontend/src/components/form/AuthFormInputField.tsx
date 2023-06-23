@@ -23,9 +23,13 @@ function AuthFormInputField({
 
   const renderHelperText = () => {
     return (
-      <Stack component="span" direction="row" justifyContent="space-between">
+      <Stack component="span" direction="row" justifyContent="space-between" spacing={2}>
         {validationError && <Typography component="span">{validationError?.message}</Typography>}
-        {watch && <Typography component="span">{getLength(watch(register.name))}</Typography>}
+        {watch && (
+          <Typography component="span" whiteSpace="nowrap">
+            {getLength(watch(register.name))}
+          </Typography>
+        )}
       </Stack>
     );
   };
