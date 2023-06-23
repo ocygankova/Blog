@@ -8,7 +8,8 @@ interface IProps {
   maxLength?: number;
 }
 
-function BlogPostInputField({
+// pass 'watch' and 'maxLength' to show remaining characters
+function AuthFormInputField({
   register,
   watch,
   validationError,
@@ -44,14 +45,8 @@ function BlogPostInputField({
       inputProps={inputProps}
       {...register}
       {...props}
-      InputLabelProps={{ shrink: true }}
-      sx={{
-        '& label': { transform: 'none', position: 'inherit', mb: 1, color: 'inherit' },
-        '& legend': { display: 'none' },
-        '& fieldset': { top: '0' },
-      }}
     />
   );
 }
 
-export default BlogPostInputField;
+export default AuthFormInputField;

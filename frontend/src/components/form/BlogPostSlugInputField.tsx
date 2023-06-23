@@ -1,6 +1,6 @@
 import { FieldError, UseFormRegisterReturn, UseFormWatch } from 'react-hook-form';
 import { Box, Button, Stack, TextFieldProps } from '@mui/material';
-import { BlogPostInputField } from '@/components';
+import { FormInputField } from '@/components';
 
 interface IProps {
   register: UseFormRegisterReturn;
@@ -25,7 +25,7 @@ function BlogPostSlugInputField({
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'stretch', sm: 'flex-start' }}>
       <Box flex={{ sm: 1 }}>
-        <BlogPostInputField
+        <FormInputField
           register={register}
           validationError={validationError}
           label={label || 'Post slug'}

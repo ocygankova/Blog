@@ -12,7 +12,7 @@ import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {
-  BlogPostInputField,
+  FormInputField,
   BlogPostSlugInputField,
   ConfirmationModal,
   LoadingButton,
@@ -184,7 +184,7 @@ export default function EditPost({ post }: IPageProps) {
       </Typography>
 
       <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <BlogPostInputField
+        <FormInputField
           register={register('title')}
           label="Post title"
           placeholder="What is your post title?"
@@ -204,7 +204,7 @@ export default function EditPost({ post }: IPageProps) {
           maxLength={maxLengths.postSlug}
         />
 
-        <BlogPostInputField
+        <FormInputField
           register={register('summary')}
           label="Post summary"
           placeholder="What is your post about?"
@@ -215,7 +215,7 @@ export default function EditPost({ post }: IPageProps) {
           maxLength={maxLengths.postSummary}
         />
 
-        <BlogPostInputField
+        <FormInputField
           register={register('postImage')}
           label="Post cover image"
           validationError={errors.postImage}
