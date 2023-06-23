@@ -56,7 +56,7 @@ function OnboardingPage() {
       const returnTo = router.query.returnTo?.toString();
       router.push(returnTo || '/');
     }
-  }, [user, router]);
+  }, [user, userLoading, router]);
 
   return (
     <>
