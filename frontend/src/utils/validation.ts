@@ -1,11 +1,12 @@
 import * as yup from 'yup';
+import { maxLengths } from '@/utils/consts';
 
 export const requiredStringSchema = yup.string().trim().required('Please fill out this field.');
 
 export const usernameSchema = yup
   .string()
   .trim()
-  .max(20, 'Must be 20 characters or less.')
+  .max(maxLengths.userName, `Must be ${maxLengths.userName} characters or less.`)
   .matches(/^[a-zA-Z0-9_]*$/, 'Only letters, numbers and underscores are allowed.');
 
 export const emailSchema = yup

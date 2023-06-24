@@ -1,4 +1,13 @@
-export const maxLengths: Record<string, number> = {
+interface IMaxLengths {
+  userName: number;
+  userDisplayName: number;
+  userAbout: number;
+  postTitle: number;
+  postSlug: number;
+  postSummary: number;
+}
+
+export const maxLengths: IMaxLengths = {
   userName: 20,
   userDisplayName: 40,
   userAbout: 200,
