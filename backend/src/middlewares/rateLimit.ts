@@ -1,4 +1,5 @@
 import rateLimit from 'express-rate-limit';
+import { verificationCodeRequestTimeoutSeconds } from '../utils/consts';
 
 export const loginRateLimit = rateLimit({
   windowMs: 3 * 60 * 60 * 1000, // 3h
@@ -9,7 +10,7 @@ export const loginRateLimit = rateLimit({
 });
 
 export const requestVerificationCodeRateLimit = rateLimit({
-  windowMs: 30 * 1000, // 30sec
+  windowMs: verificationCodeRequestTimeoutSeconds * 1000,
   max: 1,
   standardHeaders: true,
   legacyHeaders: false,

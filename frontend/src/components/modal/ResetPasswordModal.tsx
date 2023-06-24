@@ -15,6 +15,7 @@ import {
   PasswordInputField,
   VerificationCodeField,
 } from '@/components';
+import { verificationCodeRequestTimeoutSeconds } from '@/utils';
 
 interface IProps {
   open: boolean;
@@ -79,7 +80,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
     try {
       await UsersApi.requestPasswordResetCode(email);
       setShowVerificationCodeSentMessage(true);
-      startVerificationCodeTimeout(30);
+      startVerificationCodeTimeout(verificationCodeRequestTimeoutSeconds);
     } catch (error) {
       if (error instanceof NotFoundError) {
         setErrorMessage(error.message);

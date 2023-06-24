@@ -21,7 +21,7 @@ import {
   SocialSignInSection,
   VerificationCodeField,
 } from '@/components';
-import { maxLengths } from '@/utils';
+import { maxLengths, verificationCodeRequestTimeoutSeconds } from '@/utils';
 
 interface IProps {
   open: boolean;
@@ -88,7 +88,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     try {
       await UsersApi.requestEmailVerificationCode(email);
       setShowVerificationCodeSentMessage(true);
-      startVerificationCodeTimeout(30);
+      startVerificationCodeTimeout(verificationCodeRequestTimeoutSeconds);
     } catch (error) {
       if (error instanceof ConflictError) {
         setErrorMessage(error.message);
