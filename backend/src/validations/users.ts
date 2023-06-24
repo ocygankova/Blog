@@ -1,9 +1,10 @@
 import * as yup from 'yup';
 import { imageFileSchema } from '../utils/validation';
+import { maxLengths } from '../utils/consts';
 
 const usernameSchema = yup
   .string()
-  .max(20)
+  .max(maxLengths.userName)
   .matches(/^[a-zA-Z0-9_]*$/);
 
 const emailSchema = yup.string().email();
@@ -27,8 +28,8 @@ export type ISignUpBody = yup.InferType<typeof signUpSchema>['body'];
 export const updateUserSchema = yup.object({
   body: yup.object({
     username: usernameSchema,
-    displayName: yup.string().max(40),
-    about: yup.string().max(200),
+    displayName: yup.string().max(maxLengths.userDisplayName),
+    about: yup.string().max(maxLengths.userAbout),
   }),
   file: imageFileSchema,
 });

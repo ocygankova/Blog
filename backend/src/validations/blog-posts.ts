@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { imageFileSchema, mongooseObjectIdSchema } from '../utils/validation';
+import { maxLengths } from '../utils/consts';
 
 export const getBlogPostsSchema = yup.object({
   // the whole req object passed to yup, getting req.query from it
@@ -12,13 +13,13 @@ export const getBlogPostsSchema = yup.object({
 export type IGetBlogPostsReqQuery = yup.InferType<typeof getBlogPostsSchema>['query'];
 
 const blogPostReqBodySchema = yup.object({
-  title: yup.string().required().max(100),
+  title: yup.string().required().max(maxLengths.postTitle),
   slug: yup
     .string()
     .required()
-    .max(100)
+    .max(maxLengths.postSlug)
     .matches(/^[a-zA-Z0-9_-]*$/),
-  summary: yup.string().required().max(300),
+  summary: yup.string().required().max(maxLengths.postSummary),
   body: yup.string().required(),
 });
 
