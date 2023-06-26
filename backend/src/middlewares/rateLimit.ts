@@ -19,7 +19,7 @@ export const requestVerificationCodeRateLimit = rateLimit({
 
 export const createPostRateLimit = rateLimit({
   windowMs: 60 * 60 * 1000, // 1h
-  max: 5,
+  max: 10,
   standardHeaders: true,
   legacyHeaders: false,
   skipFailedRequests: true,
