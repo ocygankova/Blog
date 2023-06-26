@@ -13,8 +13,8 @@ export const getCommentsSchema = yup.object({
   }),
 });
 
-export type GetCommentsParams = yup.InferType<typeof getCommentsSchema>['params'];
-export type GetCommentsQuery = yup.InferType<typeof getCommentsSchema>['query'];
+export type IGetCommentsParams = yup.InferType<typeof getCommentsSchema>['params'];
+export type IGetCommentsQuery = yup.InferType<typeof getCommentsSchema>['query'];
 
 export const createCommentSchema = yup.object({
   body: yup.object({
@@ -26,5 +26,5 @@ export const createCommentSchema = yup.object({
   }),
 });
 
-export type CreateCommentBody = yup.InferType<typeof createCommentSchema>['body'];
-export type CreateCommentParams = yup.InferType<typeof createCommentSchema>['params'];
+export type ICreateCommentBody = yup.InferType<typeof createCommentSchema>['body'];
+export type ICreateCommentParams = yup.InferType<typeof createCommentSchema>['params'];

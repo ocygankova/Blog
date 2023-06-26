@@ -22,7 +22,6 @@ export const getBlogPosts: RequestHandler<
   unknown,
   IGetBlogPostsReqQuery
 > = async (req, res, next) => {
-  console.log(req.query);
   const authorId = req.query.authorId;
   const page = parseInt(req.query.page || '1');
   const pageSize = 6;
