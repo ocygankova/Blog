@@ -1,4 +1,4 @@
-export { default as LogInModal } from './LogInModal';
-export { default as SignUpModal } from './SignUpModal';
-export { default as ResetPasswordModal } from './ResetPasswordModal';
+export { default as LogInModal } from './auth/LogInModal';
+export { default as SignUpModal } from './auth/SignUpModal';
+export { default as ResetPasswordModal } from './auth/ResetPasswordModal';
 export { default as ConfirmationModal } from './ConfirmationModal';
