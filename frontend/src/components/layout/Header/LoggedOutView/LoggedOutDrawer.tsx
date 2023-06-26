@@ -1,55 +1,16 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Button, List, ListItem } from '@mui/material';
-import { LogInModal, ResetPasswordModal, SignUpModal } from '@/components';
+import { AuthModalsContext } from '@/components/auth/AuthModalsProvider';
 
 interface IProps {
   handleDrawerToggle: () => void;
 }
 
 function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
-  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
-  const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false);
-  const [showResetPasswordModal, setShowResetPasswordModal] = useState<boolean>(false);
+  const authModalsContext = useContext(AuthModalsContext);
 
   return (
     <>
-      <LogInModal
-        open={showLoginModal}
-        onClose={() => {
-          setShowLoginModal(false);
-        }}
-        onSignUpInsteadClicked={() => {
-          setShowLoginModal(false);
-          setShowSignUpModal(true);
-        }}
-        onForgotPasswordClicked={() => {
-          setShowLoginModal(false);
-          setShowResetPasswordModal(true);
-        }}
-      />
-
-      <SignUpModal
-        open={showSignUpModal}
-        onClose={() => {
-          setShowSignUpModal(false);
-        }}
-        onLogInInsteadClicked={() => {
-          setShowSignUpModal(false);
-          setShowLoginModal(true);
-        }}
-      />
-
-      <ResetPasswordModal
-        open={showResetPasswordModal}
-        onClose={() => {
-          setShowResetPasswordModal(false);
-        }}
-        onSignUpClicked={() => {
-          setShowResetPasswordModal(false);
-          setShowSignUpModal(true);
-        }}
-      />
-
       <List onClick={handleDrawerToggle}>
         <ListItem>
           <Button
@@ -57,7 +18,7 @@ function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
             color="secondary"
             fullWidth
             onClick={() => {
-              setShowLoginModal(true);
+              authModalsContext.showLoginModal();
             }}>
             Log in
           </Button>
@@ -68,7 +29,7 @@ function LoggedOutDrawer({ handleDrawerToggle }: IProps) {
             variant="contained"
             fullWidth
             onClick={() => {
-              setShowSignUpModal(true);
+              authModalsContext.showSignUpModal();
             }}>
             Create account
           </Button>
