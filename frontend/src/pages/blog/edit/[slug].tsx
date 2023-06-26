@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as BlogApi from '@/http/api/blog';
-import { NotFoundError } from '@/http/http-errors';
+import { ConflictError, NotFoundError, TooManyRequestsError } from '@/http/http-errors';
 import { generateSlug, maxLengths, requiredStringSchema, slugSchema } from '@/utils';
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
-import { Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {
   FormInputField,
@@ -52,6 +52,7 @@ export default function EditPost({ post }: IPageProps) {
   const router = useRouter();
   const { user, userLoading } = useAuthenticatedUser();
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDiscardConfirmationModal, setShowDiscardConfirmationModal] = useState<boolean>(false);
   const [discardConfirmed, setDiscardConfirmed] = useState<boolean>(false);
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState<boolean>(false);
@@ -72,6 +73,7 @@ export default function EditPost({ post }: IPageProps) {
 
   const onSubmit = async ({ title, slug, summary, body, postImage }: IUpdatePostFormData) => {
     try {
+      setErrorMessage(null);
       await BlogApi.updateBlogPost(post._id, {
         title,
         slug,
@@ -80,9 +82,15 @@ export default function EditPost({ post }: IPageProps) {
         postImage: postImage?.[0] || undefined,
       });
       await router.push(`/blog/${slug}`);
-    } catch (err) {
-      console.log(err);
-      alert(err);
+    } catch (error) {
+      if (error instanceof ConflictError) {
+        setErrorMessage(error.message);
+      } else if (error instanceof TooManyRequestsError) {
+        setErrorMessage('Too many requests, please try again in 1 hour.');
+      } else {
+        console.log(error);
+        alert(error);
+      }
     }
   };
 
@@ -231,6 +239,8 @@ export default function EditPost({ post }: IPageProps) {
           validationError={errors.body}
           label="Post content"
         />
+
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 4, sm: 2 }}>
           <Stack direction="row" justifyContent="flex-end" spacing={2} flex={1}>

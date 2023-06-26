@@ -5,7 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Box, Typography } from '@mui/material';
 import { emailSchema, passwordSchema, requiredStringSchema } from '@/utils/validation';
 import { useAuthenticatedUser, useCountdown } from '@/hooks';
-import { BadRequestError, ConflictError, NotFoundError } from '@/http/http-errors';
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+  TooManyRequestsError,
+} from '@/http/http-errors';
 import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
@@ -84,6 +89,8 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
     } catch (error) {
       if (error instanceof NotFoundError) {
         setErrorMessage(error.message);
+      } else if (error instanceof TooManyRequestsError) {
+        alert('Too many requests, please wait up to 1 minute.');
       } else {
         console.log(error);
         alert(error);
