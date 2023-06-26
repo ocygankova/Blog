@@ -5,6 +5,7 @@ interface IMaxLengths {
   postTitle: number;
   postSlug: number;
   postSummary: number;
+  postComment: number;
 }
 
 export const maxLengths: IMaxLengths = {
@@ -14,6 +15,7 @@ export const maxLengths: IMaxLengths = {
   postTitle: 100,
   postSlug: 100,
   postSummary: 300,
+  postComment: 1000,
 };
 
 export const verificationCodeRequestTimeoutSeconds = 60;
