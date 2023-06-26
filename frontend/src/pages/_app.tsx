@@ -6,7 +6,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import NextNProgress from 'nextjs-progressbar';
 import basicTheme from '@/styles/theme';
 import createEmotionCache from '@/styles/createEmotionCache';
-import { Footer, Header } from '@/components';
+import { AuthModalsProvider, Footer, Header } from '@/components';
 import { Container } from '@mui/material';
 import { useOnboardingRedirect } from '@/hooks';
 
@@ -29,22 +29,27 @@ export default function MyApp(props: MyAppProps) {
         <meta name="description" content="A blog to share your ideas" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
+
       <ThemeProvider theme={basicTheme}>
-        <CssBaseline />
-        <NextNProgress
-          color="#21fa90"
-          height={5}
-          options={{
-            showSpinner: false,
-          }}
-        />
-        <Header />
-        <main>
-          <Container sx={{ pb: 4, pt: 12 }}>
-            <Component {...pageProps} />
-          </Container>
-        </main>
-        <Footer />
+        <AuthModalsProvider>
+          <CssBaseline />
+          <NextNProgress
+            color="#21fa90"
+            height={5}
+            options={{
+              showSpinner: false,
+            }}
+          />
+
+          <Header />
+
+          <main>
+            <Container sx={{ pb: 4, pt: 12 }}>
+              <Component {...pageProps} />
+            </Container>
+          </main>
+          <Footer />
+        </AuthModalsProvider>
       </ThemeProvider>
     </CacheProvider>
   );
