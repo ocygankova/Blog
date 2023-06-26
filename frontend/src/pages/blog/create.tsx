@@ -3,23 +3,24 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import * as BlogApi from '@/http/api/blog';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import {
-  maxLengths,
   generateSlug,
+  maxLengths,
   requiredFileSchema,
   requiredStringSchema,
   slugSchema,
 } from '@/utils';
 import {
-  FormInputField,
   BlogPostSlugInputField,
   ConfirmationModal,
+  FormInputField,
   LoadingButton,
   MarkdownEditor,
 } from '@/components';
+import { ConflictError, TooManyRequestsError } from '@/http/http-errors';
 
 const validationSchema = yup.object({
   title: requiredStringSchema,
@@ -35,6 +36,7 @@ function CreatePostPage() {
   const router = useRouter();
   const { user, userLoading } = useAuthenticatedUser();
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showDiscardConfirmationModal, setShowDiscardConfirmationModal] = useState<boolean>(false);
   const [discardConfirmed, setDiscardConfirmed] = useState<boolean>(false);
 
@@ -50,6 +52,7 @@ function CreatePostPage() {
 
   const onSubmit = async ({ title, slug, summary, body, postImage }: ICreatePostFormData) => {
     try {
+      setErrorMessage(null);
       await BlogApi.createBlogPost({
         title,
         slug,
@@ -58,9 +61,15 @@ function CreatePostPage() {
         postImage: postImage[0],
       });
       await router.push(`/blog/${slug}`);
-    } catch (err) {
-      console.log(err);
-      alert(err);
+    } catch (error) {
+      if (error instanceof ConflictError) {
+        setErrorMessage(error.message);
+      } else if (error instanceof TooManyRequestsError) {
+        setErrorMessage('Too many requests, please try again in 1 hour.');
+      } else {
+        console.log(error);
+        alert(error);
+      }
     }
   };
 
@@ -182,6 +191,8 @@ function CreatePostPage() {
           validationError={errors.body}
           label="Post content"
         />
+
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
         <Stack direction="row" justifyContent="flex-end" spacing={2}>
           <LoadingButton

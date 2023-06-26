@@ -7,6 +7,8 @@ import {
   profileImageUpload,
   setSessionReturnTo,
   validateRequestSchema,
+  requestVerificationCodeRateLimit,
+  loginRateLimit,
 } from '../middlewares';
 import {
   requestVerificationCodeSchema,
@@ -26,12 +28,14 @@ router.post('/signup', validateRequestSchema(signUpSchema), UsersController.sign
 
 router.post(
   '/verification-code',
+  requestVerificationCodeRateLimit,
   validateRequestSchema(requestVerificationCodeSchema),
   UsersController.requestEmailVerificationCode
 );
 
 router.post(
   '/reset-password-code',
+  requestVerificationCodeRateLimit,
   validateRequestSchema(requestVerificationCodeSchema),
   UsersController.requestResetPasswordCode
 );
@@ -42,7 +46,9 @@ router.post(
   UsersController.resetPassword
 );
 
-router.post('/login', passport.authenticate('local'), (req, res) => res.status(200).json(req.user));
+router.post('/login', loginRateLimit, passport.authenticate('local'), (req, res) =>
+  res.status(200).json(req.user)
+);
 
 router.get('/login/google', setSessionReturnTo, passport.authenticate('google'));
 

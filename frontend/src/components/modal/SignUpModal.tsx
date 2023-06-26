@@ -10,7 +10,7 @@ import {
   usernameSchema,
 } from '@/utils/validation';
 import { useAuthenticatedUser, useCountdown } from '@/hooks';
-import { BadRequestError, ConflictError } from '@/http/http-errors';
+import { BadRequestError, ConflictError, TooManyRequestsError } from '@/http/http-errors';
 import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
@@ -21,7 +21,7 @@ import {
   SocialSignInSection,
   VerificationCodeField,
 } from '@/components';
-import { maxLengths } from '@/utils';
+import { maxLengths, verificationCodeRequestTimeoutSeconds } from '@/utils';
 
 interface IProps {
   open: boolean;
@@ -88,10 +88,12 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
     try {
       await UsersApi.requestEmailVerificationCode(email);
       setShowVerificationCodeSentMessage(true);
-      startVerificationCodeTimeout(30);
+      startVerificationCodeTimeout(verificationCodeRequestTimeoutSeconds);
     } catch (error) {
       if (error instanceof ConflictError) {
         setErrorMessage(error.message);
+      } else if (error instanceof TooManyRequestsError) {
+        alert('Too many requests, please wait up to 1 minute.');
       } else {
         console.log(error);
         alert(error);

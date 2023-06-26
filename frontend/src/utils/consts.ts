@@ -15,3 +15,5 @@ export const maxLengths: IMaxLengths = {
   postSlug: 100,
   postSummary: 300,
 };
+
+export const verificationCodeRequestTimeoutSeconds = 60;

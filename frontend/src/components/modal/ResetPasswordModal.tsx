@@ -5,7 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Box, Typography } from '@mui/material';
 import { emailSchema, passwordSchema, requiredStringSchema } from '@/utils/validation';
 import { useAuthenticatedUser, useCountdown } from '@/hooks';
-import { BadRequestError, ConflictError, NotFoundError } from '@/http/http-errors';
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+  TooManyRequestsError,
+} from '@/http/http-errors';
 import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
@@ -15,6 +20,7 @@ import {
   PasswordInputField,
   VerificationCodeField,
 } from '@/components';
+import { verificationCodeRequestTimeoutSeconds } from '@/utils';
 
 interface IProps {
   open: boolean;
@@ -79,10 +85,12 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
     try {
       await UsersApi.requestPasswordResetCode(email);
       setShowVerificationCodeSentMessage(true);
-      startVerificationCodeTimeout(30);
+      startVerificationCodeTimeout(verificationCodeRequestTimeoutSeconds);
     } catch (error) {
       if (error instanceof NotFoundError) {
         setErrorMessage(error.message);
+      } else if (error instanceof TooManyRequestsError) {
+        alert('Too many requests, please wait up to 1 minute.');
       } else {
         console.log(error);
         alert(error);

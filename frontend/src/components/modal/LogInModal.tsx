@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Box, Divider, Typography } from '@mui/material';
 import { requiredStringSchema } from '@/utils/validation';
 import { useAuthenticatedUser } from '@/hooks';
-import { UnauthorizedError } from '@/http/http-errors';
+import { TooManyRequestsError, UnauthorizedError } from '@/http/http-errors';
 import * as UsersApi from '@/http/api/users';
 import {
   ButtonLink,
@@ -52,6 +52,8 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
     } catch (error) {
       if (error instanceof UnauthorizedError) {
         setErrorMessage('Invalid credentials');
+      } else if (error instanceof TooManyRequestsError) {
+        setErrorMessage("You're trying too often");
       } else {
         console.log(error);
         alert(error);
