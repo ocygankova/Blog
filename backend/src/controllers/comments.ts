@@ -1,6 +1,12 @@
 import { RequestHandler } from 'express';
-import { IGetCommentsParams, IGetCommentsQuery } from '../validations/comment';
+import {
+  ICreateCommentBody,
+  ICreateCommentParams,
+  IGetCommentsParams,
+  IGetCommentsQuery,
+} from '../validations/comment';
 import CommentModel from '../models/comment';
+import { assertIsDefined } from '../utils/assertIsDefined';
 
 export const getCommentsForBlogPost: RequestHandler<
   IGetCommentsParams,
@@ -32,6 +38,34 @@ export const getCommentsForBlogPost: RequestHandler<
       comments,
       endOfPaginationReached,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const createComment: RequestHandler<
+  ICreateCommentParams,
+  unknown,
+  ICreateCommentBody,
+  unknown
+> = async (req, res, next) => {
+  const { blogPostId } = req.params;
+  const { parentCommentId, body } = req.body;
+  const authenticatedUser = req.user;
+
+  try {
+    assertIsDefined(authenticatedUser);
+
+    const newComment = await CommentModel.create({
+      blogPostId,
+      body,
+      author: authenticatedUser,
+      parentCommentId,
+    });
+
+    await CommentModel.populate(newComment, { path: 'author' });
+
+    res.status(201).json(newComment);
   } catch (err) {
     next(err);
   }
