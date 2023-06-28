@@ -3,7 +3,7 @@ import NextImage from 'next/image';
 import NextLink from 'next/link';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import EditIcon from '@mui/icons-material/Edit';
 import * as BlogApi from '@/http/api/blog';
@@ -11,7 +11,7 @@ import { NotFoundError } from '@/http/http-errors';
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser } from '@/hooks';
 import { formatDate } from '@/utils/utils';
-import { BlogPostImageBox } from '@/components';
+import { BlogCommentList, BlogPostImageBox } from '@/components';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await BlogApi.getAllBlogPostSlugs();
@@ -43,7 +43,7 @@ function BlogPostPage({ post }: IPageProps) {
   const { data: revalidatedPost } = useSWR(post.slug, BlogApi.getBlogPostBySlug, {
     revalidateOnFocus: false,
   });
-  const { summary, title, slug, body, imageUrl, author, createdAt, updatedAt } =
+  const { summary, title, slug, body, imageUrl, author, createdAt, updatedAt, _id } =
     revalidatedPost || post;
 
   const createdUpdatedText =
@@ -107,6 +107,10 @@ function BlogPostPage({ post }: IPageProps) {
           <p>{body}</p>
         </Stack>
       </article>
+
+      <Divider />
+
+      <BlogCommentList blogPostId={_id} />
     </>
   );
 }

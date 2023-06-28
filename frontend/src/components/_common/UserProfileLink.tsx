@@ -21,7 +21,7 @@ function UserProfileLink({
 
       <div>
         <Typography>
-          <Typography component="span" variant="h6">
+          <Typography component="span" variant="h6" lineHeight="inherit">
             User since:{' '}
           </Typography>
           {formatDate(createdAt)}

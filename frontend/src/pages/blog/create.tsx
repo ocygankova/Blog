@@ -195,6 +195,9 @@ function CreatePostPage() {
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
         <Stack direction="row" justifyContent="flex-end" spacing={2}>
+          <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
+            Discard
+          </Button>
           <LoadingButton
             type="submit"
             variant="contained"
@@ -203,9 +206,6 @@ function CreatePostPage() {
             sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
             Create post
           </LoadingButton>
-          <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
-            Discard
-          </Button>
         </Stack>
       </Stack>
     </>

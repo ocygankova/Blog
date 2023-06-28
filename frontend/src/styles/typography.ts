@@ -117,7 +117,10 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
       fontFamily: fontFamilyMontserrat,
       fontWeight: 400,
       fontSize: '0.75rem',
-      letterSpacing: '0.08333em',
+      letterSpacing: '0',
+      textTransform: 'none',
+      lineHeight: 'inherit',
+      color: theme.palette?.text?.secondary,
     },
   };
 };

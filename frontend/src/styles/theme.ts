@@ -1,6 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 import { responsiveFontSizes } from '@mui/material';
-import { MuiButton, MuiCssBaseline, MuiLink, MuiTooltip } from '@/styles/components';
+import {
+  MuiButton,
+  MuiCircularProgress,
+  MuiCssBaseline,
+  MuiLink,
+  MuiTooltip,
+} from '@/styles/components';
 import { palette } from '@/styles/palette';
 import createTypography from '@/styles/typography';
 
@@ -18,6 +24,7 @@ theme = createTheme(theme, {
     MuiLink,
     MuiButton,
     MuiTooltip,
+    MuiCircularProgress,
 
     MuiTypography: {
       defaultProps: {
