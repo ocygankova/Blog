@@ -1,7 +1,12 @@
 import format from 'date-fns/format/index';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 export const formatDate = (date: string) => {
   return format(new Date(date), 'MMM d, yyyy');
+};
+
+export const formatRelativeDate = (date: string) => {
+  return formatDistanceToNowStrict(new Date(date), { addSuffix: true });
 };
 
 export const generateSlug = (input: string) => {

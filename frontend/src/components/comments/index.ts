@@ -1,1 +1,1 @@
-export { default as CreateCommentBox } from './CreateCommentBox';
+export { default as BlogCommentList } from './BlogCommentList';

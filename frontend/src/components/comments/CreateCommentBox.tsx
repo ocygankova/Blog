@@ -8,11 +8,12 @@ import { IComment } from '@/models/comment';
 import { useAuthenticatedUser } from '@/hooks';
 import { AuthModalsContext } from '@/components/auth/AuthModalsProvider';
 import { FormInputField, LoadingButton } from '@/components';
+import { maxLengths } from '@/utils';
 
 interface IProps {
   blogPostId: string;
   parentCommentId?: string;
-  title: string;
+  title?: string;
   onCommentCreated: (comment: IComment) => void;
 }
 
@@ -72,6 +73,7 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
           label={title}
           placeholder="Add a comment..."
           multiline
+          maxLength={maxLengths.postComment}
         />
 
         {isDirty && (
