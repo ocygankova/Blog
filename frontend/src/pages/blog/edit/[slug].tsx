@@ -188,9 +188,19 @@ export default function EditPost({ post }: IPageProps) {
         dismissButtonText="Keep writing"
       />
 
-      <Typography variant="h1" mb={4}>
-        Edit post
-      </Typography>
+      <Stack direction="row" spacing={2} mb={4} justifyContent="space-between">
+        <Typography variant="h1">Edit post</Typography>
+
+        <Button
+          variant="outlined"
+          color="error"
+          disabled={deletePending}
+          onClick={openDeleteConfirmationModal}
+          sx={{ alignSelf: 'flex-end' }}>
+          <DeleteOutlineIcon fontSize="small" sx={{ mr: 0.3 }} />
+          Delete
+        </Button>
+      </Stack>
 
       <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
         <FormInputField
@@ -242,29 +252,18 @@ export default function EditPost({ post }: IPageProps) {
 
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 4, sm: 2 }}>
-          <Stack direction="row" justifyContent="flex-end" spacing={2} flex={1}>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              isLoading={isSubmitting}
-              disabled={!isDirty}
-              sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
-              Save changes
-            </LoadingButton>
-            <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
-              Discard
-            </Button>
-          </Stack>
-          <Button
-            variant="outlined"
-            color="error"
-            disabled={deletePending}
-            onClick={openDeleteConfirmationModal}
-            sx={{ alignSelf: 'flex-end' }}>
-            <DeleteOutlineIcon fontSize="small" sx={{ mr: 0.3 }} />
-            Delete
+        <Stack direction="row" justifyContent="flex-end" spacing={2}>
+          <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
+            Discard
           </Button>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            isLoading={isSubmitting}
+            disabled={!isDirty}
+            sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
+            Save changes
+          </LoadingButton>
         </Stack>
       </Stack>
     </>
