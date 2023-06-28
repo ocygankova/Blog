@@ -59,7 +59,7 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
         onClick={() => {
           authModalsContext.showLoginModal();
         }}
-        sx={{ mt: 2 }}>
+        sx={{ my: 2 }}>
         Log in to write a comment
       </Button>
     );

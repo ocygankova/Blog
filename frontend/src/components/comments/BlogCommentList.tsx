@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import { IComment } from '@/models/comment';
 import * as BlogApi from '@/http/api/blog';
 import CreateCommentBox from './CreateCommentBox';
@@ -54,6 +54,11 @@ function CommentSection({ blogPostId }: IProps) {
     setComments([newComment, ...comments]);
   };
 
+  const handleShowMoreButtonClicked = () => {
+    const lastCommentId = comments[comments.length - 1]?._id;
+    loadNextCommentsPage(lastCommentId);
+  };
+
   return (
     <Box pt={3}>
       <Typography variant="h3">Comments</Typography>
@@ -62,6 +67,16 @@ function CommentSection({ blogPostId }: IProps) {
       {comments.map((item) => (
         <Comment comment={item} key={item._id} />
       ))}
+
+      <Stack pt={2} alignItems="center">
+        {commentsLoading && <CircularProgress />}
+        {commentsLoadingIsError && <Typography>Comments could not be loaded.</Typography>}
+        {!commentsLoading && !commentsPaginationEnd && (
+          <Button variant="outlined" onClick={handleShowMoreButtonClicked}>
+            Show more comments
+          </Button>
+        )}
+      </Stack>
     </Box>
   );
 }
