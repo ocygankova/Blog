@@ -33,15 +33,12 @@ function BlogPostCard({ post: { slug, title, summary, imageUrl, author, createdA
         </PaperRounded>
 
         <Box p={2}>
-          <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} alignItems={{ sm: 'center' }}>
             <UserProfileLink user={author} />
-
-            <Stack direction={'row'} spacing={1} alignItems="center" py={1}>
-              <Dot />
-              <Typography variant="caption">
-                <time dateTime={createdAt}>{formatDate(createdAt)}</time>
-              </Typography>{' '}
-            </Stack>
+            <Dot display={{ xs: 'none', sm: 'block' }} />
+            <Typography component="span" variant="overline">
+              <time dateTime={createdAt}>{formatDate(createdAt)}</time>
+            </Typography>
           </Stack>
 
           <TitleLink href={postLink} text={title} />

@@ -12,13 +12,13 @@ interface IProps {
 function UserAvatar({
   src,
   imagePriority,
-  imageQuality,
+  imageQuality = 95,
   sxAvatar,
   size = 'md',
 
   ...props
 }: IProps & AvatarProps) {
-  const avatarSize = size === 'sm' ? 28 : size === 'md' ? 40 : size === 'lg' ? 140 : 240;
+  const avatarSize = size === 'sm' ? 32 : size === 'md' ? 40 : size === 'lg' ? 140 : 240;
   const avatarSx = { width: avatarSize, height: avatarSize, ...sxAvatar };
 
   return (

@@ -1,15 +1,17 @@
-import { Box } from "@mui/material";
+import { Box, BoxProps } from '@mui/material';
 
 interface IProps {
   bgcolor?: string;
 }
 
-function Dot({ bgcolor = "text.disabled" }: IProps) {
+function Dot({ bgcolor = 'text.disabled', ...props }: IProps & BoxProps) {
   return (
     <Box
-      height="4px"
-      width="4px"
-      sx={{ borderRadius: "50%", backgroundColor: bgcolor }}
+      component="span"
+      height="3px"
+      width="3px"
+      sx={{ borderRadius: '50%', backgroundColor: bgcolor }}
+      {...props}
     />
   );
 }

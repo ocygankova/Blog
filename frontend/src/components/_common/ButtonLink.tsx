@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const ButtonLink = styled(Button)<ButtonProps & IProps>(() => ({
-  padding: '0 4px',
+  padding: '0 2px',
   minWidth: 'unset',
   borderRadius: 4,
 }));
