@@ -43,7 +43,7 @@ export type ICreateCommentParams = yup.InferType<typeof createCommentSchema>['pa
 
 export const updateCommentSchema = yup.object({
   body: yup.object({
-    updatedText: commentTextSchema,
+    newText: commentTextSchema,
   }),
   params: yup.object({
     commentId: mongooseObjectIdSchema.required(),

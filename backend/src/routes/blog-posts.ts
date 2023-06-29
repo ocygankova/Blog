@@ -15,7 +15,13 @@ import {
   getBlogPostsSchema,
   updateBlogPostSchema,
 } from '../validations/blog-posts';
-import { createCommentSchema, getCommentsSchema } from '../validations/comment';
+import {
+  createCommentSchema,
+  deleteCommentSchema,
+  getCommentRepliesSchema,
+  getCommentsSchema,
+  updateCommentSchema,
+} from '../validations/comment';
 
 const router = express.Router();
 
@@ -62,6 +68,26 @@ router.post(
   requiresAuth,
   validateRequestSchema(createCommentSchema),
   CommentsController.createComment
+);
+
+router.get(
+  '/comments/:commentId/replies',
+  validateRequestSchema(getCommentRepliesSchema),
+  CommentsController.getCommentReplies
+);
+
+router.patch(
+  '/comments/:commentId',
+  requiresAuth,
+  validateRequestSchema(updateCommentSchema),
+  CommentsController.updateComment
+);
+
+router.delete(
+  '/comments/:commentId',
+  requiresAuth,
+  validateRequestSchema(deleteCommentSchema),
+  CommentsController.deleteComment
 );
 
 export default router;
