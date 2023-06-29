@@ -40,3 +40,23 @@ export const createCommentSchema = yup.object({
 
 export type ICreateCommentBody = yup.InferType<typeof createCommentSchema>['body'];
 export type ICreateCommentParams = yup.InferType<typeof createCommentSchema>['params'];
+
+export const updateCommentSchema = yup.object({
+  body: yup.object({
+    updatedText: commentTextSchema,
+  }),
+  params: yup.object({
+    commentId: mongooseObjectIdSchema.required(),
+  }),
+});
+
+export type IUpdateCommentBody = yup.InferType<typeof updateCommentSchema>['body'];
+export type IUpdateCommentParams = yup.InferType<typeof updateCommentSchema>['params'];
+
+export const deleteCommentSchema = yup.object({
+  params: yup.object({
+    commentId: mongooseObjectIdSchema.required(),
+  }),
+});
+
+export type IDeleteCommentParams = yup.InferType<typeof deleteCommentSchema>['params'];
