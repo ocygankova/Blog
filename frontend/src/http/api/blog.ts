@@ -71,8 +71,11 @@ export async function getCommentsForBlogPost(blogPostId: string, continueAfterId
 export async function createComment(
   blogPostId: string,
   parentCommentId: string | undefined,
-  body: string
+  text: string
 ) {
-  const res = await api.post<IComment>(`/posts/${blogPostId}/comments`, { body, parentCommentId });
+  const res = await api.post<IComment>(`/posts/${blogPostId}/comments`, {
+    text,
+    parentCommentId,
+  });
   return res.data;
 }

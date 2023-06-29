@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const validationSchema = yup.object({
-  body: yup.string(),
+  text: yup.string(),
 });
 
 type ICreateCommentInput = yup.InferType<typeof validationSchema>;
@@ -34,11 +34,11 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
     formState: { isSubmitting, isDirty },
   } = useForm<ICreateCommentInput>({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = async ({ body }: ICreateCommentInput) => {
-    if (!body) return;
+  const onSubmit = async ({ text }: ICreateCommentInput) => {
+    if (!text) return;
 
     try {
-      const newComment = await BlogApi.createComment(blogPostId, parentCommentId, body);
+      const newComment = await BlogApi.createComment(blogPostId, parentCommentId, text);
       onCommentCreated(newComment);
       reset();
     } catch (err) {
@@ -69,7 +69,7 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
     <div>
       <Box component="form" noValidate autoComplete="off" py={2} onSubmit={handleSubmit(onSubmit)}>
         <FormInputField
-          register={register('body')}
+          register={register('text')}
           label={title}
           placeholder="Add a comment..."
           multiline

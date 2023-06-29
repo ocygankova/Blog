@@ -21,7 +21,7 @@ export default Comment;
 function CommentLayout({ comment }: IProps) {
   return (
     <Box py={2}>
-      <Typography mb={2}>{comment.body}</Typography>
+      <Typography mb={2}>{comment.text}</Typography>
 
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} alignItems={{ sm: 'center' }}>
         <UserProfileLink user={comment.author} />

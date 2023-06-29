@@ -50,7 +50,7 @@ export const createComment: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const { blogPostId } = req.params;
-  const { parentCommentId, body } = req.body;
+  const { parentCommentId, text } = req.body;
   const authenticatedUser = req.user;
 
   try {
@@ -58,7 +58,7 @@ export const createComment: RequestHandler<
 
     const newComment = await CommentModel.create({
       blogPostId,
-      body,
+      text,
       author: authenticatedUser,
       parentCommentId,
     });

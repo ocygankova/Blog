@@ -5,9 +5,10 @@ export interface IComment {
   blogPostId: string;
   parentCommentId?: string;
   author: IUser;
-  body: string;
+  text: string;
   createdAt: string;
   updatedAt: string;
+  repliesCount?: number;
 }
 
 export interface ICommentsPage {
