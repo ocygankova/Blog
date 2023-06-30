@@ -14,7 +14,9 @@ interface IProps {
   blogPostId: string;
   parentCommentId?: string;
   title?: string;
+  placeholder?: string;
   onCommentCreated: (comment: IComment) => void;
+  onCancel?: () => void;
 }
 
 const validationSchema = yup.object({
@@ -23,7 +25,14 @@ const validationSchema = yup.object({
 
 type ICreateCommentInput = yup.InferType<typeof validationSchema>;
 
-function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated }: IProps) {
+function CreateCommentBox({
+  blogPostId,
+  title,
+  parentCommentId,
+  onCommentCreated,
+  onCancel,
+  placeholder = 'Add a comment...',
+}: IProps) {
   const { user } = useAuthenticatedUser();
   const authModalsContext = useContext(AuthModalsContext);
 
@@ -48,7 +57,7 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
   };
 
   const handleDiscardButtonClick = () => {
-    reset();
+    onCancel ? onCancel() : reset();
   };
 
   if (!user) {
@@ -71,17 +80,22 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
         <FormInputField
           register={register('text')}
           label={title}
-          placeholder="Add a comment..."
+          placeholder={placeholder}
           multiline
           maxLength={maxLengths.postComment}
+          autoFocus={!!parentCommentId}
         />
 
-        {isDirty && (
+        {(isDirty || parentCommentId) && (
           <Stack direction="row" justifyContent="flex-end" spacing={2} mt={1}>
-            <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
+            <Button color="secondary" onClick={handleDiscardButtonClick}>
               Cancel
             </Button>
-            <LoadingButton type="submit" variant="contained" isLoading={isSubmitting}>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              isLoading={isSubmitting}
+              disabled={!isDirty}>
               Comment
             </LoadingButton>
           </Stack>
