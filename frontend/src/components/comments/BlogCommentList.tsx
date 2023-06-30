@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import { IComment } from '@/models/comment';
-import * as BlogApi from '@/http/api/blog';
+import * as CommentsApi from '@/http/api/comments';
 import CreateCommentBox from './CreateCommentBox';
 import Comment from './Comment';
 
@@ -28,7 +28,7 @@ function CommentSection({ blogPostId }: IProps) {
           setCommentsLoading(true);
           setCommentsLoadingIsError(false);
 
-          const res = await BlogApi.getCommentsForBlogPost(blogPostId, continueAfterId);
+          const res = await CommentsApi.getCommentsForBlogPost(blogPostId, continueAfterId);
           if (!continueAfterId) {
             setComments(res.comments);
           } else {

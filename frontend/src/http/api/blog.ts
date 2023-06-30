@@ -60,22 +60,3 @@ export async function updateBlogPost(blogPostId: string, input: IUpdateBlogPostV
 export async function deleteBlogPost(blogPostId: string) {
   await api.delete(`/posts/${blogPostId}`);
 }
-
-export async function getCommentsForBlogPost(blogPostId: string, continueAfterId?: string) {
-  const query = continueAfterId ? `?continueAfterId=${continueAfterId}` : '';
-
-  const res = await api.get<ICommentsPage>(`/posts/${blogPostId}/comments${query}`);
-  return res.data;
-}
-
-export async function createComment(
-  blogPostId: string,
-  parentCommentId: string | undefined,
-  text: string
-) {
-  const res = await api.post<IComment>(`/posts/${blogPostId}/comments`, {
-    text,
-    parentCommentId,
-  });
-  return res.data;
-}

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack } from '@mui/material';
-import * as BlogApi from '@/http/api/blog';
+import * as CommentsApi from '@/http/api/comments';
 import { IComment } from '@/models/comment';
 import { useAuthenticatedUser } from '@/hooks';
 import { AuthModalsContext } from '@/components/auth/AuthModalsProvider';
@@ -38,7 +38,7 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
     if (!text) return;
 
     try {
-      const newComment = await BlogApi.createComment(blogPostId, parentCommentId, text);
+      const newComment = await CommentsApi.createComment(blogPostId, parentCommentId, text);
       onCommentCreated(newComment);
       reset();
     } catch (err) {
