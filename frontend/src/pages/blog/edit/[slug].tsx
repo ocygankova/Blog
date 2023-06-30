@@ -149,13 +149,13 @@ export default function EditPost({ post }: IPageProps) {
 
   useUnsavedChangesWarning(isDirty && !isSubmitting && !deletePending && !discardConfirmed);
 
-  const userIsAuthorized = (user && user._id === post.author._id) || false;
+  const userIsAuthor = (user && user._id === post.author._id) || false;
 
   if (userLoading) {
     return <CircularProgress sx={{ display: 'block', mx: 'auto' }} />;
   }
 
-  if (!userIsAuthorized) {
+  if (!userIsAuthor) {
     return <Typography>You are not authorized to edit this post.</Typography>;
   }
 
