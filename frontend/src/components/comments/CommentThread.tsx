@@ -15,6 +15,7 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
   const [repliesLoading, setRepliesLoading] = useState<boolean>(false);
   const [repliesLoadingIsError, setRepliesLoadingIsError] = useState<boolean>(false);
   const [repliesPaginationEnd, setRepliesPaginationEnd] = useState<boolean>();
+  const [localReplies, setLocalReplies] = useState<IComment[]>([]);
 
   const loadNextRepliesPage = async () => {
     const continueAfterId = replies[replies.length - 1]?._id;
@@ -25,6 +26,7 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
       const res = await CommentsApi.getRepliesForComment(comment._id, continueAfterId);
       setReplies([...replies, ...res.comments]);
       setRepliesPaginationEnd(res.endOfPaginationReached);
+      setLocalReplies([]);
     } catch (err) {
       console.log(err);
       setRepliesLoadingIsError(true);
@@ -33,9 +35,32 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
     }
   };
 
-  const handleReplyCreated = (reply: IComment) => {};
-  const handleReplyUpdated = (updatedReply: IComment) => {};
-  const handleReplyDeleted = (reply: IComment) => {};
+  const handleReplyCreated = (reply: IComment) => {
+    setLocalReplies([...localReplies, reply]);
+  };
+  const handleServerReplyUpdated = (updatedReply: IComment) => {
+    const updatedReplyList = replies.map((reply) =>
+      updatedReply._id === reply._id ? updatedReply : reply
+    );
+    setReplies(updatedReplyList);
+  };
+
+  const handleServerReplyDeleted = (deletedReply: IComment) => {
+    const updatedReplyList = replies.filter((reply) => reply._id !== deletedReply._id);
+    setReplies(updatedReplyList);
+  };
+
+  const handleLocalReplyUpdated = (updatedReply: IComment) => {
+    const updatedReplyList = localReplies.map((reply) =>
+      updatedReply._id === reply._id ? updatedReply : reply
+    );
+    setLocalReplies(updatedReplyList);
+  };
+
+  const handleLocalReplyDeleted = (deletedReply: IComment) => {
+    const updatedReplyList = localReplies.filter((reply) => reply._id !== deletedReply._id);
+    setLocalReplies(updatedReplyList);
+  };
 
   const showRepliesButton = !!comment.repliesCount && !repliesPaginationEnd && !repliesLoading;
 
@@ -56,8 +81,8 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
       <Replies
         replies={replies}
         onReplyCreated={handleReplyCreated}
-        onReplyUpdated={handleReplyUpdated}
-        onReplyDeleted={handleReplyDeleted}
+        onReplyUpdated={handleServerReplyUpdated}
+        onReplyDeleted={handleServerReplyDeleted}
       />
 
       <Stack pt={2} alignItems="center">
@@ -67,6 +92,13 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
           <Button onClick={loadNextRepliesPage}>{showRepliesButtonText}</Button>
         )}
       </Stack>
+
+      <Replies
+        replies={localReplies}
+        onReplyCreated={handleReplyCreated}
+        onReplyUpdated={handleLocalReplyUpdated}
+        onReplyDeleted={handleLocalReplyDeleted}
+      />
     </div>
   );
 }
