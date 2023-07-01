@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import * as CommentApi from '@/http/api/comments';
 import { IComment } from '@/models/comment';
 import { formatRelativeDate } from '@/utils';
@@ -82,8 +82,6 @@ function Comment({ comment, onReplyCreated, onCommentUpdated, onCommentDeleted }
 
   return (
     <>
-      <Divider />
-
       {showEditBox ? (
         <EditCommentBox
           comment={comment}
@@ -106,6 +104,7 @@ function Comment({ comment, onReplyCreated, onCommentUpdated, onCommentDeleted }
           parentCommentId={comment.parentCommentId ?? comment._id}
           onCancel={handleReplyDismissed}
           placeholder="Add a reply..."
+          defaultText={comment.parentCommentId ? `@${comment.author.displayName}, ` : undefined}
         />
       )}
 
@@ -113,8 +112,12 @@ function Comment({ comment, onReplyCreated, onCommentUpdated, onCommentDeleted }
         open={showDeleteConfirmationModal}
         onConfirm={deleteComment}
         onDismiss={handleDeleteDismissed}
-        title="Delete comment"
-        message="Delete your comment permanently?"
+        title={comment.parentCommentId ? 'Delete reply' : 'Delete comment'}
+        message={
+          comment.parentCommentId
+            ? 'Delete your reply permanently?'
+            : 'Delete your comment and all its replies permanently?'
+        }
         confirmButtonColor="error"
         confirmButtonText="Delete"
         confirmButtonVariant="outlined"

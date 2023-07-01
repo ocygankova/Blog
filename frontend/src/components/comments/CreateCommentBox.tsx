@@ -17,6 +17,7 @@ interface IProps {
   placeholder?: string;
   onCommentCreated: (comment: IComment) => void;
   onCancel?: () => void;
+  defaultText?: string;
 }
 
 const validationSchema = yup.object({
@@ -31,6 +32,7 @@ function CreateCommentBox({
   parentCommentId,
   onCommentCreated,
   onCancel,
+  defaultText,
   placeholder = 'Add a comment...',
 }: IProps) {
   const { user } = useAuthenticatedUser();
@@ -41,7 +43,10 @@ function CreateCommentBox({
     handleSubmit,
     reset,
     formState: { isSubmitting, isDirty },
-  } = useForm<ICreateCommentInput>({ resolver: yupResolver(validationSchema) });
+  } = useForm<ICreateCommentInput>({
+    defaultValues: { text: defaultText || '' },
+    resolver: yupResolver(validationSchema),
+  });
 
   const onSubmit = async ({ text }: ICreateCommentInput) => {
     if (!text) return;
