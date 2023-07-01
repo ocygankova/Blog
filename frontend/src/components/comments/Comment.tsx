@@ -152,7 +152,7 @@ function CommentLayout({
         spacing={1}
         alignItems={{ sm: 'center' }}
         mb={1}>
-        <UserProfileLink user={comment.author} />
+        <UserProfileLink user={comment.author} avatarSize={comment.parentCommentId ? 'sm' : 'md'} />
         <Dot display={{ xs: 'none', sm: 'block' }} />
         <Typography component="span" variant="overline">
           {formatRelativeDate(comment.createdAt)}

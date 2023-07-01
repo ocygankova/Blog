@@ -6,10 +6,12 @@ import { formatDate } from '@/utils/utils';
 
 interface IProps {
   user: IUser;
+  avatarSize?: 'sm' | 'md';
 }
 
 function UserProfileLink({
   user: { username, displayName, about, profileImageUrl, createdAt },
+  avatarSize = 'sm',
 }: IProps) {
   const profileLink = `/users/${username}`;
 
@@ -67,7 +69,7 @@ function UserProfileLink({
           },
         }}>
         <NextLink href={profileLink}>
-          <UserAvatar src={profileImageUrl} size="sm" />
+          <UserAvatar src={profileImageUrl} size={avatarSize} />
         </NextLink>
       </Tooltip>
 
