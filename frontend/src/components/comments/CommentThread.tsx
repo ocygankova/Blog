@@ -73,7 +73,7 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
       : 'Show more replies';
 
   return (
-    <div>
+    <>
       <Comment
         comment={comment}
         onReplyCreated={handleReplyCreated}
@@ -106,7 +106,7 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
       />
 
       <Divider />
-    </div>
+    </>
   );
 }
 
@@ -121,7 +121,7 @@ interface IRepliesProps {
 
 function Replies({ replies, onReplyCreated, onReplyUpdated, onReplyDeleted }: IRepliesProps) {
   return (
-    <Box ml={5}>
+    <Box ml={{ xs: 4, sm: 6 }}>
       {replies.map((item) => (
         <Comment
           key={item._id}
