@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Box, CircularProgress, Divider, Stack, Typography } from '@mui/material';
+import { BsChevronDown } from 'react-icons/bs';
 import { IComment } from '@/models/comment';
 import * as CommentsApi from '@/http/api/comments';
-import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import Comment from '@/components/comments/Comment';
+import { ButtonLink } from '@/components';
 
 interface IProps {
   comment: IComment;
@@ -85,11 +87,14 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
         onReplyDeleted={handleServerReplyDeleted}
       />
 
-      <Stack pt={2} alignItems="center">
+      <Stack pb={2} alignItems="center">
         {repliesLoading && <CircularProgress />}
         {repliesLoadingIsError && <Typography>Replies could not be loaded.</Typography>}
         {showRepliesButton && (
-          <Button onClick={loadNextRepliesPage}>{showRepliesButtonText}</Button>
+          <ButtonLink onClick={loadNextRepliesPage} sx={{ alignSelf: 'flex-start' }}>
+            <BsChevronDown style={{ marginRight: '8px' }} />
+            {showRepliesButtonText}
+          </ButtonLink>
         )}
       </Stack>
 
@@ -99,6 +104,8 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
         onReplyUpdated={handleLocalReplyUpdated}
         onReplyDeleted={handleLocalReplyDeleted}
       />
+
+      <Divider />
     </div>
   );
 }
