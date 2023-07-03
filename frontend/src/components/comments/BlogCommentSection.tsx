@@ -3,17 +3,17 @@ import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material'
 import { IComment } from '@/models/comment';
 import * as CommentsApi from '@/http/api/comments';
 import CreateCommentBox from './CreateCommentBox';
-import CommentThread from '@/components/comments/CommentThread';
+import CommentThread from './CommentThread';
 
 interface IProps {
   blogPostId: string;
 }
 
-function BlogCommentList({ blogPostId }: IProps) {
+function BlogCommentSection({ blogPostId }: IProps) {
   return <CommentSection blogPostId={blogPostId} key={blogPostId} />;
 }
 
-export default BlogCommentList;
+export default BlogCommentSection;
 
 function CommentSection({ blogPostId }: IProps) {
   const [comments, setComments] = useState<IComment[]>([]);

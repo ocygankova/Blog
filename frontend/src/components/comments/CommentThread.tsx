@@ -3,8 +3,8 @@ import { Box, CircularProgress, Divider, Stack, Typography } from '@mui/material
 import { BsChevronDown } from 'react-icons/bs';
 import { IComment } from '@/models/comment';
 import * as CommentsApi from '@/http/api/comments';
-import Comment from '@/components/comments/Comment';
 import { ButtonLink } from '@/components';
+import Comment from './Comment';
 
 interface IProps {
   comment: IComment;

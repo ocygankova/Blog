@@ -4,11 +4,11 @@ import * as CommentApi from '@/http/api/comments';
 import { IComment } from '@/models/comment';
 import { formatRelativeDate } from '@/utils';
 import { useAuthenticatedUser } from '@/hooks';
-import { ButtonLink, ConfirmationModal, Dot, UserProfileLink } from '@/components';
 import { NotFoundError } from '@/http/http-errors';
+import { ButtonLink, ConfirmationModal, Dot, UserProfileLink } from '@/components';
 import { AuthModalsContext } from '@/components/auth/AuthModalsProvider';
-import EditCommentBox from '@/components/comments/EditCommentBox';
-import CreateCommentBox from '@/components/comments/CreateCommentBox';
+import EditCommentBox from './EditCommentBox';
+import CreateCommentBox from './CreateCommentBox';
 
 interface IProps {
   comment: IComment;

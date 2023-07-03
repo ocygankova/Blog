@@ -11,7 +11,7 @@ import { NotFoundError } from '@/http/http-errors';
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser } from '@/hooks';
 import { formatDate } from '@/utils/utils';
-import { BlogCommentList, BlogPostImageBox } from '@/components';
+import { BlogCommentSection, BlogPostImageBox } from '@/components';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await BlogApi.getAllBlogPostSlugs();
@@ -110,7 +110,7 @@ function BlogPostPage({ post }: IPageProps) {
 
       <Divider />
 
-      <BlogCommentList blogPostId={_id} />
+      <BlogCommentSection blogPostId={_id} />
     </>
   );
 }
