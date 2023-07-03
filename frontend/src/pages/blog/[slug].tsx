@@ -43,7 +43,7 @@ function BlogPostPage({ post }: IPageProps) {
   const { data: revalidatedPost } = useSWR(post.slug, BlogApi.getBlogPostBySlug, {
     revalidateOnFocus: false,
   });
-  const { summary, title, slug, body, imageUrl, author, createdAt, updatedAt, _id } =
+  const { summary, title, slug, body, coverImageUrl, author, createdAt, updatedAt, _id } =
     revalidatedPost || post;
 
   const createdUpdatedText =
@@ -96,7 +96,7 @@ function BlogPostPage({ post }: IPageProps) {
 
           <BlogPostImageBox my={2}>
             <NextImage
-              src={imageUrl}
+              src={coverImageUrl}
               alt={title}
               fill
               priority

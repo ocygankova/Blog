@@ -5,7 +5,7 @@ import * as CommentsController from '../controllers/comments';
 import {
   requiresAuth,
   validateRequestSchema,
-  postImageUpload,
+  postCoverImageUpload,
   createPostRateLimit,
   updatePostRateLimit,
 } from '../middlewares';
@@ -36,7 +36,7 @@ router.post(
   '/',
   requiresAuth,
   createPostRateLimit,
-  postImageUpload.single('postImage'),
+  postCoverImageUpload.single('postImage'),
   validateRequestSchema(createBlogPostSchema),
   BlogPostsController.createBlogPost
 );
@@ -45,7 +45,7 @@ router.patch(
   '/:blogPostId',
   requiresAuth,
   updatePostRateLimit,
-  postImageUpload.single('postImage'),
+  postCoverImageUpload.single('postImage'),
   validateRequestSchema(updateBlogPostSchema),
   BlogPostsController.updateBlogPost
 );

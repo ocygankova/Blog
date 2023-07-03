@@ -6,7 +6,7 @@ const blogPostSchema = new Schema(
     title: { type: String, required: true },
     summary: { type: String, required: true },
     body: { type: String, required: true },
-    imageUrl: { type: String, required: true },
+    coverImageUrl: { type: String, required: true },
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
 

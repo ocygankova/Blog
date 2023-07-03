@@ -107,7 +107,7 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
     }
 
     const blogPostId = new mongoose.Types.ObjectId();
-    const imageDestPath = `/uploads/post-images/${blogPostId}.png`;
+    const imageDestPath = `/uploads/post-cover-images/${blogPostId}.png`;
 
     await sharp(postImage.buffer).resize(700, 450).toFile(`./${imageDestPath}`);
 
@@ -117,7 +117,7 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
       title,
       summary,
       body,
-      imageUrl: env.SERVER_URL + imageDestPath,
+      coverImageUrl: env.SERVER_URL + imageDestPath,
       author: authenticatedUser._id,
     });
 
@@ -168,10 +168,10 @@ export const updateBlogPost: RequestHandler<
     postToEdit.body = body;
 
     if (postImage) {
-      const imageDestPath = `/uploads/post-images/${blogPostId}.png`;
+      const imageDestPath = `/uploads/post-cover-images/${blogPostId}.png`;
       await sharp(postImage.buffer).resize(700, 450).toFile(`./${imageDestPath}`);
 
-      postToEdit.imageUrl = env.SERVER_URL + imageDestPath + '?lastupdated=' + Date.now();
+      postToEdit.coverImageUrl = env.SERVER_URL + imageDestPath + '?lastupdated=' + Date.now();
     }
 
     await postToEdit.save();
@@ -210,8 +210,8 @@ export const deleteBlogPost: RequestHandler<
     }
 
     // check so we don't delete prod images from localhost
-    if (postToDelete.imageUrl.startsWith(env.SERVER_URL)) {
-      const imagePath = postToDelete.imageUrl.split(env.SERVER_URL)[1].split('?')[0];
+    if (postToDelete.coverImageUrl.startsWith(env.SERVER_URL)) {
+      const imagePath = postToDelete.coverImageUrl.split(env.SERVER_URL)[1].split('?')[0];
       fs.unlinkSync('.' + imagePath);
     }
 

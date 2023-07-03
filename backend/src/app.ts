@@ -32,7 +32,7 @@ app.use(session(sessionConfig));
 app.use(passport.authenticate('session'));
 
 app.use('/uploads/profile-images', express.static('uploads/profile-images'));
-app.use('/uploads/post-images', express.static('uploads/post-images'));
+app.use('/uploads/post-cover-images', express.static('uploads/post-cover-images'));
 
 app.use('/users', usersRoutes);
 app.use('/posts', blogPostsRoutes);
