@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import axios from 'axios';
 
 import BlogPostModel from '../models/blog-post';
+import CommentModel from '../models/comment';
 import { assertIsDefined } from '../utils/assertIsDefined';
 import {
   IBlogPostReqBody,
@@ -214,6 +215,7 @@ export const deleteBlogPost: RequestHandler<
       fs.unlinkSync('.' + imagePath);
     }
 
+    await CommentModel.deleteMany({ blogPostId: postToDelete._id }).exec();
     await postToDelete.deleteOne();
 
     await axios.get(

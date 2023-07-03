@@ -5,7 +5,7 @@ const commentSchema = new Schema(
     blogPostId: { type: Schema.Types.ObjectId, required: true },
     parentCommentId: { type: Schema.Types.ObjectId },
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    body: { type: String, required: true },
+    text: { type: String, required: true },
   },
 
   { timestamps: true }

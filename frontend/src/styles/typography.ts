@@ -100,7 +100,7 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
 
     button: {
       fontFamily: fontFamilyMontserrat,
-      fontWeight: 500,
+      fontWeight: 600,
       fontSize: '1rem',
       letterSpacing: '0.02857em',
     },

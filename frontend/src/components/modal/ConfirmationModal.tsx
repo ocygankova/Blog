@@ -22,7 +22,7 @@ function ConfirmationModal({
   title = 'Confirm action',
   confirmButtonText = 'Confirm',
   dismissButtonText = 'Dismiss',
-  confirmButtonVariant = 'contained',
+  confirmButtonVariant = 'outlined',
   confirmButtonColor,
 }: IProps) {
   return (

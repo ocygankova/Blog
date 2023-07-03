@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack } from '@mui/material';
-import * as BlogApi from '@/http/api/blog';
+import * as CommentsApi from '@/http/api/comments';
 import { IComment } from '@/models/comment';
 import { useAuthenticatedUser } from '@/hooks';
 import { AuthModalsContext } from '@/components/auth/AuthModalsProvider';
@@ -14,16 +14,27 @@ interface IProps {
   blogPostId: string;
   parentCommentId?: string;
   title?: string;
+  placeholder?: string;
   onCommentCreated: (comment: IComment) => void;
+  onCancel?: () => void;
+  defaultText?: string;
 }
 
 const validationSchema = yup.object({
-  body: yup.string(),
+  text: yup.string(),
 });
 
 type ICreateCommentInput = yup.InferType<typeof validationSchema>;
 
-function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated }: IProps) {
+function CreateCommentBox({
+  blogPostId,
+  title,
+  parentCommentId,
+  onCommentCreated,
+  onCancel,
+  defaultText,
+  placeholder = 'Add a comment...',
+}: IProps) {
   const { user } = useAuthenticatedUser();
   const authModalsContext = useContext(AuthModalsContext);
 
@@ -32,13 +43,16 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
     handleSubmit,
     reset,
     formState: { isSubmitting, isDirty },
-  } = useForm<ICreateCommentInput>({ resolver: yupResolver(validationSchema) });
+  } = useForm<ICreateCommentInput>({
+    defaultValues: { text: defaultText || '' },
+    resolver: yupResolver(validationSchema),
+  });
 
-  const onSubmit = async ({ body }: ICreateCommentInput) => {
-    if (!body) return;
+  const onSubmit = async ({ text }: ICreateCommentInput) => {
+    if (!text) return;
 
     try {
-      const newComment = await BlogApi.createComment(blogPostId, parentCommentId, body);
+      const newComment = await CommentsApi.createComment(blogPostId, parentCommentId, text);
       onCommentCreated(newComment);
       reset();
     } catch (err) {
@@ -48,7 +62,7 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
   };
 
   const handleDiscardButtonClick = () => {
-    reset();
+    onCancel ? onCancel() : reset();
   };
 
   if (!user) {
@@ -69,19 +83,24 @@ function CreateCommentBox({ blogPostId, title, parentCommentId, onCommentCreated
     <div>
       <Box component="form" noValidate autoComplete="off" py={2} onSubmit={handleSubmit(onSubmit)}>
         <FormInputField
-          register={register('body')}
+          register={register('text')}
           label={title}
-          placeholder="Add a comment..."
+          placeholder={placeholder}
           multiline
           maxLength={maxLengths.postComment}
+          autoFocus={!!parentCommentId}
         />
 
-        {isDirty && (
+        {(isDirty || parentCommentId) && (
           <Stack direction="row" justifyContent="flex-end" spacing={2} mt={1}>
-            <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
+            <Button color="secondary" onClick={handleDiscardButtonClick}>
               Cancel
             </Button>
-            <LoadingButton type="submit" variant="contained" isLoading={isSubmitting}>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              isLoading={isSubmitting}
+              disabled={!isDirty}>
               Comment
             </LoadingButton>
           </Stack>

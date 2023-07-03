@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { maxLengths } from '../utils/consts';
 import { mongooseObjectIdSchema } from '../utils/validation';
 
-const commentBodySchema = yup.string().required().max(maxLengths.postComment);
+const commentTextSchema = yup.string().required().max(maxLengths.postComment);
 
 export const getCommentsSchema = yup.object({
   params: yup.object({
@@ -16,9 +16,21 @@ export const getCommentsSchema = yup.object({
 export type IGetCommentsParams = yup.InferType<typeof getCommentsSchema>['params'];
 export type IGetCommentsQuery = yup.InferType<typeof getCommentsSchema>['query'];
 
+export const getCommentRepliesSchema = yup.object({
+  params: yup.object({
+    commentId: mongooseObjectIdSchema.required(),
+  }),
+  query: yup.object({
+    continueAfterId: mongooseObjectIdSchema,
+  }),
+});
+
+export type IGetCommentRepliesParams = yup.InferType<typeof getCommentRepliesSchema>['params'];
+export type IGetCommentRepliesQuery = yup.InferType<typeof getCommentRepliesSchema>['query'];
+
 export const createCommentSchema = yup.object({
   body: yup.object({
-    body: commentBodySchema,
+    text: commentTextSchema,
     parentCommentId: mongooseObjectIdSchema,
   }),
   params: yup.object({
@@ -28,3 +40,23 @@ export const createCommentSchema = yup.object({
 
 export type ICreateCommentBody = yup.InferType<typeof createCommentSchema>['body'];
 export type ICreateCommentParams = yup.InferType<typeof createCommentSchema>['params'];
+
+export const updateCommentSchema = yup.object({
+  body: yup.object({
+    newText: commentTextSchema,
+  }),
+  params: yup.object({
+    commentId: mongooseObjectIdSchema.required(),
+  }),
+});
+
+export type IUpdateCommentBody = yup.InferType<typeof updateCommentSchema>['body'];
+export type IUpdateCommentParams = yup.InferType<typeof updateCommentSchema>['params'];
+
+export const deleteCommentSchema = yup.object({
+  params: yup.object({
+    commentId: mongooseObjectIdSchema.required(),
+  }),
+});
+
+export type IDeleteCommentParams = yup.InferType<typeof deleteCommentSchema>['params'];

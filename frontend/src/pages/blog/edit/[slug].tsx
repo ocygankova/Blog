@@ -149,13 +149,13 @@ export default function EditPost({ post }: IPageProps) {
 
   useUnsavedChangesWarning(isDirty && !isSubmitting && !deletePending && !discardConfirmed);
 
-  const userIsAuthorized = (user && user._id === post.author._id) || false;
+  const userIsAuthor = (user && user._id === post.author._id) || false;
 
   if (userLoading) {
     return <CircularProgress sx={{ display: 'block', mx: 'auto' }} />;
   }
 
-  if (!userIsAuthorized) {
+  if (!userIsAuthor) {
     return <Typography>You are not authorized to edit this post.</Typography>;
   }
 
@@ -168,7 +168,7 @@ export default function EditPost({ post }: IPageProps) {
         title="Confirm post deletion"
         message={
           <>
-            <span>Do you want to permanently delete this post?</span>
+            <span>Do you want to permanently delete this post and all its comments?</span>
             <br />
             <span>This action can not be reversed.</span>
           </>
