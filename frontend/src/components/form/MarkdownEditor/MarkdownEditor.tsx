@@ -3,6 +3,7 @@ import { FieldError, UseFormRegisterReturn, UseFormSetValue, UseFormWatch } from
 import ReactMarkdown from 'react-markdown';
 import { FormHelperText, InputLabel } from '@mui/material';
 import 'react-markdown-editor-lite/lib/index.css';
+import * as BlogApi from '@/http/api/blog';
 import { StyledFormControl } from './styles';
 
 const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
@@ -26,6 +27,16 @@ function MarkdownEditor({
   label,
   editorHeight = 500,
 }: IProps) {
+  const uploadInPostImage = async (image: File) => {
+    try {
+      const res = await BlogApi.uploadInPostImage(image);
+      return res.imageUrl;
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
   return (
     <StyledFormControl>
       <InputLabel
@@ -50,6 +61,8 @@ function MarkdownEditor({
             shouldDirty: true,
           })
         }
+        onImageUpload={uploadInPostImage}
+        imageAccept=".jpg,.jpeg,.png"
         placeholder={'Write your post content here...'}
         style={{ height: editorHeight }}
         className={validationError ? 'is-invalid' : ''}
