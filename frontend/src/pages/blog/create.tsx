@@ -27,7 +27,7 @@ const validationSchema = yup.object({
   slug: slugSchema.required('Please fill out this field.'),
   summary: requiredStringSchema,
   body: requiredStringSchema,
-  postImage: requiredFileSchema,
+  postCoverImage: requiredFileSchema,
 });
 
 type ICreatePostFormData = yup.InferType<typeof validationSchema>;
@@ -50,7 +50,7 @@ function CreatePostPage() {
     formState: { errors, isSubmitting, isDirty },
   } = useForm<ICreatePostFormData>({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = async ({ title, slug, summary, body, postImage }: ICreatePostFormData) => {
+  const onSubmit = async ({ title, slug, summary, body, postCoverImage }: ICreatePostFormData) => {
     try {
       setErrorMessage(null);
       await BlogApi.createBlogPost({
@@ -58,7 +58,7 @@ function CreatePostPage() {
         slug,
         summary,
         body,
-        postImage: postImage[0],
+        postCoverImage: postCoverImage[0],
       });
       await router.push(`/blog/${slug}`);
     } catch (error) {
@@ -177,9 +177,9 @@ function CreatePostPage() {
         />
 
         <FormInputField
-          register={register('postImage')}
+          register={register('postCoverImage')}
           label="Post cover image"
-          validationError={errors.postImage}
+          validationError={errors.postCoverImage}
           type="file"
           inputProps={{ accept: 'image/png,image/jpeg' }}
         />

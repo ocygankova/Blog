@@ -39,7 +39,7 @@ const validationSchema = yup.object({
   title: requiredStringSchema,
   summary: requiredStringSchema,
   body: requiredStringSchema,
-  postImage: yup.mixed<FileList>(),
+  postCoverImage: yup.mixed<FileList>(),
 });
 
 type IUpdatePostFormData = yup.InferType<typeof validationSchema>;
@@ -71,7 +71,7 @@ export default function EditPost({ post }: IPageProps) {
     defaultValues: { slug: post.slug, title: post.title, summary: post.summary, body: post.body },
   });
 
-  const onSubmit = async ({ title, slug, summary, body, postImage }: IUpdatePostFormData) => {
+  const onSubmit = async ({ title, slug, summary, body, postCoverImage }: IUpdatePostFormData) => {
     try {
       setErrorMessage(null);
       await BlogApi.updateBlogPost(post._id, {
@@ -79,7 +79,7 @@ export default function EditPost({ post }: IPageProps) {
         slug,
         summary,
         body,
-        postImage: postImage?.[0] || undefined,
+        postCoverImage: postCoverImage?.[0] || undefined,
       });
       await router.push(`/blog/${slug}`);
     } catch (error) {
@@ -235,9 +235,9 @@ export default function EditPost({ post }: IPageProps) {
         />
 
         <FormInputField
-          register={register('postImage')}
+          register={register('postCoverImage')}
           label="Post cover image"
-          validationError={errors.postImage}
+          validationError={errors.postCoverImage}
           type="file"
           inputProps={{ accept: 'image/png,image/jpeg' }}
         />

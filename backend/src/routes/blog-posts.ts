@@ -36,7 +36,7 @@ router.post(
   '/',
   requiresAuth,
   createPostRateLimit,
-  postCoverImageUpload.single('postImage'),
+  postCoverImageUpload.single('postCoverImage'),
   validateRequestSchema(createBlogPostSchema),
   BlogPostsController.createBlogPost
 );
@@ -45,7 +45,7 @@ router.patch(
   '/:blogPostId',
   requiresAuth,
   updatePostRateLimit,
-  postCoverImageUpload.single('postImage'),
+  postCoverImageUpload.single('postCoverImage'),
   validateRequestSchema(updateBlogPostSchema),
   BlogPostsController.updateBlogPost
 );

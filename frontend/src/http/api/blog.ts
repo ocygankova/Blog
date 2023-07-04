@@ -27,7 +27,7 @@ interface ICreateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  postImage: File;
+  postCoverImage: File;
 }
 
 export async function createBlogPost(input: ICreateBlogPostValues) {
@@ -45,7 +45,7 @@ interface IUpdateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  postImage?: File;
+  postCoverImage?: File;
 }
 
 export async function updateBlogPost(blogPostId: string, input: IUpdateBlogPostValues) {
