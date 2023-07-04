@@ -4,6 +4,8 @@ import sharp from 'sharp';
 import createHttpError from 'http-errors';
 import * as fs from 'fs';
 import axios from 'axios';
+import crypto from 'crypto';
+import * as path from 'path';
 
 import BlogPostModel from '../models/blog-post';
 import CommentModel from '../models/comment';
@@ -223,6 +225,24 @@ export const deleteBlogPost: RequestHandler<
     );
 
     res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const uploadInPostImage: RequestHandler = async (req, res, next) => {
+  const image = req.file;
+
+  try {
+    assertIsDefined(image);
+
+    const fileName = crypto.randomBytes(20).toString('hex');
+    const imageDestPath = `/uploads/in-post-images/${fileName}${path.extname(image.originalname)}`;
+    await sharp(image.buffer)
+      .resize(1920, undefined, { withoutEnlargement: true })
+      .toFile(`./${imageDestPath}`);
+
+    res.status(201).json({ imageUrl: env.SERVER_URL + imageDestPath });
   } catch (err) {
     next(err);
   }
