@@ -1,5 +1,4 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import NextImage from 'next/image';
 import NextLink from 'next/link';
 import Head from 'next/head';
 import useSWR from 'swr';
@@ -11,7 +10,13 @@ import { NotFoundError } from '@/http/http-errors';
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser } from '@/hooks';
 import { formatDate } from '@/utils/utils';
-import { BlogCommentSection, BlogPostImageBox } from '@/components';
+import {
+  BlogCommentSection,
+  Dot,
+  Markdown,
+  PageSectionContainer,
+  UserProfileLink,
+} from '@/components';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await BlogApi.getAllBlogPostSlugs();
@@ -82,35 +87,43 @@ function BlogPostPage({ post }: IPageProps) {
         )}
       </Stack>
 
-      <article>
-        <Stack alignItems="center">
-          <Typography variant="h1" textAlign="center" mb={4}>
-            {title}
+      <PageSectionContainer coverImageSrc={coverImageUrl} coverImageAlt={title}>
+        <Typography variant="h1" mb={4}>
+          {title}
+        </Typography>
+
+        <Typography variant="h4" mb={4}>
+          {summary}
+        </Typography>
+
+        <Divider sx={{ mt: 6, mb: 3 }} />
+
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          alignItems={{ xs: 'flex-start', md: 'center' }}>
+          <UserProfileLink
+            user={author}
+            avatarSize="md"
+            typography="body1"
+            color="primary"
+            mb={{ xs: 1, md: 0 }}
+          />
+
+          <Dot display={{ xs: 'none', md: 'block' }} mx={2} />
+
+          <Typography component="span" variant="body2">
+            {createdUpdatedText}
           </Typography>
-
-          <Typography variant="h4" textAlign="center" mb={4}>
-            {summary}
-          </Typography>
-
-          <Typography variant="body2">{createdUpdatedText} </Typography>
-
-          <BlogPostImageBox my={2}>
-            <NextImage
-              src={coverImageUrl}
-              alt={title}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 700px"
-            />
-          </BlogPostImageBox>
-
-          <p>{body}</p>
         </Stack>
-      </article>
 
-      <Divider />
+        <Divider sx={{ mt: 3, mb: 6 }} />
 
-      <BlogCommentSection blogPostId={_id} />
+        <Markdown>{body}</Markdown>
+      </PageSectionContainer>
+
+      <PageSectionContainer>
+        <BlogCommentSection blogPostId={_id} />
+      </PageSectionContainer>
     </>
   );
 }

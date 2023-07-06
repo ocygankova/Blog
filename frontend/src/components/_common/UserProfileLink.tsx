@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { Stack, Tooltip, Typography } from '@mui/material';
+import { Stack, StackProps, Tooltip, Typography, TypographyVariant } from '@mui/material';
 import { IUser } from '@/models/user';
 import { ButtonLink, UserAvatar } from '@/components';
 import { formatDate } from '@/utils/utils';
@@ -7,12 +7,17 @@ import { formatDate } from '@/utils/utils';
 interface IProps {
   user: IUser;
   avatarSize?: 'sm' | 'md';
+  typography?: TypographyVariant;
+  color?: 'primary' | 'secondary';
 }
 
 function UserProfileLink({
   user: { username, displayName, about, profileImageUrl, createdAt },
   avatarSize = 'sm',
-}: IProps) {
+  typography = 'caption',
+  color = 'secondary',
+  ...props
+}: IProps & StackProps) {
   const profileLink = `/users/${username}`;
 
   const renderTooltipContent = () => (
@@ -42,7 +47,7 @@ function UserProfileLink({
   );
 
   return (
-    <Stack direction="row" component="span" spacing={0.5} alignItems="center">
+    <Stack direction="row" component="span" spacing={0.5} alignItems="center" {...props}>
       <Tooltip
         title={renderTooltipContent()}
         placement="bottom-start"
@@ -74,10 +79,14 @@ function UserProfileLink({
       </Tooltip>
 
       <ButtonLink
-        color="secondary"
+        color={color}
         component={NextLink}
         href={profileLink}
-        sx={{ display: 'inline-flex', alignItems: 'center', typography: 'caption' }}>
+        sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          typography: typography,
+        }}>
         {displayName}
       </ButtonLink>
     </Stack>

@@ -41,6 +41,6 @@ theme = createTheme(theme, {
   },
 });
 
-theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme, { variants: ['h1', 'h2', 'h3', 'h4', 'h5'] });
 
 export default theme;
