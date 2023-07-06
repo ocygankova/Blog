@@ -95,11 +95,11 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
   next
 ) => {
   const { slug, title, summary, body } = req.body;
-  const postImage = req.file;
+  const coverImage = req.file;
   const authenticatedUser = req.user;
 
   try {
-    assertIsDefined(postImage);
+    assertIsDefined(coverImage);
     assertIsDefined(authenticatedUser);
 
     const postWithSameSlug = await BlogPostModel.findOne({ slug }).exec();
@@ -109,9 +109,11 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
     }
 
     const blogPostId = new mongoose.Types.ObjectId();
-    const imageDestPath = `/uploads/post-cover-images/${blogPostId}.png`;
+    const imageDestPath = `/uploads/post-cover-images/${blogPostId}${path.extname(
+      coverImage.originalname
+    )}`;
 
-    await sharp(postImage.buffer).resize(700, 450).toFile(`./${imageDestPath}`);
+    await sharp(coverImage.buffer).resize(1000, 420).toFile(`./${imageDestPath}`);
 
     const newPost = await BlogPostModel.create({
       _id: blogPostId,
@@ -142,7 +144,7 @@ export const updateBlogPost: RequestHandler<
 > = async (req, res, next) => {
   const { blogPostId } = req.params;
   const { slug, title, summary, body } = req.body;
-  const postImage = req.file;
+  const coverImage = req.file;
   const authenticatedUser = req.user;
 
   try {
@@ -169,9 +171,11 @@ export const updateBlogPost: RequestHandler<
     postToEdit.summary = summary;
     postToEdit.body = body;
 
-    if (postImage) {
-      const imageDestPath = `/uploads/post-cover-images/${blogPostId}.png`;
-      await sharp(postImage.buffer).resize(700, 450).toFile(`./${imageDestPath}`);
+    if (coverImage) {
+      const imageDestPath = `/uploads/post-cover-images/${blogPostId}${path.extname(
+        coverImage.originalname
+      )}`;
+      await sharp(coverImage.buffer).resize(1000, 420).toFile(`./${imageDestPath}`);
 
       postToEdit.coverImageUrl = env.SERVER_URL + imageDestPath + '?lastupdated=' + Date.now();
     }
