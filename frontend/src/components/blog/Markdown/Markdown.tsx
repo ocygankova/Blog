@@ -4,6 +4,7 @@ import remarkToc from 'remark-toc';
 import rehypeSlug from 'rehype-slug';
 import remarkEmoji from 'remark-emoji';
 import { Box, Link, List, ListItem, Typography, useTheme } from '@mui/material';
+import styles from './Markdown.module.css';
 
 interface IProps {
   children: string;
@@ -14,6 +15,7 @@ function Markdown({ children }: IProps) {
 
   return (
     <ReactMarkdown
+      className={styles.markdown}
       remarkPlugins={[remarkGfm, [remarkToc, { maxDepth: 3, tight: true }], remarkEmoji]}
       rehypePlugins={[rehypeSlug]}
       components={{
@@ -71,7 +73,7 @@ function Markdown({ children }: IProps) {
                 overflowX: 'auto',
               }}>
               {children}
-            </pre>{' '}
+            </pre>
           </Box>
         ),
 
@@ -85,6 +87,17 @@ function Markdown({ children }: IProps) {
             }}>
             {children}
           </code>
+        ),
+
+        table: ({ children }) => (
+          <Box
+            my={4}
+            py={2}
+            sx={{
+              overflowX: 'auto',
+            }}>
+            <table>{children}</table>
+          </Box>
         ),
       }}>
       {children}
