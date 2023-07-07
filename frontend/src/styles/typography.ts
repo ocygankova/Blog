@@ -56,7 +56,8 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
     h6: {
       fontFamily: fontFamilyMontserrat,
       fontWeight: 700,
-      fontSize: '1rem',
+      fontSize: 18,
+      lineHeight: '180%',
       letterSpacing: '0.008em',
       wordWrap: 'break-word',
       wordBreak: 'break-word',
@@ -65,7 +66,8 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
     body1: {
       fontFamily: fontFamilyMontserrat,
       fontWeight: 500,
-      fontSize: '1rem',
+      fontSize: 18,
+      lineHeight: '180%',
       letterSpacing: '0.00500em',
       wordWrap: 'break-word',
       wordBreak: 'break-word',
@@ -75,6 +77,7 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
       fontFamily: fontFamilyMontserrat,
       fontWeight: 500,
       fontSize: '1rem',
+      lineHeight: '180%',
       letterSpacing: '0.01070em',
       wordWrap: 'break-word',
       wordBreak: 'break-word',
@@ -103,6 +106,7 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
       fontWeight: 600,
       fontSize: '1rem',
       letterSpacing: '0.02857em',
+      textTransform: 'none',
     },
 
     caption: {

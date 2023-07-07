@@ -73,8 +73,8 @@ function CommentSection({ blogPostId }: IProps) {
     loadNextCommentsPage(lastCommentId);
   };
   return (
-    <Box pt={3}>
-      <Typography variant="h3">Comments</Typography>
+    <>
+      <Typography variant="h2">Comments</Typography>
       <CreateCommentBox blogPostId={blogPostId} onCommentCreated={handleCommentCreated} />
 
       {comments.map((item) => (
@@ -95,6 +95,6 @@ function CommentSection({ blogPostId }: IProps) {
           </Button>
         )}
       </Stack>
-    </Box>
+    </>
   );
 }

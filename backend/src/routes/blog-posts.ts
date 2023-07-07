@@ -5,15 +5,18 @@ import * as CommentsController from '../controllers/comments';
 import {
   requiresAuth,
   validateRequestSchema,
-  postImageUpload,
+  postCoverImageUpload,
   createPostRateLimit,
   updatePostRateLimit,
+  uploadImageRateLimit,
+  inPostImageUpload,
 } from '../middlewares';
 import {
   createBlogPostSchema,
   deleteBlogPostSchema,
   getBlogPostsSchema,
   updateBlogPostSchema,
+  uploadInPostImageSchema,
 } from '../validations/blog-posts';
 import {
   createCommentSchema,
@@ -36,7 +39,7 @@ router.post(
   '/',
   requiresAuth,
   createPostRateLimit,
-  postImageUpload.single('postImage'),
+  postCoverImageUpload.single('postCoverImage'),
   validateRequestSchema(createBlogPostSchema),
   BlogPostsController.createBlogPost
 );
@@ -45,7 +48,7 @@ router.patch(
   '/:blogPostId',
   requiresAuth,
   updatePostRateLimit,
-  postImageUpload.single('postImage'),
+  postCoverImageUpload.single('postCoverImage'),
   validateRequestSchema(updateBlogPostSchema),
   BlogPostsController.updateBlogPost
 );
@@ -55,6 +58,15 @@ router.delete(
   requiresAuth,
   validateRequestSchema(deleteBlogPostSchema),
   BlogPostsController.deleteBlogPost
+);
+
+router.post(
+  '/images',
+  requiresAuth,
+  uploadImageRateLimit,
+  inPostImageUpload.single('inPostImage'),
+  validateRequestSchema(uploadInPostImageSchema),
+  BlogPostsController.uploadInPostImage
 );
 
 router.get(

@@ -1,0 +1,40 @@
+.markdown table {
+  min-width: 600px;
+  line-height: 1.7;
+  overflow: auto;
+  border: 1px solid #f6f6f6;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown table td,
+.markdown table th {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.markdown table tr {
+  border: 1px solid #efefef;
+}
+
+.markdown table tr:nth-child(2n) {
+  background-color: transparent;
+}
+
+.markdown table th {
+  text-align: center;
+  font-weight: 700;
+  border: 1px solid #efefef;
+  padding: 10px 6px;
+  background-color: #f5f7fa;
+  word-break: break-word;
+}
+
+.markdown table td {
+  border: 1px solid #efefef;
+  text-align: left;
+  padding: 10px 15px;
+  word-break: break-word;
+  min-width: 60px;
+}

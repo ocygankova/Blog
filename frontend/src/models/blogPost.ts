@@ -1,4 +1,4 @@
-import { IUser } from "@/models/user";
+import { IUser } from '@/models/user';
 
 export interface IBlogPost {
   _id: string;
@@ -6,7 +6,7 @@ export interface IBlogPost {
   title: string;
   summary: string;
   body: string;
-  imageUrl: string;
+  coverImageUrl: string;
   author: IUser;
   createdAt: string;
   updatedAt: string;

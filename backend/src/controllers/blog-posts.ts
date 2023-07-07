@@ -4,6 +4,8 @@ import sharp from 'sharp';
 import createHttpError from 'http-errors';
 import * as fs from 'fs';
 import axios from 'axios';
+import crypto from 'crypto';
+import * as path from 'path';
 
 import BlogPostModel from '../models/blog-post';
 import CommentModel from '../models/comment';
@@ -93,11 +95,11 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
   next
 ) => {
   const { slug, title, summary, body } = req.body;
-  const postImage = req.file;
+  const coverImage = req.file;
   const authenticatedUser = req.user;
 
   try {
-    assertIsDefined(postImage);
+    assertIsDefined(coverImage);
     assertIsDefined(authenticatedUser);
 
     const postWithSameSlug = await BlogPostModel.findOne({ slug }).exec();
@@ -107,9 +109,11 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
     }
 
     const blogPostId = new mongoose.Types.ObjectId();
-    const imageDestPath = `/uploads/post-images/${blogPostId}.png`;
+    const imageDestPath = `/uploads/post-cover-images/${blogPostId}${path.extname(
+      coverImage.originalname
+    )}`;
 
-    await sharp(postImage.buffer).resize(700, 450).toFile(`./${imageDestPath}`);
+    await sharp(coverImage.buffer).resize(1000, 420).toFile(`./${imageDestPath}`);
 
     const newPost = await BlogPostModel.create({
       _id: blogPostId,
@@ -117,7 +121,7 @@ export const createBlogPost: RequestHandler<unknown, unknown, IBlogPostReqBody, 
       title,
       summary,
       body,
-      imageUrl: env.SERVER_URL + imageDestPath,
+      coverImageUrl: env.SERVER_URL + imageDestPath,
       author: authenticatedUser._id,
     });
 
@@ -140,7 +144,7 @@ export const updateBlogPost: RequestHandler<
 > = async (req, res, next) => {
   const { blogPostId } = req.params;
   const { slug, title, summary, body } = req.body;
-  const postImage = req.file;
+  const coverImage = req.file;
   const authenticatedUser = req.user;
 
   try {
@@ -167,11 +171,13 @@ export const updateBlogPost: RequestHandler<
     postToEdit.summary = summary;
     postToEdit.body = body;
 
-    if (postImage) {
-      const imageDestPath = `/uploads/post-images/${blogPostId}.png`;
-      await sharp(postImage.buffer).resize(700, 450).toFile(`./${imageDestPath}`);
+    if (coverImage) {
+      const imageDestPath = `/uploads/post-cover-images/${blogPostId}${path.extname(
+        coverImage.originalname
+      )}`;
+      await sharp(coverImage.buffer).resize(1000, 420).toFile(`./${imageDestPath}`);
 
-      postToEdit.imageUrl = env.SERVER_URL + imageDestPath + '?lastupdated=' + Date.now();
+      postToEdit.coverImageUrl = env.SERVER_URL + imageDestPath + '?lastupdated=' + Date.now();
     }
 
     await postToEdit.save();
@@ -210,8 +216,8 @@ export const deleteBlogPost: RequestHandler<
     }
 
     // check so we don't delete prod images from localhost
-    if (postToDelete.imageUrl.startsWith(env.SERVER_URL)) {
-      const imagePath = postToDelete.imageUrl.split(env.SERVER_URL)[1].split('?')[0];
+    if (postToDelete.coverImageUrl.startsWith(env.SERVER_URL)) {
+      const imagePath = postToDelete.coverImageUrl.split(env.SERVER_URL)[1].split('?')[0];
       fs.unlinkSync('.' + imagePath);
     }
 
@@ -223,6 +229,24 @@ export const deleteBlogPost: RequestHandler<
     );
 
     res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const uploadInPostImage: RequestHandler = async (req, res, next) => {
+  const image = req.file;
+
+  try {
+    assertIsDefined(image);
+
+    const fileName = crypto.randomBytes(20).toString('hex');
+    const imageDestPath = `/uploads/in-post-images/${fileName}${path.extname(image.originalname)}`;
+    await sharp(image.buffer)
+      .resize(1920, undefined, { withoutEnlargement: true })
+      .toFile(`./${imageDestPath}`);
+
+    res.status(201).json({ imageUrl: env.SERVER_URL + imageDestPath });
   } catch (err) {
     next(err);
   }

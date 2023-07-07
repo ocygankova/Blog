@@ -91,7 +91,9 @@ function CommentThread({ comment, onCommentUpdated, onCommentDeleted }: IProps) 
         {repliesLoading && <CircularProgress />}
         {repliesLoadingIsError && <Typography>Replies could not be loaded.</Typography>}
         {showRepliesButton && (
-          <ButtonLink onClick={loadNextRepliesPage} sx={{ alignSelf: 'flex-start' }}>
+          <ButtonLink
+            onClick={loadNextRepliesPage}
+            sx={{ alignSelf: 'flex-start', typography: 'button' }}>
             <BsChevronDown style={{ marginRight: '8px' }} />
             {showRepliesButtonText}
           </ButtonLink>

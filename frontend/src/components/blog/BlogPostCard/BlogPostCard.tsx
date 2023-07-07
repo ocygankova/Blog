@@ -9,7 +9,9 @@ interface IProps {
   post: IBlogPost;
 }
 
-function BlogPostCard({ post: { slug, title, summary, imageUrl, author, createdAt } }: IProps) {
+function BlogPostCard({
+  post: { slug, title, summary, coverImageUrl, author, createdAt },
+}: IProps) {
   const postLink = `/blog/${slug}`;
 
   return (
@@ -23,7 +25,7 @@ function BlogPostCard({ post: { slug, title, summary, imageUrl, author, createdA
         <PaperRounded elevation={0} sx={{ mb: 2 }}>
           <NextLink href={postLink}>
             <NextImage
-              src={imageUrl}
+              src={coverImageUrl}
               alt="Blog post thumbnail"
               width={550}
               height={280}

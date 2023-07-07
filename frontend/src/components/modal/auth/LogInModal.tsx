@@ -77,7 +77,7 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
 
       <SocialSignInSection pt={2} />
 
-      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email address</Divider>
+      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your password</Divider>
 
       <Box
         component="form"

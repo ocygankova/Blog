@@ -27,7 +27,7 @@ interface ICreateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  postImage: File;
+  postCoverImage: File;
 }
 
 export async function createBlogPost(input: ICreateBlogPostValues) {
@@ -45,7 +45,7 @@ interface IUpdateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  postImage?: File;
+  postCoverImage?: File;
 }
 
 export async function updateBlogPost(blogPostId: string, input: IUpdateBlogPostValues) {
@@ -59,4 +59,12 @@ export async function updateBlogPost(blogPostId: string, input: IUpdateBlogPostV
 
 export async function deleteBlogPost(blogPostId: string) {
   await api.delete(`/posts/${blogPostId}`);
+}
+
+export async function uploadInPostImage(image: File) {
+  const formData = new FormData();
+  formData.append('inPostImage', image);
+
+  const res = await api.post<{ imageUrl: string }>('/posts/images', formData);
+  return res.data;
 }
