@@ -106,6 +106,7 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
       fontWeight: 600,
       fontSize: '1rem',
       letterSpacing: '0.02857em',
+      textTransform: 'none',
     },
 
     caption: {

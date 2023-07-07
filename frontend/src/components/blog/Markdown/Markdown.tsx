@@ -19,11 +19,11 @@ function Markdown({ children }: IProps) {
       remarkPlugins={[remarkGfm, [remarkToc, { maxDepth: 3, tight: true }], remarkEmoji]}
       rehypePlugins={[rehypeSlug]}
       components={{
-        h1: ({ node, ...props }) => <Typography {...props} variant="h1" my={4} component="h2" />,
-        h2: ({ node, ...props }) => <Typography {...props} variant="h2" my={3} />,
-        h3: ({ node, ...props }) => <Typography {...props} variant="h3" my={2} />,
-        h4: ({ node, ...props }) => <Typography {...props} variant="h4" my={2} />,
-        h5: ({ node, ...props }) => <Typography {...props} variant="h5" fontWeight="bold" my={2} />,
+        h1: ({ node, ...props }) => <Typography {...props} variant="h1" my={6} component="h2" />,
+        h2: ({ node, ...props }) => <Typography {...props} variant="h2" my={6} />,
+        h3: ({ node, ...props }) => <Typography {...props} variant="h3" my={4} />,
+        h4: ({ node, ...props }) => <Typography {...props} variant="h4" my={3} />,
+        h5: ({ node, ...props }) => <Typography {...props} variant="h5" fontWeight="bold" my={3} />,
         h6: ({ node, ...props }) => <Typography {...props} variant="h6" fontWeight="bold" my={2} />,
         p: ({ node, ...props }) => <Typography {...props} variant="body1" my={1} />,
         span: ({ node, ...props }) => <Typography {...props} variant="body1" component="span" />,
