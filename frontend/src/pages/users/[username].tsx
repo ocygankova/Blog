@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { Divider } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 import * as UsersApi from '@/http/api/users';
 import { NotFoundError } from '@/http/http-errors';
 import { IUser } from '@/models/user';
@@ -53,17 +53,18 @@ function UserProfile({ user }: IPageProps) {
       <Head>
         <title>{`${profileUser.displayName} - Blog`}</title>
       </Head>
+      <Container sx={{ pt: 12 }}>
+        <UserInfo user={profileUser} />
 
-      <UserInfo user={profileUser} />
+        <Divider />
 
-      <Divider />
-
-      {profileUserIsLoggedInUser && (
-        <>
-          <UpdateProfile onUserUpdated={handleUserUpdated} />
-          <Divider />
-        </>
-      )}
+        {profileUserIsLoggedInUser && (
+          <>
+            <UpdateProfile onUserUpdated={handleUserUpdated} />
+            <Divider />
+          </>
+        )}
+      </Container>
 
       <UserPosts user={profileUser} />
     </>

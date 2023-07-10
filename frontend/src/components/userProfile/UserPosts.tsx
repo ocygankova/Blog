@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSWR from 'swr';
-import { Box, CircularProgress, Stack, Typography } from '@mui/material';
+import { CircularProgress, Container, Stack, Typography } from '@mui/material';
 import { IUser } from '@/models/user';
 import * as BlogApi from '@/http/api/blog';
 import { BlogPostsGrid, PaginationBar } from '@/components';
@@ -24,21 +24,16 @@ function UserPosts({ user }: IProps) {
   };
 
   return (
-    <Box component="section" py={4}>
-      <Typography variant="h3Uppercase" mb={3}>
+    <Container sx={{ py: 4, px: { xs: 0, sm: 3 } }} component="section">
+      <Typography variant="h3Uppercase" mb={3} ml={{ xs: 2, sm: 0 }}>
         Published articles
       </Typography>
 
       {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
 
-      <Stack mt={4}>
+      <Stack mt={4} alignItems="center">
         {blogPosts.length > 0 && (
-          <PaginationBar
-            count={totalPages}
-            page={page}
-            onPageChange={handlePageItemClicked}
-            sx={{ mx: 'auto' }}
-          />
+          <PaginationBar count={totalPages} page={page} onPageChange={handlePageItemClicked} />
         )}
 
         {isLoading && <CircularProgress />}
@@ -49,7 +44,7 @@ function UserPosts({ user }: IProps) {
           <Typography>No blog posts found.</Typography>
         )}
       </Stack>
-    </Box>
+    </Container>
   );
 }
 

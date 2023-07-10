@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { stringify } from 'querystring';
-import { Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 import * as BlogApi from '@/http/api/blog';
 import { IBlogPostsPage } from '@/models/blogPost';
 import { BlogPostsGrid, PaginationBar } from '@/components';
@@ -57,14 +57,14 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
         <meta name="description" content="Read the latest posts on Blog" />
       </Head>
 
-      <section>
-        <Typography component="h1" variant="h2Uppercase" mb={4}>
+      <Container sx={{ pt: 12, px: { xs: 0, sm: 3 } }} component="section">
+        <Typography component="h1" variant="h2Uppercase" mb={4} ml={{ xs: 2, sm: 0 }}>
           Latest posts
         </Typography>
 
         {blogPosts.length > 0 && <BlogPostsGrid posts={blogPosts} />}
 
-        <Stack mt={4}>
+        <Stack py={4}>
           {blogPosts.length > 0 && (
             <PaginationBar
               count={totalPages}
@@ -76,7 +76,7 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
 
           {blogPosts.length === 0 && <Typography>No blog posts found.</Typography>}
         </Stack>
-      </section>
+      </Container>
     </>
   );
 }

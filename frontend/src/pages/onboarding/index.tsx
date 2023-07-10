@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Box, Stack, Typography } from '@mui/material';
+import { Alert, Box, Container, Stack, Typography } from '@mui/material';
 import { maxLengths, usernameSchema } from '@/utils';
 import { useAuthenticatedUser } from '@/hooks';
 import { BadRequestError, ConflictError } from '@/http/http-errors';
@@ -59,7 +59,7 @@ function OnboardingPage() {
   }, [user, userLoading, router]);
 
   return (
-    <>
+    <Container sx={{ pb: 4, pt: 12 }}>
       <Typography variant="h1" mb={4}>
         Onboarding
       </Typography>
@@ -95,7 +95,7 @@ function OnboardingPage() {
           </LoadingButton>
         </Stack>
       </Box>
-    </>
+    </Container>
   );
 }
 

@@ -44,10 +44,9 @@ export default function MyApp(props: MyAppProps) {
           <Header />
 
           <main>
-            <Container sx={{ pb: 4, pt: 12 }}>
-              <Component {...pageProps} />
-            </Container>
+            <Component {...pageProps} />
           </main>
+
           <Footer />
         </AuthModalsProvider>
       </ThemeProvider>
