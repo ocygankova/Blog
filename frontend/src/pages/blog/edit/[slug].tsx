@@ -9,7 +9,7 @@ import { ConflictError, NotFoundError, TooManyRequestsError } from '@/http/http-
 import { generateSlug, maxLengths, requiredStringSchema, slugSchema } from '@/utils';
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
-import { Alert, Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Container, Stack, Typography } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {
   FormInputField,
@@ -188,84 +188,86 @@ export default function EditPost({ post }: IPageProps) {
         dismissButtonText="Keep writing"
       />
 
-      <Stack direction="row" spacing={2} mb={4} justifyContent="space-between">
-        <Typography variant="h1">Edit post</Typography>
+      <Container sx={{ pb: 4, pt: 12 }}>
+        <Stack direction="row" spacing={2} mb={4} justifyContent="space-between">
+          <Typography variant="h1">Edit post</Typography>
 
-        <Button
-          variant="outlined"
-          color="error"
-          disabled={deletePending}
-          onClick={openDeleteConfirmationModal}
-          sx={{ alignSelf: 'flex-end' }}>
-          <DeleteOutlineIcon fontSize="small" sx={{ mr: 0.3 }} />
-          Delete
-        </Button>
-      </Stack>
-
-      <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <FormInputField
-          register={register('title')}
-          label="Post title"
-          placeholder="What is your post title?"
-          validationError={errors.title}
-          multiline
-          watch={watch}
-          maxLength={maxLengths.postTitle}
-        />
-
-        <BlogPostSlugInputField
-          register={register('slug')}
-          onGenerateSlugClick={generateSlugFromTitle}
-          validationError={errors.slug}
-          label="Post slug"
-          multiline
-          watch={watch}
-          maxLength={maxLengths.postSlug}
-        />
-
-        <FormInputField
-          register={register('summary')}
-          label="Post summary"
-          placeholder="What is your post about?"
-          validationError={errors.summary}
-          multiline
-          rows={3}
-          watch={watch}
-          maxLength={maxLengths.postSummary}
-        />
-
-        <FormInputField
-          register={register('postCoverImage')}
-          label="Post cover image"
-          validationError={errors.postCoverImage}
-          type="file"
-          inputProps={{ accept: 'image/png,image/jpeg' }}
-        />
-
-        <MarkdownEditor
-          register={register('body')}
-          watch={watch}
-          setValue={setValue}
-          validationError={errors.body}
-          label="Post content"
-        />
-
-        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-
-        <Stack direction="row" justifyContent="flex-end" spacing={2}>
-          <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
-            Discard
+          <Button
+            variant="outlined"
+            color="error"
+            disabled={deletePending}
+            onClick={openDeleteConfirmationModal}
+            sx={{ alignSelf: 'flex-end' }}>
+            <DeleteOutlineIcon fontSize="small" sx={{ mr: 0.3 }} />
+            Delete
           </Button>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            isLoading={isSubmitting}
-            disabled={!isDirty}
-            sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
-            Save changes
-          </LoadingButton>
         </Stack>
-      </Stack>
+
+        <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+          <FormInputField
+            register={register('title')}
+            label="Post title"
+            placeholder="What is your post title?"
+            validationError={errors.title}
+            multiline
+            watch={watch}
+            maxLength={maxLengths.postTitle}
+          />
+
+          <BlogPostSlugInputField
+            register={register('slug')}
+            onGenerateSlugClick={generateSlugFromTitle}
+            validationError={errors.slug}
+            label="Post slug"
+            multiline
+            watch={watch}
+            maxLength={maxLengths.postSlug}
+          />
+
+          <FormInputField
+            register={register('summary')}
+            label="Post summary"
+            placeholder="What is your post about?"
+            validationError={errors.summary}
+            multiline
+            rows={3}
+            watch={watch}
+            maxLength={maxLengths.postSummary}
+          />
+
+          <FormInputField
+            register={register('postCoverImage')}
+            label="Post cover image"
+            validationError={errors.postCoverImage}
+            type="file"
+            inputProps={{ accept: 'image/png,image/jpeg' }}
+          />
+
+          <MarkdownEditor
+            register={register('body')}
+            watch={watch}
+            setValue={setValue}
+            validationError={errors.body}
+            label="Post content"
+          />
+
+          {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
+          <Stack direction="row" justifyContent="flex-end" spacing={2}>
+            <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
+              Discard
+            </Button>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              isLoading={isSubmitting}
+              disabled={!isDirty}
+              sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
+              Save changes
+            </LoadingButton>
+          </Stack>
+        </Stack>
+      </Container>
     </>
   );
 }

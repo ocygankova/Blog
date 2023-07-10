@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import NextLink from 'next/link';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { Button, Divider, Stack, Typography } from '@mui/material';
+import { Button, Container, Divider, Stack, Typography } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import EditIcon from '@mui/icons-material/Edit';
 import * as BlogApi from '@/http/api/blog';
@@ -14,7 +14,7 @@ import {
   BlogCommentSection,
   Dot,
   Markdown,
-  PageSectionContainer,
+  PageSectionWrapper,
   UserProfileLink,
 } from '@/components';
 
@@ -69,25 +69,27 @@ function BlogPostPage({ post }: IPageProps) {
         <meta name="description" content={summary} />
       </Head>
 
-      <Stack direction="row" spacing={{ xs: 2, sm: 5 }} alignItems="center" mb={4}>
-        <Button component={NextLink} href={`/blog`}>
-          <NavigateBeforeIcon sx={{ mr: 1 }} />
-          <span>Back to Blog</span>
-        </Button>
-
-        {user?._id === author._id && (
-          <Button
-            component={NextLink}
-            href={`/blog/edit/${slug}`}
-            variant="outlined"
-            color="inherit">
-            <EditIcon fontSize="small" sx={{ mr: 1 }} />
-            <span>Edit post</span>
+      <Container>
+        <Stack direction="row" spacing={{ xs: 2, sm: 5 }} alignItems="center" mb={4} pt={12}>
+          <Button component={NextLink} href={`/blog`} sx={{ pl: 0 }}>
+            <NavigateBeforeIcon sx={{ mr: 1 }} />
+            <span>Back to Blog</span>
           </Button>
-        )}
-      </Stack>
 
-      <PageSectionContainer coverImageSrc={coverImageUrl} coverImageAlt={title}>
+          {user?._id === author._id && (
+            <Button
+              component={NextLink}
+              href={`/blog/edit/${slug}`}
+              variant="outlined"
+              color="inherit">
+              <EditIcon fontSize="small" sx={{ mr: 1 }} />
+              <span>Edit post</span>
+            </Button>
+          )}
+        </Stack>
+      </Container>
+
+      <PageSectionWrapper coverImageSrc={coverImageUrl} coverImageAlt={title} component="article">
         <Typography variant="h1" mb={4}>
           {title}
         </Typography>
@@ -119,11 +121,11 @@ function BlogPostPage({ post }: IPageProps) {
         <Divider sx={{ mt: 3, mb: 6 }} />
 
         <Markdown>{body}</Markdown>
-      </PageSectionContainer>
+      </PageSectionWrapper>
 
-      <PageSectionContainer>
+      <PageSectionWrapper>
         <BlogCommentSection blogPostId={_id} />
-      </PageSectionContainer>
+      </PageSectionWrapper>
     </>
   );
 }

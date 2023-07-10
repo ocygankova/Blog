@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Container, Stack, Typography } from '@mui/material';
 import * as BlogApi from '@/http/api/blog';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import {
@@ -140,74 +140,76 @@ function CreatePostPage() {
         dismissButtonText="Keep writing"
       />
 
-      <Typography variant="h1" mb={4}>
-        Create a post
-      </Typography>
+      <Container sx={{ pb: 4, pt: 12 }}>
+        <Typography variant="h1" mb={4}>
+          Create a post
+        </Typography>
 
-      <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <FormInputField
-          register={register('title')}
-          label="Post title"
-          placeholder="What is your post title?"
-          validationError={errors.title}
-          multiline
-          watch={watch}
-          maxLength={maxLengths.postTitle}
-          onBlur={handleTitleFieldBlur}
-        />
+        <Stack spacing={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+          <FormInputField
+            register={register('title')}
+            label="Post title"
+            placeholder="What is your post title?"
+            validationError={errors.title}
+            multiline
+            watch={watch}
+            maxLength={maxLengths.postTitle}
+            onBlur={handleTitleFieldBlur}
+          />
 
-        <BlogPostSlugInputField
-          register={register('slug')}
-          onGenerateSlugClick={generateSlugFromTitle}
-          validationError={errors.slug}
-          label="Post slug "
-          multiline
-          watch={watch}
-          maxLength={maxLengths.postSlug}
-        />
+          <BlogPostSlugInputField
+            register={register('slug')}
+            onGenerateSlugClick={generateSlugFromTitle}
+            validationError={errors.slug}
+            label="Post slug "
+            multiline
+            watch={watch}
+            maxLength={maxLengths.postSlug}
+          />
 
-        <FormInputField
-          register={register('summary')}
-          label="Post summary"
-          placeholder="What is your post about?"
-          validationError={errors.summary}
-          multiline
-          watch={watch}
-          maxLength={maxLengths.postSummary}
-        />
+          <FormInputField
+            register={register('summary')}
+            label="Post summary"
+            placeholder="What is your post about?"
+            validationError={errors.summary}
+            multiline
+            watch={watch}
+            maxLength={maxLengths.postSummary}
+          />
 
-        <FormInputField
-          register={register('postCoverImage')}
-          label="Post cover image"
-          validationError={errors.postCoverImage}
-          type="file"
-          inputProps={{ accept: 'image/png,image/jpeg' }}
-        />
+          <FormInputField
+            register={register('postCoverImage')}
+            label="Post cover image"
+            validationError={errors.postCoverImage}
+            type="file"
+            inputProps={{ accept: 'image/png,image/jpeg' }}
+          />
 
-        <MarkdownEditor
-          register={register('body')}
-          watch={watch}
-          setValue={setValue}
-          validationError={errors.body}
-          label="Post content"
-        />
+          <MarkdownEditor
+            register={register('body')}
+            watch={watch}
+            setValue={setValue}
+            validationError={errors.body}
+            label="Post content"
+          />
 
-        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+          {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
-        <Stack direction="row" justifyContent="flex-end" spacing={2}>
-          <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
-            Discard
-          </Button>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            isLoading={isSubmitting}
-            disabled={!isDirty}
-            sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
-            Create post
-          </LoadingButton>
+          <Stack direction="row" justifyContent="flex-end" spacing={2}>
+            <Button variant="outlined" color="secondary" onClick={handleDiscardButtonClick}>
+              Discard
+            </Button>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              isLoading={isSubmitting}
+              disabled={!isDirty}
+              sx={{ px: { sm: 10 }, flex: { xs: 1, sm: 'unset' } }}>
+              Create post
+            </LoadingButton>
+          </Stack>
         </Stack>
-      </Stack>
+      </Container>
     </>
   );
 }
