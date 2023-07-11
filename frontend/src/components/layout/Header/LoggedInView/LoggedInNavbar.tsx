@@ -11,15 +11,11 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AddIcon from '@mui/icons-material/Add';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { MdAdd, MdArrowDropDown, MdLogout, MdPerson } from 'react-icons/md';
 import { IUser } from '@/models/user';
 import { useAuthenticatedUser } from '@/hooks';
 import * as UsersApi from '@/http/api/users';
 import { UserAvatar } from '@/components';
-import { MdAdd, MdLogout, MdPerson } from 'react-icons/md';
 
 interface IProps {
   user: IUser;
@@ -62,13 +58,12 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
           component="button"
           direction="row"
           alignItems="center"
-          spacing={0.5}
           aria-controls={open ? 'profile-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}>
           <UserAvatar src={profileImageUrl} />
-          <ArrowDropDownIcon />
+          <MdArrowDropDown fontSize={24} />
         </Stack>
       </Tooltip>
 

@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { AuthFormInputField, LoadingButton } from '@/components';
 
