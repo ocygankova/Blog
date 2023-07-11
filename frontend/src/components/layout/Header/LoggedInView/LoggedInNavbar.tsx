@@ -19,6 +19,7 @@ import { IUser } from '@/models/user';
 import { useAuthenticatedUser } from '@/hooks';
 import * as UsersApi from '@/http/api/users';
 import { UserAvatar } from '@/components';
+import { MdAdd, MdLogout, MdPerson } from 'react-icons/md';
 
 interface IProps {
   user: IUser;
@@ -50,7 +51,7 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
   return (
     <Stack direction="row" alignItems="center" spacing={2} display={{ xs: 'none', sm: 'flex' }}>
       <Button component={NextLink} href="/blog/create" variant="outlined">
-        <AddIcon />
+        <MdAdd fontSize={26} />
         <Typography component="span" ml={1}>
           Create post
         </Typography>
@@ -92,7 +93,7 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
         onClose={handleClose}>
         <MenuItem component={NextLink} href={`/users/${username}`} sx={{ mb: 2 }}>
           <ListItemIcon>
-            <PersonIcon />
+            <MdPerson fontSize={24} />
           </ListItemIcon>
           <ListItemText primary="Your profile" secondary={displayName || 'User'} />
         </MenuItem>
@@ -100,7 +101,7 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
         <Divider />
         <MenuItem onClick={logoutUser} sx={{ mt: 2 }}>
           <ListItemIcon>
-            <LogoutIcon />
+            <MdLogout fontSize={24} />
           </ListItemIcon>
           <ListItemText primary="Logout" />
         </MenuItem>

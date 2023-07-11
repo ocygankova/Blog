@@ -1,7 +1,7 @@
-import { useState } from "react";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import Image from "next/image";
+import { useState } from 'react';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import {
   AppBar,
   Box,
@@ -17,15 +17,13 @@ import {
   Stack,
   Toolbar,
   Typography,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAuthenticatedUser } from "@/hooks";
-import logo from "@/assets/logo.png";
-import { LoggedInDrawer, LoggedInNavbar } from "./LoggedInView";
-import { LoggedOutDrawer, LoggedOutNavbar } from "./LoggedOutView";
+} from '@mui/material';
+import { CgMenuRightAlt } from 'react-icons/cg';
+import { MdArrowForwardIos, MdHome, MdNewspaper } from 'react-icons/md';
+import { useAuthenticatedUser } from '@/hooks';
+import logo from '@/assets/logo.png';
+import { LoggedInDrawer, LoggedInNavbar } from './LoggedInView';
+import { LoggedOutDrawer, LoggedOutNavbar } from './LoggedOutView';
 
 function Header() {
   const { user, userLoading } = useAuthenticatedUser();
@@ -44,11 +42,7 @@ function Header() {
         <Container>
           <Toolbar disableGutters>
             <Stack direction="row" alignItems="center" spacing={2} flexGrow={1}>
-              <Link
-                component={NextLink}
-                href="/"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
+              <Link component={NextLink} href="/" sx={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={logo} alt="Blog logo" width={36} />
                 <Typography component="span" variant="h4" ml={1}>
                   Welcome Blog
@@ -59,16 +53,14 @@ function Header() {
                 component={NextLink}
                 href="/"
                 typography="h5"
-                display={{ xs: "none", sm: "block" }}
-              >
+                display={{ xs: 'none', sm: 'block' }}>
                 Home
               </Link>
               <Link
                 component={NextLink}
                 href="/blog"
                 typography="h5"
-                display={{ xs: "none", sm: "block" }}
-              >
+                display={{ xs: 'none', sm: 'block' }}>
                 Articles
               </Link>
             </Stack>
@@ -79,10 +71,9 @@ function Header() {
             <IconButton
               color="inherit"
               aria-label="open menu"
-              sx={{ display: { sm: "none" } }}
-              onClick={handleMobileDrawerToggle}
-            >
-              <MenuIcon fontSize="large" />
+              sx={{ display: { sm: 'none' } }}
+              onClick={handleMobileDrawerToggle}>
+              <CgMenuRightAlt fontSize={30} />
             </IconButton>
           </Toolbar>
         </Container>
@@ -97,28 +88,21 @@ function Header() {
             keepMounted: true,
           }}
           sx={{
-            display: { sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: "300px",
+            display: { sm: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: '300px',
             },
-          }}
-        >
+          }}>
           <Box>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              p={2}
-            >
+            <Stack direction="row" justifyContent="space-between" alignItems="center" p={2}>
               <Typography variant="h6">Welcome Blog</Typography>
               <IconButton
                 color="inherit"
                 aria-label="open menu"
-                sx={{ display: { sm: "none" } }}
-                onClick={handleMobileDrawerToggle}
-              >
-                <ArrowForwardIosIcon />
+                sx={{ display: { sm: 'none' } }}
+                onClick={handleMobileDrawerToggle}>
+                <MdArrowForwardIos />
               </IconButton>
             </Stack>
 
@@ -127,28 +111,23 @@ function Header() {
             <List onClick={handleMobileDrawerToggle}>
               <ListItem component={NextLink} href="/">
                 <ListItemIcon>
-                  <HomeIcon />
+                  <MdHome fontSize={28} />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItem>
 
               <ListItem component={NextLink} href="/blog">
                 <ListItemIcon>
-                  <NewspaperIcon />
+                  <MdNewspaper fontSize={24} />
                 </ListItemIcon>
-                <ListItemText primary="Articles" />
+                <ListItemText primary="Latest posts" />
               </ListItem>
             </List>
 
             {!userLoading && !user && (
               <LoggedOutDrawer handleDrawerToggle={handleMobileDrawerToggle} />
             )}
-            {user && (
-              <LoggedInDrawer
-                user={user}
-                handleDrawerToggle={handleMobileDrawerToggle}
-              />
-            )}
+            {user && <LoggedInDrawer user={user} handleDrawerToggle={handleMobileDrawerToggle} />}
           </Box>
         </Drawer>
       </Box>

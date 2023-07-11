@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Box, Dialog, DialogProps, IconButton, useMediaQuery, useTheme } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { MdClose } from 'react-icons/md';
 
 interface IProps {
   open: boolean;
@@ -15,9 +15,9 @@ function DialogBase({ open, onClose, children, ...props }: IProps & DialogProps)
   return (
     <Dialog open={open} onClose={onClose} fullScreen={widthSmDown} {...props}>
       <IconButton sx={{ alignSelf: 'end', mt: 1, mr: 1 }} onClick={onClose}>
-        <CloseIcon />
+        <MdClose />
       </IconButton>
-      <Box px={4} pb={4} pt={1}>
+      <Box px={4} pb={4} pt={{ xs: 2, sm: 1 }}>
         {children}
       </Box>
     </Dialog>

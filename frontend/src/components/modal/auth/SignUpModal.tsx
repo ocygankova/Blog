@@ -122,7 +122,7 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
 
       <SocialSignInSection pt={2} />
 
-      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email address</Divider>
+      <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email</Divider>
 
       <Box
         component="form"

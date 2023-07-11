@@ -9,9 +9,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { MdAdd, MdLogout, MdPerson } from 'react-icons/md';
 import { IUser } from '@/models/user';
 import { useAuthenticatedUser } from '@/hooks';
 import * as UsersApi from '@/http/api/users';
@@ -42,7 +40,7 @@ function LoggedInDrawer({
     <List onClick={handleDrawerToggle}>
       <ListItem>
         <Button component={NextLink} href="/blog/create" variant="outlined" fullWidth>
-          <AddIcon />
+          <MdAdd fontSize={26} />
           <Typography component="span" ml={2}>
             Create post
           </Typography>
@@ -51,7 +49,7 @@ function LoggedInDrawer({
 
       <ListItem component={NextLink} href={`/users/${username}`}>
         <ListItemIcon>
-          <PersonIcon />
+          <MdPerson fontSize={24} />
         </ListItemIcon>
         <ListItemText primary="Your profile" secondary={displayName || 'User'} />
         <ListItemAvatar
@@ -68,7 +66,7 @@ function LoggedInDrawer({
       <Divider />
       <ListItem onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>
         <ListItemIcon>
-          <LogoutIcon />
+          <MdLogout fontSize={24} />
         </ListItemIcon>
         <ListItemText primary="Logout" />
       </ListItem>
