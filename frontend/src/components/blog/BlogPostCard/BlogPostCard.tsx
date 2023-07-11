@@ -27,13 +27,13 @@ function BlogPostCard({
     <ResponsiveRoundedPaper
       variant={paperVariant}
       elevation={0}
-      squareBreakpoint="sm"
+      square_width="sm"
       component="article"
       sx={{
         height: '100%',
         overflow: 'hidden',
       }}>
-      <ResponsiveRoundedPaper elevation={0} squareBreakpoint="sm" sx={{ mb: 2 }}>
+      <ResponsiveRoundedPaper elevation={0} square_width="sm" sx={{ mb: 2 }}>
         <NextLink href={postLink}>
           <NextImage
             src={coverImageUrl}
