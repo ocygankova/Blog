@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from '@mui/material';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import { AuthFormInputField } from '@/components';
+import { AuthFormInputField, LoadingButton } from '@/components';
 
 interface IProps {
   register: UseFormRegisterReturn;
@@ -20,7 +20,7 @@ function VerificationCodeField({
   timeoutLeft,
 }: IProps) {
   return (
-    <Stack direction="row" spacing={1} alignItems="flex-start">
+    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
       <Box flex={1}>
         <AuthFormInputField
           register={register}
@@ -30,14 +30,16 @@ function VerificationCodeField({
         />
       </Box>
 
-      <Button
+      <LoadingButton
         onClick={onCodeRequest}
         disabled={codeSending || timeoutLeft > 0}
+        isLoading={codeSending}
         sx={{
-          py: 1.7,
+          py: 1.6,
+          alignSelf: { xs: 'flex-end', sm: 'flex-start' },
         }}>
         {timeoutLeft > 0 ? `Resend in ${timeoutLeft}` : 'Send Code'}
-      </Button>
+      </LoadingButton>
     </Stack>
   );
 }
