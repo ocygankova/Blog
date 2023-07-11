@@ -3,11 +3,9 @@ import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import NextNProgress from 'nextjs-progressbar';
 import basicTheme from '@/styles/theme';
 import createEmotionCache from '@/styles/createEmotionCache';
-import { AuthModalsProvider, Footer, Header } from '@/components';
-import { Container } from '@mui/material';
+import { AuthModalsProvider, Footer, Header, ProgressBar } from '@/components';
 import { useOnboardingRedirect } from '@/hooks';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -33,14 +31,7 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={basicTheme}>
         <AuthModalsProvider>
           <CssBaseline />
-          <NextNProgress
-            color="#21fa90"
-            height={5}
-            options={{
-              showSpinner: false,
-            }}
-          />
-
+          <ProgressBar />
           <Header />
 
           <main>
