@@ -47,21 +47,23 @@ function LoggedInDrawer({
         </Button>
       </ListItem>
 
-      <ListItem component={NextLink} href={`/users/${username}`}>
-        <ListItemIcon>
-          <MdPerson fontSize={24} />
-        </ListItemIcon>
-        <ListItemText primary="Your profile" secondary={displayName || 'User'} />
-        <ListItemAvatar
-          sx={{
-            '& .MuiAvatar-root': {
-              marginRight: 0,
-              marginLeft: 'auto',
-            },
-          }}>
-          <UserAvatar src={profileImageUrl} />
-        </ListItemAvatar>
-      </ListItem>
+      {username && (
+        <ListItem component={NextLink} href={`/users/${username}`}>
+          <ListItemIcon>
+            <MdPerson fontSize={24} />
+          </ListItemIcon>
+          <ListItemText primary="Your profile" secondary={displayName || 'User'} />
+          <ListItemAvatar
+            sx={{
+              '& .MuiAvatar-root': {
+                marginRight: 0,
+                marginLeft: 'auto',
+              },
+            }}>
+            <UserAvatar src={profileImageUrl} />
+          </ListItemAvatar>
+        </ListItem>
+      )}
 
       <Divider />
       <ListItem onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>

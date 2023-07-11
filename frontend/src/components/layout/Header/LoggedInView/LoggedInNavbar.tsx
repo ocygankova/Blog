@@ -26,7 +26,7 @@ interface IProps {
 }
 
 function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IProps) {
-  const { mutateUser } = useAuthenticatedUser();
+  const { user, mutateUser } = useAuthenticatedUser();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -91,14 +91,17 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
           },
         }}
         onClose={handleClose}>
-        <MenuItem component={NextLink} href={`/users/${username}`} sx={{ mb: 2 }}>
-          <ListItemIcon>
-            <MdPerson fontSize={24} />
-          </ListItemIcon>
-          <ListItemText primary="Your profile" secondary={displayName || 'User'} />
-        </MenuItem>
+        {user?.username && (
+          <MenuItem component={NextLink} href={`/users/${username}`} sx={{ mb: 2 }}>
+            <ListItemIcon>
+              <MdPerson fontSize={24} />
+            </ListItemIcon>
+            <ListItemText primary="Your profile" secondary={displayName || 'User'} />
+          </MenuItem>
+        )}
 
         <Divider />
+
         <MenuItem onClick={logoutUser} sx={{ mt: 2 }}>
           <ListItemIcon>
             <MdLogout fontSize={24} />
