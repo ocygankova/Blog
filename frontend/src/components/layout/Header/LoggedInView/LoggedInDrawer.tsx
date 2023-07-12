@@ -5,6 +5,7 @@ import {
   List,
   ListItem,
   ListItemAvatar,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
@@ -33,12 +34,14 @@ function LoggedInDrawer({
     } catch (error) {
       alert(error);
       console.log(error);
+    } finally {
+      handleDrawerToggle();
     }
   };
 
   return (
-    <List onClick={handleDrawerToggle}>
-      <ListItem>
+    <List>
+      <ListItem onClick={handleDrawerToggle}>
         <Button component={NextLink} href="/blog/create" variant="outlined" fullWidth>
           <MdAdd fontSize={26} />
           <Typography component="span" ml={2}>
@@ -48,7 +51,10 @@ function LoggedInDrawer({
       </ListItem>
 
       {username && (
-        <ListItem component={NextLink} href={`/users/${username}`}>
+        <ListItemButton
+          component={NextLink}
+          href={`/users/${username}`}
+          onClick={handleDrawerToggle}>
           <ListItemIcon>
             <MdPerson fontSize={24} />
           </ListItemIcon>
@@ -62,16 +68,16 @@ function LoggedInDrawer({
             }}>
             <UserAvatar src={profileImageUrl} />
           </ListItemAvatar>
-        </ListItem>
+        </ListItemButton>
       )}
 
-      <Divider />
-      <ListItem onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>
+      <Divider variant="middle" />
+      <ListItemButton onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>
         <ListItemIcon>
           <MdLogout fontSize={24} />
         </ListItemIcon>
         <ListItemText primary="Logout" />
-      </ListItem>
+      </ListItemButton>
     </List>
   );
 }

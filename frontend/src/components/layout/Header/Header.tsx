@@ -11,7 +11,7 @@ import {
   IconButton,
   Link,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Stack,
@@ -19,11 +19,13 @@ import {
   Typography,
 } from '@mui/material';
 import { CgMenuRightAlt } from 'react-icons/cg';
-import { MdArrowForwardIos, MdHome, MdNewspaper } from 'react-icons/md';
+import { MdArrowForwardIos } from 'react-icons/md';
 import { useAuthenticatedUser } from '@/hooks';
 import logo from '@/assets/logo.png';
 import { LoggedInDrawer, LoggedInNavbar } from './LoggedInView';
 import { LoggedOutDrawer, LoggedOutNavbar } from './LoggedOutView';
+import theme from '@/styles/theme';
+import { menuItems } from './consts';
 
 function Header() {
   const { user, userLoading } = useAuthenticatedUser();
@@ -38,31 +40,30 @@ function Header() {
 
   return (
     <>
-      <AppBar component="nav" color="inherit">
+      <AppBar
+        component="nav"
+        color="inherit"
+        elevation={0}
+        sx={{ borderBottom: `1px solid ${theme.palette.divider}` }}>
         <Container>
           <Toolbar disableGutters>
             <Stack direction="row" alignItems="center" spacing={2} flexGrow={1}>
               <Link component={NextLink} href="/" sx={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={logo} alt="Blog logo" width={36} />
                 <Typography component="span" variant="h4" ml={1}>
-                  Welcome Blog
+                  Daily Blog
                 </Typography>
               </Link>
-
-              <Link
-                component={NextLink}
-                href="/"
-                typography="h5"
-                display={{ xs: 'none', sm: 'block' }}>
-                Home
-              </Link>
-              <Link
-                component={NextLink}
-                href="/blog"
-                typography="h5"
-                display={{ xs: 'none', sm: 'block' }}>
-                Articles
-              </Link>
+              {menuItems.map(({ id, href, name }) => (
+                <Link
+                  key={id}
+                  component={NextLink}
+                  href={href}
+                  typography="h5"
+                  display={{ xs: 'none', sm: 'block' }}>
+                  {name}
+                </Link>
+              ))}
             </Stack>
 
             {!userLoading && !user && <LoggedOutNavbar />}
@@ -96,7 +97,7 @@ function Header() {
           }}>
           <Box>
             <Stack direction="row" justifyContent="space-between" alignItems="center" p={2}>
-              <Typography variant="h6">Welcome Blog</Typography>
+              <Typography variant="h6">Daily Blog</Typography>
               <IconButton
                 color="inherit"
                 aria-label="open menu"
@@ -108,20 +109,17 @@ function Header() {
 
             <Divider variant="middle" />
 
-            <List onClick={handleMobileDrawerToggle}>
-              <ListItem component={NextLink} href="/">
-                <ListItemIcon>
-                  <MdHome fontSize={28} />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItem>
-
-              <ListItem component={NextLink} href="/blog">
-                <ListItemIcon>
-                  <MdNewspaper fontSize={24} />
-                </ListItemIcon>
-                <ListItemText primary="Latest posts" />
-              </ListItem>
+            <List>
+              {menuItems.map(({ id, name, href, icon }) => (
+                <ListItemButton
+                  key={id + '-drawer'}
+                  component={NextLink}
+                  href={href}
+                  onClick={handleMobileDrawerToggle}>
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={name} />
+                </ListItemButton>
+              ))}
             </List>
 
             {!userLoading && !user && (

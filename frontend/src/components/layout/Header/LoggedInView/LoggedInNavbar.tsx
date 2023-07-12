@@ -3,10 +3,12 @@ import NextLink from 'next/link';
 import {
   Button,
   Divider,
+  Fade,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  MenuList,
   Stack,
   Tooltip,
   Typography,
@@ -27,10 +29,10 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const closeMenu = () => {
     setAnchorEl(null);
   };
 
@@ -41,6 +43,8 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
     } catch (error) {
       alert(error);
       console.log(error);
+    } finally {
+      closeMenu();
     }
   };
 
@@ -61,7 +65,7 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
           aria-controls={open ? 'profile-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}>
+          onClick={openMenu}>
           <UserAvatar src={profileImageUrl} />
           <MdArrowDropDown fontSize={24} />
         </Stack>
@@ -85,24 +89,31 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
             minWidth: '200px',
           },
         }}
-        onClose={handleClose}>
-        {user?.username && (
-          <MenuItem component={NextLink} href={`/users/${username}`} sx={{ mb: 2 }}>
+        TransitionComponent={Fade}
+        onClose={closeMenu}>
+        <MenuList>
+          {user?.username && (
+            <MenuItem
+              component={NextLink}
+              href={`/users/${username}`}
+              sx={{ mb: 2 }}
+              onClick={closeMenu}>
+              <ListItemIcon>
+                <MdPerson fontSize={24} />
+              </ListItemIcon>
+              <ListItemText primary="Your profile" secondary={displayName || 'User'} />
+            </MenuItem>
+          )}
+
+          <Divider />
+
+          <MenuItem onClick={logoutUser} sx={{ mt: 2 }}>
             <ListItemIcon>
-              <MdPerson fontSize={24} />
+              <MdLogout fontSize={24} />
             </ListItemIcon>
-            <ListItemText primary="Your profile" secondary={displayName || 'User'} />
+            <ListItemText primary="Logout" />
           </MenuItem>
-        )}
-
-        <Divider />
-
-        <MenuItem onClick={logoutUser} sx={{ mt: 2 }}>
-          <ListItemIcon>
-            <MdLogout fontSize={24} />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </MenuItem>
+        </MenuList>
       </Menu>
     </Stack>
   );

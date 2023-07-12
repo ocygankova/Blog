@@ -23,17 +23,21 @@ export const MuiCssBaseline = {
   footer {
   flex-grow: 0;
   flex-shrink: 0;
-  }
+  },
   
   button {
   color: inherit;
   background-color: transparent;
   border: none;
   cursor: pointer;
-   }
+   },
    
   img {
   display: block;
+  },
+  
+  a { 
+  color: inherit;
   }
 `,
 };
