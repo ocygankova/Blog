@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import {
   AppBar,
@@ -10,16 +9,17 @@ import {
   Drawer,
   IconButton,
   Link,
+  LinkProps,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Stack,
+  styled,
   Toolbar,
   Typography,
 } from '@mui/material';
-import { CgMenuRightAlt } from 'react-icons/cg';
-import { MdArrowForwardIos } from 'react-icons/md';
+import { MdArrowForwardIos, MdOutlineMenu } from 'react-icons/md';
 import { useAuthenticatedUser } from '@/hooks';
 import logo from '@/assets/logo.png';
 import { LoggedInDrawer, LoggedInNavbar } from './LoggedInView';
@@ -29,14 +29,13 @@ import { menuItems } from './consts';
 
 function Header() {
   const { user, userLoading } = useAuthenticatedUser();
-
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
   const handleMobileDrawerToggle = () => {
     setMobileDrawerOpen((prevState) => !prevState);
   };
 
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <>
@@ -55,14 +54,15 @@ function Header() {
                 </Typography>
               </Link>
               {menuItems.map(({ id, href, name }) => (
-                <Link
+                <StyledNavLink
                   key={id}
                   component={NextLink}
                   href={href}
-                  typography="h5"
-                  display={{ xs: 'none', sm: 'block' }}>
+                  display={{ xs: 'none', md: 'block' }}
+                  // highlighted={router.pathname === href}
+                >
                   {name}
-                </Link>
+                </StyledNavLink>
               ))}
             </Stack>
 
@@ -72,9 +72,9 @@ function Header() {
             <IconButton
               color="inherit"
               aria-label="open menu"
-              sx={{ display: { sm: 'none' } }}
+              sx={{ display: { md: 'none' } }}
               onClick={handleMobileDrawerToggle}>
-              <CgMenuRightAlt fontSize={30} />
+              <MdOutlineMenu fontSize={30} />
             </IconButton>
           </Toolbar>
         </Container>
@@ -89,7 +89,7 @@ function Header() {
             keepMounted: true,
           }}
           sx={{
-            display: { sm: 'none' },
+            display: { md: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: '300px',
@@ -100,8 +100,7 @@ function Header() {
               <Typography variant="h6">Daily Blog</Typography>
               <IconButton
                 color="inherit"
-                aria-label="open menu"
-                sx={{ display: { sm: 'none' } }}
+                aria-label="close menu"
                 onClick={handleMobileDrawerToggle}>
                 <MdArrowForwardIos />
               </IconButton>
@@ -134,3 +133,35 @@ function Header() {
 }
 
 export default Header;
+
+interface StyledNavLinkProps extends LinkProps {
+  highlighted?: boolean;
+  component?: typeof NextLink;
+}
+
+const StyledNavLink = styled(Link, {
+  shouldForwardProp: (prop) => prop !== 'highlighted',
+})<StyledNavLinkProps>(({ highlighted, theme }) => ({
+  color: 'inherit',
+  lineHeight: '1.5rem',
+  transition: 'ease 0.1s',
+  position: 'relative',
+
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+  // ...(highlighted &&
+  //   {
+  // color: theme.palette.primary.main,
+  // fontWeight: 600,
+  // '&:before': {
+  //   content: '""',
+  //   width: '100%',
+  //   height: 1,
+  //   backgroundColor: theme.palette.primary.main,
+  //   position: 'absolute',
+  //   left: 0,
+  //   bottom: '-4px',
+  // },
+  // }),
+}));

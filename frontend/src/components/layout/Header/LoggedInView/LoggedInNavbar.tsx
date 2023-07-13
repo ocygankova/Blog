@@ -49,8 +49,12 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
   };
 
   return (
-    <Stack direction="row" alignItems="center" spacing={2} display={{ xs: 'none', sm: 'flex' }}>
-      <Button component={NextLink} href="/blog/create" variant="outlined">
+    <Stack direction="row" alignItems="center" spacing={2} mr={{ sm: 4, md: 0 }}>
+      <Button
+        component={NextLink}
+        href="/blog/create"
+        variant="outlined"
+        sx={{ display: { xs: 'none', sm: 'flex' } }}>
         <MdAdd fontSize={26} />
         <Typography component="span" ml={1}>
           Create post
@@ -65,7 +69,8 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
           aria-controls={open ? 'profile-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
-          onClick={openMenu}>
+          onClick={openMenu}
+          sx={{ display: { xs: 'none', md: 'flex' } }}>
           <UserAvatar src={profileImageUrl} />
           <MdArrowDropDown fontSize={24} />
         </Stack>

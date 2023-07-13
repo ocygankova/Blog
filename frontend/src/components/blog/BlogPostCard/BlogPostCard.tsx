@@ -32,6 +32,7 @@ function BlogPostCard({
       sx={{
         height: '100%',
         overflow: 'hidden',
+        borderBottom: { xs: `1px solid ${theme.palette.divider}` },
       }}>
       <ResponsiveRoundedPaper elevation={0} square_width="sm" sx={{ mb: 2 }}>
         <NextLink href={postLink}>

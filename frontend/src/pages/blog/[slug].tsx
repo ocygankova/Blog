@@ -70,7 +70,12 @@ function BlogPostPage({ post }: IPageProps) {
       </Head>
 
       <Container>
-        <Stack direction="row" spacing={{ xs: 2, sm: 5 }} alignItems="center" mb={4} pt={12}>
+        <Stack
+          direction="row"
+          spacing={{ xs: 2, sm: 5 }}
+          alignItems="center"
+          mb={{ xs: 2, md: 4 }}
+          pt={12}>
           <Button component={NextLink} href={`/blog`} sx={{ pl: 0 }}>
             <IoIosArrowBack fontSize={20} style={{ marginRight: 4 }} />
             <span>Back to Blog</span>
