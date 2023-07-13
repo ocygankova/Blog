@@ -3,18 +3,16 @@ import { ElementType } from 'react';
 
 interface IProps {
   component?: ElementType;
-  squareBreakpoint?: 'sm' | 'md' | 'lg';
+  square_width?: 'sm' | 'md' | 'lg';
 }
 
-const ResponsiveRoundedPaper = styled(Paper)<PaperProps & IProps>(
-  ({ theme, squareBreakpoint }) => ({
-    borderRadius: 20,
-    overflow: 'hidden',
+const ResponsiveRoundedPaper = styled(Paper)<PaperProps & IProps>(({ theme, square_width }) => ({
+  borderRadius: 20,
+  overflow: 'hidden',
 
-    [theme.breakpoints.down(squareBreakpoint || 'md')]: {
-      borderRadius: 0,
-    },
-  })
-);
+  [theme.breakpoints.down(square_width || 'md')]: {
+    borderRadius: 0,
+  },
+}));
 
 export default ResponsiveRoundedPaper;

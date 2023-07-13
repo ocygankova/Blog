@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
+import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import { IComment } from '@/models/comment';
 import * as CommentsApi from '@/http/api/comments';
 import CreateCommentBox from './CreateCommentBox';

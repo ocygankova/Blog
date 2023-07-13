@@ -1,7 +1,6 @@
-import { useState } from "react";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import Image from "next/image";
+import { useState } from 'react';
+import NextLink from 'next/link';
+import Image from 'next/image';
 import {
   AppBar,
   Box,
@@ -10,67 +9,61 @@ import {
   Drawer,
   IconButton,
   Link,
+  LinkProps,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Stack,
+  styled,
   Toolbar,
   Typography,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAuthenticatedUser } from "@/hooks";
-import logo from "@/assets/logo.png";
-import { LoggedInDrawer, LoggedInNavbar } from "./LoggedInView";
-import { LoggedOutDrawer, LoggedOutNavbar } from "./LoggedOutView";
+} from '@mui/material';
+import { MdArrowForwardIos, MdOutlineMenu } from 'react-icons/md';
+import { useAuthenticatedUser } from '@/hooks';
+import logo from '@/assets/logo.png';
+import { LoggedInDrawer, LoggedInNavbar } from './LoggedInView';
+import { LoggedOutDrawer, LoggedOutNavbar } from './LoggedOutView';
+import theme from '@/styles/theme';
+import { menuItems } from './consts';
 
 function Header() {
   const { user, userLoading } = useAuthenticatedUser();
-
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
   const handleMobileDrawerToggle = () => {
     setMobileDrawerOpen((prevState) => !prevState);
   };
 
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <>
-      <AppBar component="nav" color="inherit">
+      <AppBar
+        component="nav"
+        color="inherit"
+        elevation={0}
+        sx={{ borderBottom: `1px solid ${theme.palette.divider}` }}>
         <Container>
           <Toolbar disableGutters>
             <Stack direction="row" alignItems="center" spacing={2} flexGrow={1}>
-              <Link
-                component={NextLink}
-                href="/"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
+              <Link component={NextLink} href="/" sx={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={logo} alt="Blog logo" width={36} />
                 <Typography component="span" variant="h4" ml={1}>
-                  Welcome Blog
+                  Daily Blog
                 </Typography>
               </Link>
-
-              <Link
-                component={NextLink}
-                href="/"
-                typography="h5"
-                display={{ xs: "none", sm: "block" }}
-              >
-                Home
-              </Link>
-              <Link
-                component={NextLink}
-                href="/blog"
-                typography="h5"
-                display={{ xs: "none", sm: "block" }}
-              >
-                Articles
-              </Link>
+              {menuItems.map(({ id, href, name }) => (
+                <StyledNavLink
+                  key={id}
+                  component={NextLink}
+                  href={href}
+                  display={{ xs: 'none', md: 'block' }}
+                  // highlighted={router.pathname === href}
+                >
+                  {name}
+                </StyledNavLink>
+              ))}
             </Stack>
 
             {!userLoading && !user && <LoggedOutNavbar />}
@@ -79,10 +72,9 @@ function Header() {
             <IconButton
               color="inherit"
               aria-label="open menu"
-              sx={{ display: { sm: "none" } }}
-              onClick={handleMobileDrawerToggle}
-            >
-              <MenuIcon fontSize="large" />
+              sx={{ display: { md: 'none' } }}
+              onClick={handleMobileDrawerToggle}>
+              <MdOutlineMenu fontSize={30} />
             </IconButton>
           </Toolbar>
         </Container>
@@ -97,58 +89,42 @@ function Header() {
             keepMounted: true,
           }}
           sx={{
-            display: { sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: "300px",
+            display: { md: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: '300px',
             },
-          }}
-        >
+          }}>
           <Box>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              p={2}
-            >
-              <Typography variant="h6">Welcome Blog</Typography>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" p={2}>
+              <Typography variant="h6">Daily Blog</Typography>
               <IconButton
                 color="inherit"
-                aria-label="open menu"
-                sx={{ display: { sm: "none" } }}
-                onClick={handleMobileDrawerToggle}
-              >
-                <ArrowForwardIosIcon />
+                aria-label="close menu"
+                onClick={handleMobileDrawerToggle}>
+                <MdArrowForwardIos />
               </IconButton>
             </Stack>
 
             <Divider variant="middle" />
 
-            <List onClick={handleMobileDrawerToggle}>
-              <ListItem component={NextLink} href="/">
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItem>
-
-              <ListItem component={NextLink} href="/blog">
-                <ListItemIcon>
-                  <NewspaperIcon />
-                </ListItemIcon>
-                <ListItemText primary="Articles" />
-              </ListItem>
+            <List>
+              {menuItems.map(({ id, name, href, icon }) => (
+                <ListItemButton
+                  key={id + '-drawer'}
+                  component={NextLink}
+                  href={href}
+                  onClick={handleMobileDrawerToggle}>
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={name} />
+                </ListItemButton>
+              ))}
             </List>
 
             {!userLoading && !user && (
               <LoggedOutDrawer handleDrawerToggle={handleMobileDrawerToggle} />
             )}
-            {user && (
-              <LoggedInDrawer
-                user={user}
-                handleDrawerToggle={handleMobileDrawerToggle}
-              />
-            )}
+            {user && <LoggedInDrawer user={user} handleDrawerToggle={handleMobileDrawerToggle} />}
           </Box>
         </Drawer>
       </Box>
@@ -157,3 +133,35 @@ function Header() {
 }
 
 export default Header;
+
+interface StyledNavLinkProps extends LinkProps {
+  highlighted?: boolean;
+  component?: typeof NextLink;
+}
+
+const StyledNavLink = styled(Link, {
+  shouldForwardProp: (prop) => prop !== 'highlighted',
+})<StyledNavLinkProps>(({ highlighted, theme }) => ({
+  color: 'inherit',
+  lineHeight: '1.5rem',
+  transition: 'ease 0.1s',
+  position: 'relative',
+
+  '&:hover': {
+    color: theme.palette.primary.main,
+  },
+  // ...(highlighted &&
+  //   {
+  // color: theme.palette.primary.main,
+  // fontWeight: 600,
+  // '&:before': {
+  //   content: '""',
+  //   width: '100%',
+  //   height: 1,
+  //   backgroundColor: theme.palette.primary.main,
+  //   position: 'absolute',
+  //   left: 0,
+  //   bottom: '-4px',
+  // },
+  // }),
+}));

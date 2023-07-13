@@ -3,8 +3,8 @@ import NextLink from 'next/link';
 import Head from 'next/head';
 import useSWR from 'swr';
 import { Button, Container, Divider, Stack, Typography } from '@mui/material';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import EditIcon from '@mui/icons-material/Edit';
+import { IoIosArrowBack } from 'react-icons/io';
+import { BiSolidEditAlt } from 'react-icons/bi';
 import * as BlogApi from '@/http/api/blog';
 import { NotFoundError } from '@/http/http-errors';
 import { IBlogPost } from '@/models/blogPost';
@@ -65,14 +65,19 @@ function BlogPostPage({ post }: IPageProps) {
   return (
     <>
       <Head>
-        <title>{`${title} - Blog`}</title>
+        <title>{`${title} - Daily Blog`}</title>
         <meta name="description" content={summary} />
       </Head>
 
       <Container>
-        <Stack direction="row" spacing={{ xs: 2, sm: 5 }} alignItems="center" mb={4} pt={12}>
+        <Stack
+          direction="row"
+          spacing={{ xs: 2, sm: 5 }}
+          alignItems="center"
+          mb={{ xs: 2, md: 4 }}
+          pt={12}>
           <Button component={NextLink} href={`/blog`} sx={{ pl: 0 }}>
-            <NavigateBeforeIcon sx={{ mr: 1 }} />
+            <IoIosArrowBack fontSize={20} style={{ marginRight: 4 }} />
             <span>Back to Blog</span>
           </Button>
 
@@ -82,7 +87,7 @@ function BlogPostPage({ post }: IPageProps) {
               href={`/blog/edit/${slug}`}
               variant="outlined"
               color="inherit">
-              <EditIcon fontSize="small" sx={{ mr: 1 }} />
+              <BiSolidEditAlt fontSize={20} style={{ marginRight: 4 }} />
               <span>Edit post</span>
             </Button>
           )}

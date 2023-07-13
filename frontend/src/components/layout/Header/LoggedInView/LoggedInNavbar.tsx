@@ -3,18 +3,17 @@ import NextLink from 'next/link';
 import {
   Button,
   Divider,
+  Fade,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  MenuList,
   Stack,
   Tooltip,
   Typography,
 } from '@mui/material';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AddIcon from '@mui/icons-material/Add';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { MdAdd, MdArrowDropDown, MdLogout, MdPerson } from 'react-icons/md';
 import { IUser } from '@/models/user';
 import { useAuthenticatedUser } from '@/hooks';
 import * as UsersApi from '@/http/api/users';
@@ -25,15 +24,15 @@ interface IProps {
 }
 
 function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IProps) {
-  const { mutateUser } = useAuthenticatedUser();
+  const { user, mutateUser } = useAuthenticatedUser();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const closeMenu = () => {
     setAnchorEl(null);
   };
 
@@ -44,13 +43,19 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
     } catch (error) {
       alert(error);
       console.log(error);
+    } finally {
+      closeMenu();
     }
   };
 
   return (
-    <Stack direction="row" alignItems="center" spacing={2} display={{ xs: 'none', sm: 'flex' }}>
-      <Button component={NextLink} href="/blog/create" variant="outlined">
-        <AddIcon />
+    <Stack direction="row" alignItems="center" spacing={2} mr={{ sm: 4, md: 0 }}>
+      <Button
+        component={NextLink}
+        href="/blog/create"
+        variant="outlined"
+        sx={{ display: { xs: 'none', sm: 'flex' } }}>
+        <MdAdd fontSize={26} />
         <Typography component="span" ml={1}>
           Create post
         </Typography>
@@ -61,13 +66,13 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
           component="button"
           direction="row"
           alignItems="center"
-          spacing={0.5}
           aria-controls={open ? 'profile-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}>
+          onClick={openMenu}
+          sx={{ display: { xs: 'none', md: 'flex' } }}>
           <UserAvatar src={profileImageUrl} />
-          <ArrowDropDownIcon />
+          <MdArrowDropDown fontSize={24} />
         </Stack>
       </Tooltip>
 
@@ -89,21 +94,31 @@ function LoggedInNavbar({ user: { username, displayName, profileImageUrl } }: IP
             minWidth: '200px',
           },
         }}
-        onClose={handleClose}>
-        <MenuItem component={NextLink} href={`/users/${username}`} sx={{ mb: 2 }}>
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="Your profile" secondary={displayName || 'User'} />
-        </MenuItem>
+        TransitionComponent={Fade}
+        onClose={closeMenu}>
+        <MenuList>
+          {user?.username && (
+            <MenuItem
+              component={NextLink}
+              href={`/users/${username}`}
+              sx={{ mb: 2 }}
+              onClick={closeMenu}>
+              <ListItemIcon>
+                <MdPerson fontSize={24} />
+              </ListItemIcon>
+              <ListItemText primary="Your profile" secondary={displayName || 'User'} />
+            </MenuItem>
+          )}
 
-        <Divider />
-        <MenuItem onClick={logoutUser} sx={{ mt: 2 }}>
-          <ListItemIcon>
-            <LogoutIcon />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </MenuItem>
+          <Divider />
+
+          <MenuItem onClick={logoutUser} sx={{ mt: 2 }}>
+            <ListItemIcon>
+              <MdLogout fontSize={24} />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </MenuItem>
+        </MenuList>
       </Menu>
     </Stack>
   );

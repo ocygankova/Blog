@@ -51,7 +51,7 @@ function UserProfile({ user }: IPageProps) {
   return (
     <>
       <Head>
-        <title>{`${profileUser.displayName} - Blog`}</title>
+        <title>{`${profileUser.displayName} - Daily Blog`}</title>
       </Head>
       <Container sx={{ pt: 12 }}>
         <UserInfo user={profileUser} />

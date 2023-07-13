@@ -5,13 +5,12 @@ import {
   List,
   ListItem,
   ListItemAvatar,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { MdAdd, MdLogout, MdPerson } from 'react-icons/md';
 import { IUser } from '@/models/user';
 import { useAuthenticatedUser } from '@/hooks';
 import * as UsersApi from '@/http/api/users';
@@ -35,43 +34,50 @@ function LoggedInDrawer({
     } catch (error) {
       alert(error);
       console.log(error);
+    } finally {
+      handleDrawerToggle();
     }
   };
 
   return (
-    <List onClick={handleDrawerToggle}>
-      <ListItem>
+    <List>
+      <ListItem onClick={handleDrawerToggle}>
         <Button component={NextLink} href="/blog/create" variant="outlined" fullWidth>
-          <AddIcon />
+          <MdAdd fontSize={26} />
           <Typography component="span" ml={2}>
             Create post
           </Typography>
         </Button>
       </ListItem>
 
-      <ListItem component={NextLink} href={`/users/${username}`}>
-        <ListItemIcon>
-          <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary="Your profile" secondary={displayName || 'User'} />
-        <ListItemAvatar
-          sx={{
-            '& .MuiAvatar-root': {
-              marginRight: 0,
-              marginLeft: 'auto',
-            },
-          }}>
-          <UserAvatar src={profileImageUrl} />
-        </ListItemAvatar>
-      </ListItem>
+      {username && (
+        <ListItemButton
+          component={NextLink}
+          href={`/users/${username}`}
+          onClick={handleDrawerToggle}>
+          <ListItemIcon>
+            <MdPerson fontSize={24} />
+          </ListItemIcon>
+          <ListItemText primary="Your profile" secondary={displayName || 'User'} />
+          <ListItemAvatar
+            sx={{
+              '& .MuiAvatar-root': {
+                marginRight: 0,
+                marginLeft: 'auto',
+              },
+            }}>
+            <UserAvatar src={profileImageUrl} />
+          </ListItemAvatar>
+        </ListItemButton>
+      )}
 
-      <Divider />
-      <ListItem onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>
+      <Divider variant="middle" />
+      <ListItemButton onClick={logoutUser} sx={{ mt: 2, cursor: 'pointer' }}>
         <ListItemIcon>
-          <LogoutIcon />
+          <MdLogout fontSize={24} />
         </ListItemIcon>
         <ListItemText primary="Logout" />
-      </ListItem>
+      </ListItemButton>
     </List>
   );
 }

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { Button } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 export const GoogleSignInButton = () => {
   const router = useRouter();
@@ -9,10 +9,11 @@ export const GoogleSignInButton = () => {
     <Button
       variant="outlined"
       color="secondary"
+      sx={{ py: 1 }}
       fullWidth
       href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/login/google?returnTo=${router.asPath}`}>
-      <GoogleIcon fontSize="small" sx={{ mr: 1 }} />
-      Continue with Google
+      <FcGoogle style={{ marginRight: 6 }} fontSize={24} />
+      Sign in with Google
     </Button>
   );
 };
@@ -23,10 +24,11 @@ export const GitHubSignInButton = () => {
     <Button
       variant="outlined"
       color="secondary"
+      sx={{ py: 1 }}
       fullWidth
       href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/login/github?returnTo=${router.asPath}`}>
-      <GitHubIcon fontSize="small" sx={{ mr: 1 }} />
-      Continue with GitHub
+      <FaGithub style={{ marginRight: 6 }} fontSize={22} />
+      Sign in with GitHub
     </Button>
   );
 };

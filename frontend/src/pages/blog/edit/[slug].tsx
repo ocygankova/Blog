@@ -10,11 +10,11 @@ import { generateSlug, maxLengths, requiredStringSchema, slugSchema } from '@/ut
 import { IBlogPost } from '@/models/blogPost';
 import { useAuthenticatedUser, useUnsavedChangesWarning } from '@/hooks';
 import { Alert, Button, CircularProgress, Container, Stack, Typography } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { MdOutlineDelete } from 'react-icons/md';
 import {
-  FormInputField,
   BlogPostSlugInputField,
   ConfirmationModal,
+  FormInputField,
   LoadingButton,
   MarkdownEditor,
 } from '@/components';
@@ -198,7 +198,7 @@ export default function EditPost({ post }: IPageProps) {
             disabled={deletePending}
             onClick={openDeleteConfirmationModal}
             sx={{ alignSelf: 'flex-end' }}>
-            <DeleteOutlineIcon fontSize="small" sx={{ mr: 0.3 }} />
+            <MdOutlineDelete fontSize={22} style={{ marginRight: 4 }} />
             Delete
           </Button>
         </Stack>

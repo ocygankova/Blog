@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { Stack, StackProps, Tooltip, Typography, TypographyVariant } from '@mui/material';
+import { Fade, Stack, StackProps, Tooltip, Typography, TypographyVariant } from '@mui/material';
 import { IUser } from '@/models/user';
 import { ButtonLink, UserAvatar } from '@/components';
 import { formatDate } from '@/utils/utils';
@@ -28,7 +28,7 @@ function UserProfileLink({
 
       <div>
         <Typography>
-          <Typography component="span" variant="h6" lineHeight="inherit">
+          <Typography component="span" variant="h6">
             User since:{' '}
           </Typography>
           {formatDate(createdAt)}
@@ -48,12 +48,17 @@ function UserProfileLink({
 
   return (
     <Stack direction="row" component="span" spacing={0.5} alignItems="center" {...props}>
+      <NextLink href={profileLink}>
+        <UserAvatar src={profileImageUrl} size={avatarSize} />
+      </NextLink>
+
       <Tooltip
         title={renderTooltipContent()}
         placement="bottom-start"
-        enterDelay={300}
-        enterNextDelay={300}
+        enterDelay={500}
+        enterNextDelay={500}
         leaveDelay={300}
+        TransitionComponent={Fade}
         componentsProps={{
           tooltip: {
             sx: {
@@ -73,22 +78,18 @@ function UserProfileLink({
             },
           },
         }}>
-        <NextLink href={profileLink}>
-          <UserAvatar src={profileImageUrl} size={avatarSize} />
-        </NextLink>
+        <ButtonLink
+          color={color}
+          component={NextLink}
+          href={profileLink}
+          sx={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            typography: typography,
+          }}>
+          {displayName}
+        </ButtonLink>
       </Tooltip>
-
-      <ButtonLink
-        color={color}
-        component={NextLink}
-        href={profileLink}
-        sx={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          typography: typography,
-        }}>
-        {displayName}
-      </ButtonLink>
     </Stack>
   );
 }
