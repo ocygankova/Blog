@@ -23,8 +23,11 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Blog - Share your ideas</title>
-        <meta name="description" content="A blog to share your ideas" />
+        <title>Daily Blog - Share your ideas</title>
+        <meta
+          name="description"
+          content="Perfect place to share your stories, projects, tutorials, learn new skills and find inspiration"
+        />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 

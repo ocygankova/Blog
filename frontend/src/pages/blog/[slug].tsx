@@ -65,7 +65,7 @@ function BlogPostPage({ post }: IPageProps) {
   return (
     <>
       <Head>
-        <title>{`${title} - Blog`}</title>
+        <title>{`${title} - Daily Blog`}</title>
         <meta name="description" content={summary} />
       </Head>
 
