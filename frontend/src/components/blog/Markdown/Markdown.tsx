@@ -27,9 +27,11 @@ function Markdown({ children }: IProps) {
         h6: ({ node, ...props }) => <Typography {...props} variant="h6" fontWeight="bold" my={2} />,
         p: ({ node, ...props }) => <Typography {...props} variant="body1" my={1} />,
         span: ({ node, ...props }) => <Typography {...props} variant="body1" component="span" />,
-        ul: ({ node, ...props }) => <List {...props} sx={{ listStyleType: 'disc', pl: 4 }} />,
-        ol: ({ node, ...props }) => <List {...props} sx={{ listStyleType: 'number', pl: 4 }} />,
-        li: ({ node, ...props }) => <ListItem {...props} sx={{ display: 'list-item', py: 0.5 }} />,
+        ul: ({ children }) => <List sx={{ listStyleType: 'disc', pl: 4 }}>{children}</List>,
+        ol: ({ children }) => <List sx={{ listStyleType: 'number', pl: 4 }}>{children}</List>,
+        li: ({ children }) => (
+          <ListItem sx={{ display: 'list-item', py: 0.5 }}>{children}</ListItem>
+        ),
         a: ({ node, ...props }) => (
           <Link {...props} underline="always" target="_blank" rel="noreferrer" />
         ),
