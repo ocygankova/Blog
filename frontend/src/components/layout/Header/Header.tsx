@@ -21,10 +21,10 @@ import {
 } from '@mui/material';
 import { MdArrowForwardIos, MdOutlineMenu } from 'react-icons/md';
 import { useAuthenticatedUser } from '@/hooks';
-import logo from '@/assets/logo.png';
 import { LoggedInDrawer, LoggedInNavbar } from './LoggedInView';
 import { LoggedOutDrawer, LoggedOutNavbar } from './LoggedOutView';
 import theme from '@/styles/theme';
+import logo from '@/assets/logo.svg';
 import { menuItems } from './consts';
 
 function Header() {
@@ -48,9 +48,9 @@ function Header() {
           <Toolbar disableGutters>
             <Stack direction="row" alignItems="center" spacing={2} flexGrow={1}>
               <Link component={NextLink} href="/" sx={{ display: 'flex', alignItems: 'center' }}>
-                <Image src={logo} alt="Blog logo" width={36} />
-                <Typography component="span" variant="h4" ml={1}>
-                  Daily Blog
+                <Image src={logo} alt="Blog logo" width={42} />
+                <Typography component="span" color="text.primary" fontWeight={600} ml={1}>
+                  DAILY BLOG
                 </Typography>
               </Link>
               {menuItems.map(({ id, href, name }) => (

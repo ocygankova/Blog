@@ -67,6 +67,8 @@ function BlogPostPage({ post }: IPageProps) {
       <Head>
         <title>{`${title} - Daily Blog`}</title>
         <meta name="description" content={summary} />
+        <meta property="og:image" key="og:image" content={coverImageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <Container>
