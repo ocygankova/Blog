@@ -47,23 +47,26 @@ function Header() {
         <Container>
           <Toolbar disableGutters>
             <Stack direction="row" alignItems="center" spacing={2} flexGrow={1}>
-              <Link component={NextLink} href="/" sx={{ display: 'flex', alignItems: 'center' }}>
+              <Link
+                component={NextLink}
+                href="/blog"
+                sx={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={logo} alt="Blog logo" width={42} />
-                <Typography component="span" color="text.primary" fontWeight={600} ml={1}>
+                <Typography component="span" color="text.primary" fontWeight={700} ml={1}>
                   DAILY BLOG
                 </Typography>
               </Link>
-              {menuItems.map(({ id, href, name }) => (
-                <StyledNavLink
-                  key={id}
-                  component={NextLink}
-                  href={href}
-                  display={{ xs: 'none', md: 'block' }}
-                  // highlighted={router.pathname === href}
-                >
-                  {name}
-                </StyledNavLink>
-              ))}
+              {/*{menuItems.map(({ id, href, name }) => (*/}
+              {/*  <StyledNavLink*/}
+              {/*    key={id}*/}
+              {/*    component={NextLink}*/}
+              {/*    href={href}*/}
+              {/*    display={{ xs: 'none', md: 'block' }}*/}
+              {/*    // highlighted={router.pathname === href}*/}
+              {/*  >*/}
+              {/*    {name}*/}
+              {/*  </StyledNavLink>*/}
+              {/*))}*/}
             </Stack>
 
             {!userLoading && !user && <LoggedOutNavbar />}

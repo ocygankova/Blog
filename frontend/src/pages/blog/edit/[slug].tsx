@@ -151,6 +151,10 @@ export default function EditPost({ post }: IPageProps) {
 
   const userIsAuthor = (user && user._id === post.author._id) || false;
 
+  if (!userLoading && !user) {
+    router.push('/blog');
+  }
+
   if (userLoading) {
     return <CircularProgress sx={{ display: 'block', mx: 'auto' }} />;
   }
