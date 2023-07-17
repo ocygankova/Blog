@@ -29,6 +29,12 @@ export default function MyApp(props: MyAppProps) {
           content="Perfect place to share your stories, projects, tutorials, learn new skills and find inspiration"
         />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta
+          property="og:image"
+          key="og:image"
+          content={`${process.env.NEXT_PUBLIC_SITE_URL}/social_media_preview.png`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <ThemeProvider theme={basicTheme}>

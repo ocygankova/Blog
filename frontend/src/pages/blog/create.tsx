@@ -125,7 +125,7 @@ function CreatePostPage() {
   }
 
   if (!userLoading && !user) {
-    router.push('/');
+    router.push('/blog');
   }
 
   return (
