@@ -115,11 +115,6 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
         Sign up to create an account
       </Typography>
 
-      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-      {showVerificationCodeSentMessage && (
-        <Alert severity="warning">We sent you a verification code. Please check your inbox!</Alert>
-      )}
-
       <SocialSignInSection pt={2} />
 
       <Divider sx={{ mt: 4, mb: 3 }}>Continue with your email</Divider>
@@ -169,6 +164,29 @@ function SignUpModal({ open, onClose, onLogInInsteadClicked }: IProps) {
           timeoutLeft={verificationCodeTimeoutSecondsLeft}
           onCodeRequest={requestVerificationCode}
         />
+
+        {errorMessage && (
+          <Alert
+            severity="error"
+            sx={{
+              mt: 1.5,
+            }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+        {showVerificationCodeSentMessage && (
+          <Alert
+            severity="warning"
+            sx={{
+              mt: 1.5,
+            }}>
+            <>
+              We sent you a verification code. Please check your inbox! <br />( ...be sure to check
+              your spam box as well )
+            </>
+          </Alert>
+        )}
 
         <LoadingButton
           type="submit"
