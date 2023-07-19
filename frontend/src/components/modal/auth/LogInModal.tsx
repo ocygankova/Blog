@@ -73,11 +73,15 @@ function LogInModal({ open, onClose, onSignUpInsteadClicked, onForgotPasswordCli
         Login to your account
       </Typography>
 
-      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-
       <SocialSignInSection pt={2} />
 
       <Divider sx={{ mt: 4, mb: 3 }}>Continue with your password</Divider>
+
+      {errorMessage && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {errorMessage}
+        </Alert>
+      )}
 
       <Box
         component="form"

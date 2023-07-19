@@ -172,7 +172,7 @@ export default function EditPost({ post }: IPageProps) {
         title="Confirm post deletion"
         message={
           <>
-            <span>Do you want to permanently delete this post and all its comments?</span>
+            <span>Do you want to permanently delete this post?</span>
             <br />
             <span>This action can not be reversed.</span>
           </>

@@ -10,14 +10,11 @@ const transporter = createTransport({
   },
 });
 
-export async function sendVerificationCode(
-  toEmail: string,
-  verificationCode: string
-) {
+export async function sendVerificationCode(toEmail: string, verificationCode: string) {
   await transporter.sendMail({
-    from: env.SMTP_USER,
+    from: 'noreply@dailyblog.com',
     to: toEmail,
-    subject: '[Blog]: Please verify your email address',
+    subject: '[Daily Blog]: Please verify your email address',
     html: `<p>Hello,</p>
            <p>Somebody just used this email address to sign up at Blog.</p>
            <p>If this was you, here is your verification code. It will expire in 10 minutes</p>
@@ -26,14 +23,11 @@ export async function sendVerificationCode(
   });
 }
 
-export async function sendPasswordResetCode(
-  toEmail: string,
-  verificationCode: string
-) {
+export async function sendPasswordResetCode(toEmail: string, verificationCode: string) {
   await transporter.sendMail({
-    from: env.SMTP_USER,
+    from: 'noreply@dailyblog.com',
     to: toEmail,
-    subject: '[Blog]: Reset your password',
+    subject: '[Daily Blog]: Reset your password',
     html: `<p>A password reset has been requested for this account.</p>
            <p>Use this verification code to reset your password. It will expire in 10 minutes</p>
            <p><strong>${verificationCode}</strong></p>

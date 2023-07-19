@@ -112,11 +112,6 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
         Reset password
       </Typography>
 
-      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-      {showVerificationCodeSentMessage && (
-        <Alert severity="warning">We sent you a verification code. Please check your inbox!</Alert>
-      )}
-
       <Box
         pt={2}
         component="form"
@@ -134,7 +129,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
 
         <PasswordInputField
           register={register('newPassword')}
-          label="Password"
+          label="New Password"
           validationError={errors.newPassword}
           sx={{
             mb: 2,
@@ -142,7 +137,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
         />
 
         <Typography variant="body2" mb={0.4}>
-          We will send verification code to the email you provided.
+          We will send a verification code to the email you provided.
         </Typography>
 
         <VerificationCodeField
@@ -153,6 +148,29 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
           onCodeRequest={requestVerificationCode}
         />
 
+        {errorMessage && (
+          <Alert
+            severity="error"
+            sx={{
+              mt: 1.5,
+            }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+        {showVerificationCodeSentMessage && (
+          <Alert
+            severity="warning"
+            sx={{
+              mt: 1.5,
+            }}>
+            <>
+              We sent you a verification code. Please check your inbox! <br />( ...be sure to check
+              your spam box as well )
+            </>
+          </Alert>
+        )}
+
         <LoadingButton
           type="submit"
           variant="contained"
@@ -161,7 +179,7 @@ function ResetPasswordModal({ open, onClose, onSignUpClicked }: IProps) {
           sx={{
             mt: 2,
           }}>
-          Sign up
+          Log in
         </LoadingButton>
 
         <Typography mt={2} textAlign="center">
