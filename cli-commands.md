@@ -27,7 +27,7 @@
 
 - Send SSH keys to server:
   - Windows: `scp $env:USERPROFILE/.ssh/id_rsa.pub <username>@<your-server-ip>:~/.ssh/authorized_keys`
-  	`scp %userprofile%/.ssh/id_rsa.pub <username>@<your-server-ip>:~/.ssh/authorized_keys`
+  - Windows: `scp %userprofile%/.ssh/id_rsa.pub <username>@<your-server-ip>:~/.ssh/authorized_keys`
   - Mac: `scp ~/.ssh/id_rsa.pub <username>@<your-server-ip>:~/.ssh/authorized_keys`
   - Linux: `ssh-copy-id <username>@<your-server-ip>`
 
