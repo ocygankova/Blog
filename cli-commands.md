@@ -111,6 +111,13 @@ https://pm2.keymetrics.io/
 - Start server with PM2 (after compiling TypeScript):
 `pm2 start dist/server.js`
 
+- Restart after editing
+pm2 restart server
+
+
+pm2 startup
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u oc --hp /home/oc
+
 - Install NGINX:
 `sudo apt install nginx`
 
