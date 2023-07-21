@@ -55,6 +55,9 @@ https://www.iana.org/assignments/service-names-port-numbers/service-names-port-n
 - Enable Firewall:
 `sudo ufw enable`
 
+- Disable Firewall:
+`sudo ufw disable`
+
 - Modify Firewall rules:
 `sudo nano /etc/ufw/before.rules`
   - Disable pings:
