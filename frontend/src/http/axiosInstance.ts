@@ -1,15 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   BadRequestError,
   ConflictError,
   NotFoundError,
   TooManyRequestsError,
   UnauthorizedError,
-} from "./http-errors";
+} from './http-errors';
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-  timeout: 5000,
+  timeout: 15000,
   // allow sending auth cookies to different url(combined with cors setup on backend)
   withCredentials: true,
 });
