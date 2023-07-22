@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
-    deviceSizes: [576, 768, 992, 1200, 1400],
+    domains: ['localhost', 'api.blog-daily.com'],
+    deviceSizes: [600, 900, 1200, 1536],
   },
   async redirects() {
     return [
