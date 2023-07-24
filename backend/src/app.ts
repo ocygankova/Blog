@@ -15,7 +15,13 @@ import './config/passport';
 
 const app = express();
 
-app.use(morgan('dev'));
+if (env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  // setup to manage user ip correctly with reverse proxy(affects rate limit)
+  app.set('trust proxy', true);
+} else {
+  app.use(morgan('dev'));
+}
 
 app.use(express.json());
 
