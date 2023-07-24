@@ -52,8 +52,13 @@ function Header() {
                 href="/blog"
                 sx={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={logo} alt="Blog logo" width={42} />
-                <Typography component="span" color="text.primary" fontWeight={700} ml={1}>
-                  DAILY BLOG
+                <Typography
+                  component="span"
+                  variant="h5"
+                  color="text.primary"
+                  fontWeight={700}
+                  ml={1}>
+                  Daily Blog
                 </Typography>
               </Link>
               {/*{menuItems.map(({ id, href, name }) => (*/}
