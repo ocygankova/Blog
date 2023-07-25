@@ -53,8 +53,11 @@ function Blog({ data: { blogPosts, page, totalPages } }: IPageProps) {
   return (
     <>
       <Head>
-        <title>Articles - Daily Blog</title>
-        <meta name="description" content="Read the latest posts on Daily Blog" />
+        <title>Latest Posts - Daily Blog</title>
+        <meta
+          name="description"
+          content="Tutorials and stories about programming, SEO, web development, UI UX design, science, travelling, hobbies, personal experience"
+        />
       </Head>
 
       <Container sx={{ pt: 12, px: { xs: 0, sm: 3 } }} component="section">
