@@ -39,6 +39,7 @@ const createTypography = (theme: ThemeOptions): IExtendedTypographyOptions => {
       fontFamily: fontFamilyMontserrat,
       fontWeight: 400,
       fontSize: '1.5rem',
+      lineHeight: '1.5',
       letterSpacing: '0.00735em',
       wordWrap: 'break-word',
       wordBreak: 'break-word',

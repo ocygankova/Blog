@@ -101,7 +101,7 @@ function BlogPostPage({ post }: IPageProps) {
           {title}
         </Typography>
 
-        <Typography variant="h4" mb={4}>
+        <Typography variant="h4" mb={4} sx={{ whiteSpace: 'pre-line' }}>
           {summary}
         </Typography>
 

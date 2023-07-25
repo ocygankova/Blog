@@ -25,7 +25,7 @@ function Markdown({ children }: IProps) {
         h4: ({ node, ...props }) => <Typography {...props} variant="h4" my={3} />,
         h5: ({ node, ...props }) => <Typography {...props} variant="h5" fontWeight="bold" my={3} />,
         h6: ({ node, ...props }) => <Typography {...props} variant="h6" fontWeight="bold" my={2} />,
-        p: ({ node, ...props }) => <Typography {...props} variant="body1" my={1} />,
+        p: ({ node, ...props }) => <Typography {...props} variant="body1" my={2} />,
         span: ({ node, ...props }) => <Typography {...props} variant="body1" component="span" />,
         ul: ({ children }) => <List sx={{ listStyleType: 'disc', pl: 4 }}>{children}</List>,
         ol: ({ children }) => <List sx={{ listStyleType: 'number', pl: 4 }}>{children}</List>,

@@ -160,7 +160,9 @@ function CommentLayout({
         </Typography>
       </Stack>
 
-      <Typography mb={1}>{comment.text}</Typography>
+      <Typography mb={1} sx={{ whiteSpace: 'pre-line' }}>
+        {comment.text}
+      </Typography>
 
       <Stack direction="row" spacing={2}>
         <ButtonLink onClick={onReplyClicked} sx={{ typography: 'caption', color: 'primary' }}>
