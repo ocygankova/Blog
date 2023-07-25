@@ -24,7 +24,7 @@ export const getCommentsForBlogPost: RequestHandler<
   const { blogPostId } = req.params;
   const { continueAfterId } = req.query;
 
-  const pageSize = 10;
+  const pageSize = 5;
 
   try {
     const query = CommentModel.find({ blogPostId, parentCommentId: undefined }).sort({ _id: -1 });
@@ -65,7 +65,7 @@ export const getCommentReplies: RequestHandler<
   const { commentId: parentCommentId } = req.params;
   const { continueAfterId } = req.query;
 
-  const pageSize = 10;
+  const pageSize = 5;
 
   try {
     const query = CommentModel.find({ parentCommentId });
