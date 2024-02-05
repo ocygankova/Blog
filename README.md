@@ -1,6 +1,5 @@
 # Daily Blog - minimalistic blogging app
 
----
 
 Daily Blog is a fully responsive web app built with the MERN Stack using Next.js.
 
