@@ -5,15 +5,13 @@ function Marketplace() {
     <Container sx={{ pb: 4, pt: 12 }}>
       <h1>Discover amazing offers</h1>
 
-      <div style="height: 1000px; min-height: 100%">
+      <div>
         <iframe
           name="Spendbase marketplace"
           src="https://www.spendbase.co/discount-marketplace-widget/"
-          height="100%"
-          width="100%"
-          style="border:none;"></iframe>
+          height="1000px"
+          width="100%"></iframe>
       </div>
-
 
       <p>
         At Daily Blog, accessible from www.blog-daily.com, one of our main priorities is the privacy
